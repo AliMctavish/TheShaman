@@ -15,5 +15,13 @@ namespace TheShaman
         public Texture2D groundTexture;
         public Rectangle groundPos;
 
+        public Ground(int posX, int posY)
+        {
+            this.groundPos = new Rectangle(posX, posY, 50, 64);
+        }
+
+
+      
+
     }
 }

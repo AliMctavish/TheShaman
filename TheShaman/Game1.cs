@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
 using MonoGame.Extended;
+using System.Diagnostics.CodeAnalysis;
+using System.Reflection.Emit;
 
 namespace TheShaman
 {
@@ -10,15 +12,26 @@ namespace TheShaman
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private LevelEditor level;
+        private Maps level = new Maps();
         private Player player;
+        private Vector2 firePos;
+        private Texture2D fireTexture;
         private float time;
-        Ground[,] tileMap = new Ground[40, 40];
-        Ground ground;
-        Enemy[,] enemy = new Enemy[40,40]; 
+        int fireAnimate = 1;
+        float animateCounter = 0.1f;
+        float waitingTime = 0;
+        private int selectLevel = 1;
+        LevelEditor levelMapper = new LevelEditor();
+        Ground[] ground;
+        Enemy[] enemy; 
         int xAxis = 0;
         int yAxis = 0;
         double timer = 20;
+        private bool startFollow = false;
+        AnimationManager animationManager;
+        GamePhysics gamePhysics;
+
+        float sum = 0;
 
         OrthographicCamera cam;
      
@@ -33,9 +46,18 @@ namespace TheShaman
 
         protected override void Initialize()
         {
+            int sumOfArrays = -1;
+            foreach (var cell in level.LoadLevel(selectLevel))
+            {
+                sumOfArrays += cell.Length;
+            }
 
-            level= new LevelEditor();
-            ground = new Ground();
+           animationManager = new AnimationManager();
+            gamePhysics = new GamePhysics();
+            ground = new Ground[sumOfArrays];
+            enemy = new Enemy[sumOfArrays];
+
+
             player = new Player();
             
 
@@ -55,48 +77,20 @@ namespace TheShaman
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            player.playerTexture = Content.Load<Texture2D>("playerTexture");
+            player.playerTexture = Content.Load<Texture2D>("PlayerAnimation/playerIdle1");
 
-            enemy[5, 2] = new Enemy();
+            fireTexture = Content.Load<Texture2D>("fireAnimation1");
 
-            enemy[5, 2].enemyTexture = Content.Load<Texture2D>("enemy");
 
-            int xLength = tileMap.GetLength(0);
-            int yLength = tileMap.GetLength(1);
 
             cam = new OrthographicCamera(GraphicsDevice);
 
+            string[] map = level.LoadLevel(selectLevel);
+
+            levelMapper.StartMapping(ground, map ,enemy, Content);
 
 
-            for (int i = 0; i < 40; i++)
-            {
-                for (int j = 0; j < 40; j++)
-                {
-                    tileMap[i, j] = new Ground();
-
-                    if (j < 10)
-                    {
-
-                        tileMap[i, j].groundTexture = Content.Load<Texture2D>("ground");
-                        
-                    }
-                    else
-                    {
-                        tileMap[i, j].groundTexture = Content.Load<Texture2D>("groundDryTexture");
-
-                    }
-                 
-                 
-
-                    
-
-
-                }
-
-            }
-
-
-            enemy[5, 2].enemyPos = new Vector2(100, 100);
+            firePos = new Vector2(500, 500);
 
             // ground =level.Map(Content);
 
@@ -107,33 +101,42 @@ namespace TheShaman
 
         protected override void Update(GameTime gameTime)
         {
-            //enemy[5, 2].enemyPos.X = 50 - xAxis * 2;
-            //enemy[5, 2].enemyPos.Y = 50 - xAxis * 2;
+
            
             timer -= gameTime.TotalGameTime.TotalSeconds;
+            waitingTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            for (int i = 0; i < 40; i++)
-            {
-                for (int j = 0; j < 40; j++)
-                {
-                    tileMap[i, j].groundPos = new Rectangle(50 * i , 50 * j , 50, 50);
-                }
-            }
+
+
+
+
+
+
+            gamePhysics.playerBounderies(player , enemy , firePos);
+
+
+           
 
 
         
+            if(waitingTime > animateCounter)
+            {
+                animationManager.playerAnimation(player, Content);
 
-            Vector2 movDir = player.playerPos - enemy[5, 2].enemyPos ;
+                fireTexture = Content.Load<Texture2D>($"fireAnimation{fireAnimate}");
+                if(fireAnimate == 3)
+                {
+                    fireTexture = Content.Load<Texture2D>($"fireAnimation3");
+                    fireAnimate = 1;
+                }
+                fireAnimate += 1;
+            animateCounter += 0.1f;
+            }
 
-            movDir.Normalize();
 
-            enemy[5, 2].enemyPos += movDir;
-           
 
-          
-               
-            
-                Debug.WriteLine(timer);
+
+
 
             float time = (float)gameTime.TotalGameTime.TotalSeconds;
 
@@ -143,21 +146,21 @@ namespace TheShaman
 
             if(Keyboard.GetState().IsKeyDown(Keys.Up))
             {
-                player.playerPos.Y -= 1  * time;
+                player.playerPos.Y -= 2;
             }
             if(Keyboard.GetState().IsKeyDown(Keys.Down))
             {
-                player.playerPos.Y += 1 * time;
+                player.playerPos.Y += 2;
               
             }  
             if(Keyboard.GetState().IsKeyDown(Keys.Right))
             {
-                player.playerPos.X += 1 * time;
+                player.playerPos.X += 2;
                
             } 
             if(Keyboard.GetState().IsKeyDown(Keys.Left))
             {
-               player.playerPos.X -= 1 * time;
+               player.playerPos.X -= 2;
               
             }
             cam.LookAt(player.playerPos);
@@ -174,25 +177,38 @@ namespace TheShaman
 
             _spriteBatch.Begin(transformMatrix : cam.GetViewMatrix());
 
-
-
-            for (int i = 0; i < 40; i++)
+            foreach (var ground in ground)
             {
-                for (int j = 0; j < 40 ; j++)
+                if (ground != null)
                 {
 
-                    _spriteBatch.Draw(tileMap[i, j].groundTexture, tileMap[i, j].groundPos, Color.White);
-                 
+                    _spriteBatch.Draw(ground.groundTexture, new Vector2(ground.groundPos.X - 50, ground.groundPos.Y - 50), Color.White);
+                }
 
+            }
+            _spriteBatch.Draw(fireTexture, firePos, Color.White);
+
+
+
+
+            foreach (var enemy in enemy)
+            {
+                if(enemy != null)
+                {
+                _spriteBatch.Draw(enemy.enemyTexture, new Vector2(enemy.enemyPos.X - 50, enemy.enemyPos.Y - 50), Color.White); _spriteBatch.Draw(enemy.enemyTexture, new Vector2(enemy.enemyPos.X - 50, enemy.enemyPos.Y - 50), Color.White);
                 }
 
             }
 
+         
 
-            _spriteBatch.Draw(enemy[5, 2].enemyTexture, new Vector2(enemy[5,2].enemyPos.X - 50,enemy[5,2].enemyPos.Y - 50), Color.White);
-
-
+            
             _spriteBatch.Draw(player.playerTexture, new Vector2(player.playerPos.X - 50 , player.playerPos.Y - 50 ), Color.White);
+           
+
+
+
+
 
 
 

@@ -14,6 +14,11 @@ namespace TheShaman
 
         public Vector2 playerPos = new Vector2(1200/2,600/2);
 
+        public int playerAnimationCounter = 1;
+        public int playerAnimationMovingCounter = 1;
+        public int playerAnimationHitCounter = 1;
+        public bool isFlipped = false;
+        public bool isHitting = false;
 
 
     }

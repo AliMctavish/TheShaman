@@ -12,6 +12,8 @@ namespace TheShaman
     {
         public Texture2D enemyTexture;
         public Vector2 enemyPos;
+        public bool isFollowing = false;
+        public bool isArrived = false;
 
 
 
