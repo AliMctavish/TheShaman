@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
+using MonoGame.Extended;
 
 namespace TheShaman
 {
@@ -18,6 +19,8 @@ namespace TheShaman
         int xAxis = 0;
         int yAxis = 0;
         double timer = 20;
+
+        OrthographicCamera cam;
      
         public Game1()
         {
@@ -60,6 +63,8 @@ namespace TheShaman
 
             int xLength = tileMap.GetLength(0);
             int yLength = tileMap.GetLength(1);
+
+            cam = new OrthographicCamera(GraphicsDevice);
 
 
 
@@ -104,14 +109,14 @@ namespace TheShaman
         {
             //enemy[5, 2].enemyPos.X = 50 - xAxis * 2;
             //enemy[5, 2].enemyPos.Y = 50 - xAxis * 2;
-            double time = gameTime.TotalGameTime.TotalSeconds;
+           
             timer -= gameTime.TotalGameTime.TotalSeconds;
 
             for (int i = 0; i < 40; i++)
             {
                 for (int j = 0; j < 40; j++)
                 {
-                    tileMap[i, j].groundPos = new Rectangle(50 * i - xAxis * 2, 50 * j - yAxis * 2, 50, 50);
+                    tileMap[i, j].groundPos = new Rectangle(50 * i , 50 * j , 50, 50);
                 }
             }
 
@@ -130,7 +135,7 @@ namespace TheShaman
             
                 Debug.WriteLine(timer);
 
-
+            float time = (float)gameTime.TotalGameTime.TotalSeconds;
 
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -138,23 +143,24 @@ namespace TheShaman
 
             if(Keyboard.GetState().IsKeyDown(Keys.Up))
             {
-                yAxis -= 1 ;
+                player.playerPos.Y -= 1  * time;
             }
             if(Keyboard.GetState().IsKeyDown(Keys.Down))
             {
-                yAxis += 1;
+                player.playerPos.Y += 1 * time;
               
             }  
             if(Keyboard.GetState().IsKeyDown(Keys.Right))
             {
-                xAxis += 1;
+                player.playerPos.X += 1 * time;
                
             } 
             if(Keyboard.GetState().IsKeyDown(Keys.Left))
             {
-               xAxis -= 1;
+               player.playerPos.X -= 1 * time;
               
             }
+            cam.LookAt(player.playerPos);
 
             // TODO: Add your update logic here
 
@@ -166,7 +172,7 @@ namespace TheShaman
             GraphicsDevice.Clear(Color.Black);
 
 
-            _spriteBatch.Begin();
+            _spriteBatch.Begin(transformMatrix : cam.GetViewMatrix());
 
 
 
