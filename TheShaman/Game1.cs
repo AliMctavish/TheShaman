@@ -5,6 +5,7 @@ using System.Diagnostics;
 using MonoGame.Extended;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection.Emit;
+using System.Collections.Generic;
 
 namespace TheShaman
 {
@@ -23,14 +24,16 @@ namespace TheShaman
         private int selectLevel = 1;
         LevelEditor levelMapper = new LevelEditor();
         Ground[] ground;
-        Enemy[] enemy; 
+        Human[] human; 
         int xAxis = 0;
         int yAxis = 0;
         double timer = 20;
         private bool startFollow = false;
+        SpriteFont spriteFont;
         AnimationManager animationManager;
         GamePhysics gamePhysics;
 
+        Animals[] animals;
         float sum = 0;
 
         OrthographicCamera cam;
@@ -55,14 +58,14 @@ namespace TheShaman
            animationManager = new AnimationManager();
             gamePhysics = new GamePhysics();
             ground = new Ground[sumOfArrays];
-            enemy = new Enemy[sumOfArrays];
+            human = new Human[sumOfArrays];
+            animals = new Animals[sumOfArrays];
 
 
             player = new Player();
             
 
 
-            Debug.Write(enemy);
 
 
 
@@ -81,13 +84,15 @@ namespace TheShaman
 
             fireTexture = Content.Load<Texture2D>("fireAnimation1");
 
+            spriteFont = Content.Load<SpriteFont>("File");
+
 
 
             cam = new OrthographicCamera(GraphicsDevice);
 
             string[] map = level.LoadLevel(selectLevel);
 
-            levelMapper.StartMapping(ground, map ,enemy, Content);
+            levelMapper.StartMapping(ground, map ,human, animals, Content);
 
 
             firePos = new Vector2(500, 500);
@@ -111,8 +116,8 @@ namespace TheShaman
 
 
 
-
-            gamePhysics.playerBounderies(player , enemy , firePos);
+            gamePhysics.playerBounderies(player , human , firePos );
+            gamePhysics.humansBounderies(human, animals);
 
 
            
@@ -122,6 +127,7 @@ namespace TheShaman
             if(waitingTime > animateCounter)
             {
                 animationManager.playerAnimation(player, Content);
+                animationManager.HumanAnimation(human, Content, player);
 
                 fireTexture = Content.Load<Texture2D>($"fireAnimation{fireAnimate}");
                 if(fireAnimate == 3)
@@ -175,6 +181,7 @@ namespace TheShaman
             GraphicsDevice.Clear(Color.Black);
 
 
+           
             _spriteBatch.Begin(transformMatrix : cam.GetViewMatrix());
 
             foreach (var ground in ground)
@@ -189,16 +196,52 @@ namespace TheShaman
             _spriteBatch.Draw(fireTexture, firePos, Color.White);
 
 
+         
 
 
-            foreach (var enemy in enemy)
+            foreach (var human in human)
             {
-                if(enemy != null)
+                if(human != null)
                 {
-                _spriteBatch.Draw(enemy.enemyTexture, new Vector2(enemy.enemyPos.X - 50, enemy.enemyPos.Y - 50), Color.White); _spriteBatch.Draw(enemy.enemyTexture, new Vector2(enemy.enemyPos.X - 50, enemy.enemyPos.Y - 50), Color.White);
+                    if (Vector2.Distance(player.playerPos, firePos) <= 50 && human.isFollowing == true && human.isArrived == false)
+                    {
+                        _spriteBatch.DrawString(spriteFont, "Press 'Space' To Deliver", new Vector2(player.playerPos.X + 50, player.playerPos.Y - 20), Color.White);
+                    }
+                    else
+                    {
+                        _spriteBatch.DrawString(spriteFont, "", new Vector2(0, 0), Color.White);
+                    }
+                    _spriteBatch.Draw(human.humanTexture, new Vector2(human.humanPos.X - 50, human.humanPos.Y - 50), Color.White);
+
+
+                    if (Vector2.Distance(player.playerPos,human.humanPos) <= 50 && human.isFollowing == false && human.isArrived == false)
+                    {
+                        
+                        _spriteBatch.DrawString(spriteFont, "Press 'Space' To Follow", new Vector2(player.playerPos.X + 50, player.playerPos.Y - 20 ), Color.White);
+                    }
+                    else
+                    {
+                        _spriteBatch.DrawString(spriteFont, "", new Vector2(0,0), Color.AntiqueWhite);
+                    }
+
+
+
                 }
 
+
+
             }
+
+            foreach(var animal in animals)
+            {
+                if (animal != null)
+                {
+                    _spriteBatch.Draw(animal.animalTexture, new Vector2(animal.animalPos.X - 50, animal.animalPos.Y - 50), Color.White); 
+              
+                }
+            }
+
+         
 
          
 
@@ -215,6 +258,12 @@ namespace TheShaman
 
             _spriteBatch.End();
 
+
+
+            _spriteBatch.Begin();
+
+            _spriteBatch.DrawString(spriteFont, $"number of followers : {player.AcceptedEnemies}", new Vector2(1000, 50), Color.White);
+            _spriteBatch.End();
 
 
 

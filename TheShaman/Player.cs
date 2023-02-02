@@ -17,9 +17,11 @@ namespace TheShaman
         public int playerAnimationCounter = 1;
         public int playerAnimationMovingCounter = 1;
         public int playerAnimationHitCounter = 1;
+        public int playerAnimationMovingUpCounter = 1;
+        public int playerAnimationMovingDownCounter = 1;
         public bool isFlipped = false;
         public bool isHitting = false;
-
+        public int AcceptedEnemies = 0;
 
     }
 }

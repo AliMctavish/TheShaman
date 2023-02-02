@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,12 +14,13 @@ namespace TheShaman
     internal class AnimationManager
     {
 
+      
         public void playerAnimation(Player player, ContentManager Content)
         {
 
             if (player.isFlipped == false)
             {
-                player.playerTexture = Content.Load<Texture2D>($"PlayerAnimation/playerIdle {player.playerAnimationCounter}");
+                player.playerTexture = Content.Load<Texture2D>($"PlayerAnimation/playerIdle{player.playerAnimationCounter}");
             }
             else
             {
@@ -26,7 +28,7 @@ namespace TheShaman
             }
         
             
-            if (Keyboard.GetState().IsKeyDown(Keys.Right) )
+            if (Keyboard.GetState().IsKeyDown(Keys.Right) && player.isHitting == false )
             {
                     player.isFlipped = false;
                 if (player.isFlipped == false)
@@ -39,7 +41,7 @@ namespace TheShaman
                     }
                 }
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            if (Keyboard.GetState().IsKeyDown(Keys.Left) && player.isHitting == false)
             {
                 player.isFlipped = true;
                     player.playerTexture = Content.Load<Texture2D>($"PlayerFlipAnimation/playerMoving{player.playerAnimationMovingCounter}");
@@ -74,6 +76,8 @@ namespace TheShaman
             {
                 if (player.isHitting == true)
                 {
+                    
+
                     player.playerTexture = Content.Load<Texture2D>($"PlayerAnimation/playerHit{player.playerAnimationHitCounter}");
 
                     player.playerAnimationHitCounter += 1;
@@ -91,8 +95,100 @@ namespace TheShaman
                 player.isHitting = true;
             }
 
+            if(Keyboard.GetState().IsKeyDown(Keys.Up) &&  player.isHitting == false)
+            {
 
+                player.isFlipped = false;
+                if (player.isFlipped == false)
+                {
+                    player.playerTexture = Content.Load<Texture2D>($"PlayerAnimation/playerWalkingUp{player.playerAnimationMovingUpCounter}");
+                    player.playerAnimationMovingUpCounter += 1;
+                    if (player.playerAnimationMovingUpCounter == 7)
+                    {
+                        player.playerAnimationMovingUpCounter = 1;
+                    }
+                }
+            } 
             
+            if(Keyboard.GetState().IsKeyDown(Keys.Down) &&  player.isHitting == false)
+            {
+
+                player.isFlipped = false;
+                if (player.isFlipped == false)
+                {
+                    player.playerTexture = Content.Load<Texture2D>($"PlayerAnimation/playerWalkingDown{player.playerAnimationMovingDownCounter}");
+                    player.playerAnimationMovingDownCounter += 1;
+                    if (player.playerAnimationMovingDownCounter == 3)
+                    {
+                        player.playerAnimationMovingDownCounter = 1;
+                    }
+                }
+
+
+
+
+            }
+        }
+
+
+        public void HumanAnimation(Human[] humans, ContentManager content, Player player)
+        {
+            for (int i = 0; i < humans.Length; i++)
+            {
+                if (humans[i] != null)
+                {
+                    if (humans[i].isFollowing== false)
+                    {
+                       humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanIdle{humans[i].humanIdleAnimationCounter}");
+
+                    humans[i].humanIdleAnimationCounter += 1;
+
+                       if (humans[i].humanIdleAnimationCounter == 10)
+                       {
+                           humans[i].humanTexture = content.Load<Texture2D>("HumansAnimation/HumanIdle1");
+                       
+                           humans[i].humanIdleAnimationCounter = 1;
+                       
+                       }
+
+                    }
+                    else
+                    {
+                        if (humans[i].humanPos.X <= player.playerPos.X)
+                        {
+                        humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanWalking{humans[i].humanWalkingAnimationCounter}");
+                            humans[i].humanWalkingAnimationCounter += 1;
+
+                            if (humans[i].humanWalkingAnimationCounter == 4)
+                            {
+                                humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanWalking1");
+                                humans[i].humanWalkingAnimationCounter = 1;
+                            }
+                        }
+                        else
+                        {
+                            humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanWalkingFlip{humans[i].humanWalkingAnimationCounter}");
+                            humans[i].humanWalkingAnimationCounter += 1;
+
+                            if (humans[i].humanWalkingAnimationCounter == 4)
+                            {
+                                humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanWalkingFlip1");
+                                humans[i].humanWalkingAnimationCounter = 1;
+                            }
+                        }
+
+                    }
+
+                  
+
+                   
+                    
+                }
+
+
+
+            }
+
 
 
 

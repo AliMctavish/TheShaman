@@ -8,12 +8,17 @@ using System.Threading.Tasks;
 
 namespace TheShaman
 {
-    internal class Enemy
+    internal class Human
     {
-        public Texture2D enemyTexture;
-        public Vector2 enemyPos;
+        public Texture2D humanTexture;
+        public Vector2 humanPos;
         public bool isFollowing = false;
         public bool isArrived = false;
+
+        public int humanIdleAnimationCounter = 1;
+        public int humanWalkingAnimationCounter= 1;
+
+      
 
 
 

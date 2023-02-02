@@ -19,7 +19,7 @@ namespace TheShaman
         int num = 0;
         private int groundAxis = 50;
 
-        public void StartMapping(Ground[] ground , string[] map, Enemy[] enemies , ContentManager Content)
+        public void StartMapping(Ground[] ground , string[] map, Human[] humans , Animals[] animals , ContentManager Content)
         {
 
             for (int i = 0; i < map.Length; i++)
@@ -35,7 +35,7 @@ namespace TheShaman
                     if (map[i][j] == '$')
                     {
                         ground[num] = new Ground(50 * j, i * 50 + 50);
-                        ground[num].groundTexture = Content.Load<Texture2D>("groundDryTexture");
+                        ground[num].groundTexture = Content.Load<Texture2D>("ground");
                         num++;
                     }
                     //if (map[i][j] == '%')
@@ -52,13 +52,17 @@ namespace TheShaman
                     //    num++;
 
                     //}
-                    //if (map[i][j] == 'x')
-                    //{
-                    //    ground[num] = new Ground(64 * j, i * 64 + 50);
-                    //    ground[num].groundTexture = Content.Load<Texture2D>("ground4x");
-                    //    num++;
+                    if (map[i][j] == 'x')
+                    {
+                        animals[num] = new Animals();
+                        animals[num].animalPos = new Vector2(50 * j, i * 50);
+                        animals[num].animalTexture = Content.Load<Texture2D>("animal");
 
-                    //}
+                        ground[num] = new Ground(50 * j, i * 50 + 50);
+                        ground[num].groundTexture = Content.Load<Texture2D>("ground");
+                        num++;
+
+                    }
                     if (map[i][j] == '.')
                     {
                         num++;
@@ -80,9 +84,9 @@ namespace TheShaman
                     //}
                     if (map[i][j] == '!')
                     {
-                        enemies[num] = new Enemy();
-                        enemies[num].enemyPos = new Vector2(50 * j, i * 50);
-                        enemies[num].enemyTexture = Content.Load<Texture2D>("enemy");
+                        humans[num] = new Human();
+                        humans[num].humanPos = new Vector2(50 * j, i * 50);
+                        humans[num].humanTexture = Content.Load<Texture2D>("HumansAnimation/HumanIdle1");
                         ground[num] = new Ground(50 * j, i * 50 + 50);
                         ground[num].groundTexture = Content.Load<Texture2D>("ground");
                         num++;

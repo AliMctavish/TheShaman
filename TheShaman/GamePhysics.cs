@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,42 +12,109 @@ namespace TheShaman
     internal class GamePhysics
     {
 
-        public void playerBounderies(Player player , Enemy[] enemy, Vector2 firePos)
+        Random random= new Random();    
+     
+
+        public void playerBounderies(Player player , Human[] humans, Vector2 firePos)
         {
-            for (int i = 0; i < enemy.Length; i++)
+
+        
+
+            for (int i = 0; i < humans.Length; i++)
             {
-                if (enemy[i] != null)
+                if (humans[i] != null)
                 {
-                    if (Vector2.Distance(player.playerPos, enemy[i].enemyPos) < 100 && Keyboard.GetState().IsKeyDown(Keys.Space) )
+                    if (Vector2.Distance(player.playerPos, humans[i].humanPos) < 100 && Keyboard.GetState().IsKeyDown(Keys.Space) )
                     {
-                        enemy[i].isFollowing = true;
+                        humans[i].isFollowing = true;
                     }
 
-                    if (enemy[i].isFollowing == true)
+                    if (humans[i].isFollowing == true)
                     {
-                        Vector2 movDir = player.playerPos - enemy[i].enemyPos;
+                        Vector2 movDir = player.playerPos  - humans[i].humanPos;
 
                         movDir.Normalize();
 
-                        enemy[i].enemyPos += movDir;
+                        humans[i].humanPos += movDir  ;
                     }
 
-                    if (Vector2.Distance(player.playerPos, firePos) < 100 && Keyboard.GetState().IsKeyDown(Keys.Space) && enemy[i].isFollowing)
+                    if (Vector2.Distance(player.playerPos, firePos) < 100 && Keyboard.GetState().IsKeyDown(Keys.Space) && humans[i].isFollowing)
                     {
-                        enemy[i].isFollowing = false;
-                        enemy[i].isArrived = true;
+                        humans[i].isFollowing = false;
+                        humans[i].isArrived = true;
                     }
 
-                    if (enemy[i].isArrived == true)
+                    if (humans[i].isArrived == true)
                     {
-                        Vector2 movDir = firePos - enemy[i].enemyPos;
 
-                        movDir.Normalize();
+                      
+                            Vector2 movDir = firePos  - humans[i].humanPos;
 
-                        enemy[i].enemyPos += movDir;
+                            movDir.Normalize();
+
+                            humans[i].humanPos += movDir;
+
+
                     }
+
+
+
+                   
                 }
             }
+        }
+
+        public void humansBounderies(Human[] humans, Animals[] animals)
+        {
+
+            for (int i = 0; i < humans.Length; i++)
+            {
+                if (humans[i] != null )
+                {
+                    for(int j = 0; j < animals.Length; j++)
+                    {
+                        if (animals[j] != null)
+                        {
+                            if (Vector2.Distance(humans[i].humanPos, animals[j].animalPos) <= 100)
+                            {
+                                Vector2 movDir = humans[i].humanPos - animals[j].animalPos;
+
+                                movDir.Normalize();
+
+                                animals[j].animalPos += movDir;
+
+
+                                humans[i].isFollowing = false;
+
+                            }
+                        }
+                    } 
+                }
+            }
+
+
+            //for (int i = 0; i < humans.Length; i++)
+            //{
+            //    if (humans[i] != null)
+            //    {
+            //        for (int j = 0; j < animals.Length; j++)
+            //        {
+            //            if (animals[j] != null)
+            //            {
+            //                if (Vector2.Distance(humans[i].humansPos, animals[j].animalPos) <= 50)
+            //                {
+            //                    Vector2 movDir = humans[i].humansPos - animals[j].animalPos;
+
+            //                    movDir.Normalize();
+
+            //                    humans[i].humansPos += movDir;
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
+
+
         }
 
 
