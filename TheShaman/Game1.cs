@@ -19,6 +19,7 @@ namespace TheShaman
         private Water[] water;
         private Vector2 firePos;
         private Texture2D fireTexture;
+        private Texture2D GameOver;
         private float time;
         int fireAnimate = 1;
         float animateCounter = 0.1f;
@@ -36,7 +37,8 @@ namespace TheShaman
         AnimationManager animationManager;
             bool zrba = false;
         GamePhysics gamePhysics;
-        public bool gameState = false;
+        public bool loseGameState = true;
+        public bool startGameState = false;
         Animals[] animals;
         float sum = 0;
 
@@ -97,6 +99,7 @@ namespace TheShaman
 
             spriteFont = Content.Load<SpriteFont>("File");
             player.manaBarTexture = Content.Load<Texture2D>("ManaBar1");
+            GameOver = Content.Load<Texture2D>("GameOver1");
 
 
 
@@ -120,10 +123,17 @@ namespace TheShaman
 
         protected override void Update(GameTime gameTime)
         {
-            if (gameState == false && Keyboard.GetState().IsKeyDown(Keys.Space))
+            if (Keyboard.GetState().IsKeyDown(Keys.Enter))
             {
 
-                gameState = true;
+                startGameState= true;
+
+            }
+
+            if (loseGameState == false && startGameState == true && Keyboard.GetState().IsKeyDown(Keys.Enter))
+            {
+
+                loseGameState = true;
 
                 for(int i = 0; i < human.Length; i++)
                 {
@@ -135,7 +145,7 @@ namespace TheShaman
                 }
 
             }
-            if (gameState == true)
+            if (loseGameState == true)
             {
 
 
@@ -225,118 +235,130 @@ namespace TheShaman
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.White);
 
 
-            if (gameState != false)
+            if (loseGameState)
             {
-
-
-                _spriteBatch.Begin(transformMatrix: cam.GetViewMatrix());
-
-
-                foreach (var water in water)
+                if (startGameState == true)
                 {
-                    if (water != null)
+
+
+
+                    _spriteBatch.Begin(transformMatrix: cam.GetViewMatrix());
+
+
+                    foreach (var water in water)
                     {
-                        _spriteBatch.Draw(water.waterTexture, new Vector2(water.waterPos.X - 50, water.waterPos.Y - 50), Color.White);
-                    }
-                }
-
-
-
-                foreach (var ground in ground)
-                {
-                    if (ground != null)
-                    {
-
-                        _spriteBatch.Draw(ground.groundTexture, new Vector2(ground.groundPos.X - 50, ground.groundPos.Y - 50), Color.White);
+                        if (water != null)
+                        {
+                            _spriteBatch.Draw(water.waterTexture, new Vector2(water.waterPos.X - 50, water.waterPos.Y - 50), Color.White);
+                        }
                     }
 
-                }
 
 
-
-                foreach (var trees in tree)
-                {
-                    if (trees != null)
+                    foreach (var ground in ground)
                     {
-                        _spriteBatch.Draw(trees.treeTexture, new Vector2(trees.treePos.X - 50, trees.treePos.Y - 100), Color.White);
-
-                    }
-                }
-
-
-
-
-
-                _spriteBatch.Draw(player.playerTexture, new Vector2(player.playerPos.X - 50, player.playerPos.Y - 100), Color.White);
-
-
-
-
-                foreach (var animal in animals)
-                {
-                    if (animal != null)
-                    {
-                        _spriteBatch.Draw(animal.animalTexture, new Vector2(animal.animalPos.X - 50, animal.animalPos.Y - 50), Color.White);
-
-                    }
-                }
-                _spriteBatch.Draw(fireTexture, new Vector2(firePos.X - 50, firePos.Y - 100), Color.White);
-
-
-
-                foreach (var human in human)
-                {
-                    if (human != null)
-                    {
-                        if (Vector2.Distance(player.playerPos, firePos) <= 100 && human.isFollowing == true && human.isArrived == false)
-                        {
-                            _spriteBatch.DrawString(spriteFont, "Press 'Space' To Deliver", new Vector2(player.playerPos.X + 50, player.playerPos.Y - 20), Color.White);
-                        }
-                        else
-                        {
-                            _spriteBatch.DrawString(spriteFont, "", new Vector2(0, 0), Color.White);
-                        }
-                        _spriteBatch.Draw(human.humanTexture, new Vector2(human.humanPos.X - 50, human.humanPos.Y - 100), Color.White);
-
-
-                        if (Vector2.Distance(player.playerPos, human.humanPos) <= 50 && human.isFollowing == false && human.isArrived == false)
+                        if (ground != null)
                         {
 
-                            _spriteBatch.DrawString(spriteFont, "Press 'Space' To Follow", new Vector2(player.playerPos.X + 50, player.playerPos.Y - 20), Color.White);
+                            _spriteBatch.Draw(ground.groundTexture, new Vector2(ground.groundPos.X - 50, ground.groundPos.Y - 50), Color.White);
                         }
-                        else
-                        {
-                            _spriteBatch.DrawString(spriteFont, "", new Vector2(0, 0), Color.AntiqueWhite);
-                        }
-
-                        _spriteBatch.Draw(human.HealthBar, new Vector2(human.humanPos.X - 30, human.humanPos.Y - 100), Color.White);
-
-
-
-
-                        if (human.humanHealth <= 0)
-                        {
-                            gameState = false;
-                        }
-
 
                     }
 
 
 
+                    foreach (var trees in tree)
+                    {
+                        if (trees != null)
+                        {
+                            _spriteBatch.Draw(trees.treeTexture, new Vector2(trees.treePos.X - 50, trees.treePos.Y - 100), Color.White);
 
+                        }
+                    }
+
+
+
+
+
+                    _spriteBatch.Draw(player.playerTexture, new Vector2(player.playerPos.X - 50, player.playerPos.Y - 100), Color.White);
+
+
+
+
+                    foreach (var animal in animals)
+                    {
+                        if (animal != null)
+                        {
+                            _spriteBatch.Draw(animal.animalTexture, new Vector2(animal.animalPos.X - 50, animal.animalPos.Y - 50), Color.White);
+
+                        }
+                    }
+                    _spriteBatch.Draw(fireTexture, new Vector2(firePos.X - 50, firePos.Y - 100), Color.White);
+
+
+
+                    foreach (var human in human)
+                    {
+                        if (human != null)
+                        {
+                            if (Vector2.Distance(player.playerPos, firePos) <= 100 && human.isFollowing == true && human.isArrived == false)
+                            {
+                                _spriteBatch.DrawString(spriteFont, "Press 'Space' To Deliver", new Vector2(player.playerPos.X + 50, player.playerPos.Y - 20), Color.White);
+                            }
+                            else
+                            {
+                                _spriteBatch.DrawString(spriteFont, "", new Vector2(0, 0), Color.White);
+                            }
+                            _spriteBatch.Draw(human.humanTexture, new Vector2(human.humanPos.X - 50, human.humanPos.Y - 100), Color.White);
+
+
+                            if (Vector2.Distance(player.playerPos, human.humanPos) <= 50 && human.isFollowing == false && human.isArrived == false)
+                            {
+
+                                _spriteBatch.DrawString(spriteFont, "Press 'Space' To Follow", new Vector2(player.playerPos.X + 50, player.playerPos.Y - 20), Color.White);
+                            }
+                            else
+                            {
+                                _spriteBatch.DrawString(spriteFont, "", new Vector2(0, 0), Color.AntiqueWhite);
+                            }
+
+                            _spriteBatch.Draw(human.HealthBar, new Vector2(human.humanPos.X - 30, human.humanPos.Y - 100), Color.White);
+
+
+
+
+                            if (human.humanHealth <= 0)
+                            {
+                                loseGameState = false;
+                            }
+
+
+                        }
+
+
+
+
+                    }
+
+                    _spriteBatch.Draw(player.manaBarTexture, new Vector2(player.playerPos.X - 40, player.playerPos.Y - 110), Color.White);
+
+                    _spriteBatch.End();
                 }
-
-                _spriteBatch.Draw(player.manaBarTexture, new Vector2(player.playerPos.X - 40, player.playerPos.Y - 110), Color.White);
-
-                _spriteBatch.End();
+                else
+                {
+                    _spriteBatch.Begin();
+                 
+                    _spriteBatch.End();
+                }
             }
             else
             {
-
+                _spriteBatch.Begin();
+                _spriteBatch.Draw(GameOver, new Vector2(0,0), Color.White);
+                _spriteBatch.End();
             }
 
 

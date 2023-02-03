@@ -149,11 +149,7 @@ namespace TheShaman
 
         public void PushAnimals(Player player , Animals[] animals , GameTime gameTime)
         {
-
-          
-                decreaseMana -= (float)gameTime.ElapsedGameTime.TotalSeconds * 2;
-
-
+          decreaseMana -= (float)gameTime.ElapsedGameTime.TotalSeconds * 2;
                 for (int i = 0; i < animals.Length; i++)
                 {
 
@@ -165,8 +161,6 @@ namespace TheShaman
                     {
                         if (Vector2.Distance(player.playerPos, animals[i].animalPos) <= 200 && player.mana != 0)
                         {
-
-
                             Vector2 movDir = player.playerPos - animals[i].animalPos;
 
                             movDir.Normalize();
@@ -193,13 +187,9 @@ namespace TheShaman
                   }
                    
                 }
-          
         }
-
-
         public void treeColliders(Player player, Human[] humans, Animals[] animals, Tree[] trees)
         {
-
             foreach(var tree in trees)
             {
                 if (tree != null)
@@ -248,39 +238,31 @@ namespace TheShaman
                         player.playerPos += movDir;
                     }
                 }
-               
-                
-
             }
-
-
-
-
-
         }
-
-
         public void waterColliders( Water[] waters , Player player, Human[] humans , Animals[] animals)
         {
           foreach(var water in waters)
           {
             if(water != null)
                 {
-                    foreach (var human in humans)
-                    {
-
-
-
-
-                    }
-
-
                     foreach (var animal in animals)
                     {
+                        if (animal != null)
+                        {
+                            if (Vector2.Distance(animal.animalPos, water.waterPos) <= 50)
+                            {
 
+                                Vector2 movDir = animal.animalPos - water.waterPos;
+
+                                movDir.Normalize();
+
+                                animal.animalPos += movDir * 10;
+
+
+                            }
+                        }  
                     }
-
-
                     if (Vector2.Distance(player.playerPos, water.waterPos) <= 50)
                     {
 

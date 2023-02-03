@@ -165,6 +165,9 @@ namespace TheShaman
                     }
                 }
             }
+
+            //sorry for the recurrtion :p
+
             if(player.mana == 20)
             {
             player.manaBarTexture = Content.Load<Texture2D>("ManaBar1");
@@ -310,7 +313,7 @@ namespace TheShaman
                     }
 
                 
-
+                    //sorry again dont have time to fix it xD
 
                     if (humans[i].humanHealth <= 18)
                     {
