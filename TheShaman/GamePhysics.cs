@@ -11,7 +11,8 @@ namespace TheShaman
 {
     internal class GamePhysics
     {
-
+        float decreaseHealth = 2;
+        float decreaseMana = 2;
         Random random= new Random();    
      
 
@@ -57,14 +58,13 @@ namespace TheShaman
                     {
 
                       
-                            Vector2 movDir = firePos  - humans[i].humanPos;
+                            Vector2 movDir = firePos - humans[i].humanPos;
 
                             movDir.Normalize();
 
-                            humans[i].humanPos += movDir;
+                            humans[i].humanPos = humans[i].humanPos +  movDir ;
 
-
-                        if (Vector2.Distance(humans[i].humanPos, firePos) <= 50)
+                        if (Vector2.Distance(humans[i].humanPos, firePos) <= 70)
                         {
 
                             movDir = firePos - humans[i].humanPos;
@@ -79,13 +79,18 @@ namespace TheShaman
 
 
 
+
+
+
+
                    
                 }
             }
         }
 
-        public void humansBounderies(Human[] humans, Animals[] animals)
+        public void humansBounderies(Human[] humans, Animals[] animals, GameTime gameTime)
         {
+            decreaseHealth -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             for (int i = 0; i < humans.Length; i++)
             {
@@ -95,16 +100,24 @@ namespace TheShaman
                     {
                         if (animals[j] != null)
                         {
-                            if (Vector2.Distance(humans[i].humanPos, animals[j].animalPos) <= 100)
+                            if (Vector2.Distance(humans[i].humanPos, animals[j].animalPos) <= 200)
                             {
                                 Vector2 movDir = humans[i].humanPos - animals[j].animalPos;
 
                                 movDir.Normalize();
 
-                                animals[j].animalPos += movDir;
+                                animals[j].animalPos += movDir * 2;
 
+                                if(decreaseHealth <= 1)
+                                {
+                                    humans[i].humanHealth -= 1;
+                                    decreaseHealth = 2;
+                                }
+                        
 
                                 humans[i].isFollowing = false;
+
+                            
 
                             }
                         }
@@ -112,11 +125,6 @@ namespace TheShaman
                 }
 
             }
-
-
-            
-
-
             //for (int i = 0; i < humans.Length; i++)
             //{
             //    if (humans[i] != null)
@@ -137,6 +145,43 @@ namespace TheShaman
             //        }
             //    }
             //}
+        }
+
+        public void PushAnimals(Player player , Animals[] animals , GameTime gameTime)
+        {
+
+            decreaseMana -= (float)gameTime.ElapsedGameTime.TotalSeconds * 2;
+
+
+            for (int i = 0; i < animals.Length;i++)
+            {
+
+                if (animals[i] != null)
+                {
+                    if(Vector2.Distance(player.playerPos , animals[i].animalPos) <= 200 && player.mana != 0)
+                    {
+
+
+                        Vector2 movDir = player.playerPos - animals[i].animalPos;
+
+                        movDir.Normalize();
+
+
+                        animals[i].animalPos -= movDir * 5;
+
+                        if (decreaseMana <= 1)
+                        {
+                            player.mana -= 1;
+                            decreaseMana = 2;
+                        }
+                    }
+                }
+
+
+            }
+
+
+
 
 
         }

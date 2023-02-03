@@ -21,6 +21,10 @@ namespace TheShaman
         public int playerAnimationMovingDownCounter = 1;
         public bool isFlipped = false;
         public bool isHitting = false;
+
+
+        public int mana = 20;
+        
         public int AcceptedHumans = 0;
 
     }

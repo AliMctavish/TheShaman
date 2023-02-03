@@ -14,6 +14,9 @@ namespace TheShaman
         public Vector2 humanPos;
         public bool isFollowing = false;
         public bool isArrived = false;
+        public bool isAdded = false;
+
+        public int humanHealth = 20;
 
         public int humanIdleAnimationCounter = 1;
         public int humanWalkingAnimationCounter= 1;

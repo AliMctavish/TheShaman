@@ -77,16 +77,18 @@ namespace TheShaman
                     //}
                     //if (map[i][j] == '?')
                     //{
-                    //    items[num] = new Items();
-                    //    items[num].chestPos = new Rectangle(64 * j, i * 64 + 61, 60, 60);
-                    //    items[num].chestTexture = Content.Load<Texture2D>("chest1");
+                    //    humans[num] = new Human();
+                    //    humans[num].humanPos = new Vector2(50 * j, i * 50);
+                    //    humans[num].humanTexture = Content.Load<Texture2D>("HumansAnimation/HumanSecondary1");
+                    //    ground[num] = new Ground(50 * j, i * 50 + 50);
+                    //    ground[num].groundTexture = Content.Load<Texture2D>("ground");
                     //    num++;
                     //}
                     if (map[i][j] == '!')
                     {
                         humans[num] = new Human();
                         humans[num].humanPos = new Vector2(50 * j, i * 50);
-                        humans[num].humanTexture = Content.Load<Texture2D>("HumansAnimation/HumanIdle1");
+                        humans[num].humanTexture = Content.Load<Texture2D>("HumansAnimation/HumanSecondary1");
                         ground[num] = new Ground(50 * j, i * 50 + 50);
                         ground[num].groundTexture = Content.Load<Texture2D>("ground");
                         num++;

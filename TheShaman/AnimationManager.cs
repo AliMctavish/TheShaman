@@ -139,13 +139,13 @@ namespace TheShaman
                 {
                     if (humans[i].isFollowing== false)
                     {
-                       humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanIdle{humans[i].humanIdleAnimationCounter}");
+                       humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanSecondary{humans[i].humanIdleAnimationCounter}");
 
                     humans[i].humanIdleAnimationCounter += 1;
 
-                       if (humans[i].humanIdleAnimationCounter == 10)
+                       if (humans[i].humanIdleAnimationCounter == 5)
                        {
-                           humans[i].humanTexture = content.Load<Texture2D>("HumansAnimation/HumanIdle1");
+                           humans[i].humanTexture = content.Load<Texture2D>("HumansAnimation/HumanSecondary5");
                        
                            humans[i].humanIdleAnimationCounter = 1;
                        
@@ -156,23 +156,23 @@ namespace TheShaman
                     {
                         if (humans[i].humanPos.X <= player.playerPos.X)
                         {
-                        humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanWalking{humans[i].humanWalkingAnimationCounter}");
+                        humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanSecondaryWalking{humans[i].humanWalkingAnimationCounter}");
                             humans[i].humanWalkingAnimationCounter += 1;
 
                             if (humans[i].humanWalkingAnimationCounter == 4)
                             {
-                                humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanWalking1");
+                                humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanSecondaryWalking1");
                                 humans[i].humanWalkingAnimationCounter = 1;
                             }
                         }
                         else
                         {
-                            humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanWalkingFlip{humans[i].humanWalkingAnimationCounter}");
+                            humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanSecondaryWalkingFlip{humans[i].humanWalkingAnimationCounter}");
                             humans[i].humanWalkingAnimationCounter += 1;
 
                             if (humans[i].humanWalkingAnimationCounter == 4)
                             {
-                                humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanWalkingFlip1");
+                                humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanSecondaryWalkingFlip1");
                                 humans[i].humanWalkingAnimationCounter = 1;
                             }
                         }

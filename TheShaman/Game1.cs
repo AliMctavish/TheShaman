@@ -20,7 +20,6 @@ namespace TheShaman
         private float time;
         int fireAnimate = 1;
         float animateCounter = 0.1f;
-        bool normal = false;
         float waitingTime = 0;
         private int selectLevel = 1;
         LevelEditor levelMapper = new LevelEditor();
@@ -32,10 +31,13 @@ namespace TheShaman
         private bool startFollow = false;
         SpriteFont spriteFont;
         AnimationManager animationManager;
+            bool zrba = false;
         GamePhysics gamePhysics;
 
         Animals[] animals;
         float sum = 0;
+
+        List<Human> hum = new List<Human>();
 
         OrthographicCamera cam;
 
@@ -119,14 +121,24 @@ namespace TheShaman
 
 
             gamePhysics.playerBounderies(player , human , firePos );
-            gamePhysics.humansBounderies(human, animals);
+            gamePhysics.humansBounderies(human, animals, gameTime);
 
 
-           
+
+            if (Keyboard.GetState().IsKeyDown(Keys.LeftControl))
+            {
+
+                gamePhysics.PushAnimals(player , animals, gameTime);
+
+            }
 
 
-        
-            if(waitingTime > animateCounter)
+
+
+
+
+
+            if (waitingTime > animateCounter)
             {
                 animationManager.playerAnimation(player, Content);
                 animationManager.HumanAnimation(human, Content, player);
@@ -195,21 +207,14 @@ namespace TheShaman
                 }
 
             }
-            _spriteBatch.Draw(fireTexture, firePos, Color.White);
-
-          
+            _spriteBatch.Draw(fireTexture, new Vector2 (firePos.X - 50 , firePos.Y - 50), Color.White);
 
             foreach (var human in human)
             {
                 if(human != null)
                 {
-                  
 
-                    if(normal == true)
-                    {
-                        _spriteBatch.Draw(player.playerTexture, new Vector2(player.playerPos.X - 50, player.playerPos.Y - 50), Color.White);
-                    }
-
+                 
 
 
                     if (Vector2.Distance(player.playerPos, firePos) <= 50 && human.isFollowing == true && human.isArrived == false)
@@ -223,25 +228,25 @@ namespace TheShaman
                     _spriteBatch.Draw(human.humanTexture, new Vector2(human.humanPos.X - 50, human.humanPos.Y - 50), Color.White);
 
 
-                    if (Vector2.Distance(player.playerPos,human.humanPos) <= 50 && human.isFollowing == false && human.isArrived == false)
+                    if (Vector2.Distance(player.playerPos, human.humanPos) <= 50 && human.isFollowing == false && human.isArrived == false)
                     {
-                        
-                        _spriteBatch.DrawString(spriteFont, "Press 'Space' To Follow", new Vector2(player.playerPos.X + 50, player.playerPos.Y - 20 ), Color.White);
+
+                        _spriteBatch.DrawString(spriteFont, "Press 'Space' To Follow", new Vector2(player.playerPos.X + 50, player.playerPos.Y - 20), Color.White);
                     }
                     else
                     {
-                        _spriteBatch.DrawString(spriteFont, "", new Vector2(0,0), Color.AntiqueWhite);
+                        _spriteBatch.DrawString(spriteFont, "", new Vector2(0, 0), Color.AntiqueWhite);
                     }
-                    if (player.playerPos.Y > human.humanPos.Y && Vector2.Distance(player.playerPos , human.humanPos) <= 50)
-                    {
-                        _spriteBatch.Draw(player.playerTexture, new Vector2(player.playerPos.X - 50, player.playerPos.Y - 50), Color.White);
-                        normal = false;
-                    }
-                    else
-                    {
-                        normal = true;
-                    }
-                   
+
+                    _spriteBatch.DrawString(spriteFont, $"humanHealth :{human.humanHealth}", new Vector2(human.humanPos.X - 30, human.humanPos.Y + 80), Color.White);
+                    
+              
+
+
+
+
+
+
 
 
                 }
@@ -250,7 +255,15 @@ namespace TheShaman
 
             }
 
-            foreach(var animal in animals)
+
+
+
+            _spriteBatch.Draw(player.playerTexture, new Vector2(player.playerPos.X - 50, player.playerPos.Y - 50), Color.White);
+
+
+
+
+            foreach (var animal in animals)
             {
                 if (animal != null)
                 {
@@ -259,28 +272,31 @@ namespace TheShaman
                 }
             }
 
-         
-
-         
-
-            
-        
-           
-
-
-
-
-
-
-
-
             _spriteBatch.End();
 
 
 
             _spriteBatch.Begin();
 
-            _spriteBatch.DrawString(spriteFont, $"number of followers : {player.AcceptedHumans}", new Vector2(1000, 50), Color.White);
+            foreach(Human huma in human)
+            {
+               if(huma != null)
+                {
+                    if (huma.isArrived == true && huma.isAdded == false)
+                    {
+                        hum.Add(huma);
+                        huma.isAdded = true;
+                    }
+                }
+             
+            _spriteBatch.DrawString(spriteFont, $"number of followers : {hum.Count} / 15", new Vector2(1000, 50), Color.White);
+            
+
+              _spriteBatch.DrawString(spriteFont, $"Player Mana : {player.mana} / 20", new Vector2(1000, 100), Color.White);
+            }
+
+
+
             _spriteBatch.End();
 
 
