@@ -21,7 +21,7 @@ namespace TheShaman
         public int playerAnimationMovingDownCounter = 1;
         public bool isFlipped = false;
         public bool isHitting = false;
-        public int AcceptedEnemies = 0;
+        public int AcceptedHumans = 0;
 
     }
 }

@@ -20,6 +20,7 @@ namespace TheShaman
         private float time;
         int fireAnimate = 1;
         float animateCounter = 0.1f;
+        bool normal = false;
         float waitingTime = 0;
         private int selectLevel = 1;
         LevelEditor levelMapper = new LevelEditor();
@@ -37,6 +38,7 @@ namespace TheShaman
         float sum = 0;
 
         OrthographicCamera cam;
+
      
         public Game1()
         {
@@ -195,14 +197,21 @@ namespace TheShaman
             }
             _spriteBatch.Draw(fireTexture, firePos, Color.White);
 
-
-         
-
+          
 
             foreach (var human in human)
             {
                 if(human != null)
                 {
+                  
+
+                    if(normal == true)
+                    {
+                        _spriteBatch.Draw(player.playerTexture, new Vector2(player.playerPos.X - 50, player.playerPos.Y - 50), Color.White);
+                    }
+
+
+
                     if (Vector2.Distance(player.playerPos, firePos) <= 50 && human.isFollowing == true && human.isArrived == false)
                     {
                         _spriteBatch.DrawString(spriteFont, "Press 'Space' To Deliver", new Vector2(player.playerPos.X + 50, player.playerPos.Y - 20), Color.White);
@@ -223,7 +232,16 @@ namespace TheShaman
                     {
                         _spriteBatch.DrawString(spriteFont, "", new Vector2(0,0), Color.AntiqueWhite);
                     }
-
+                    if (player.playerPos.Y > human.humanPos.Y && Vector2.Distance(player.playerPos , human.humanPos) <= 50)
+                    {
+                        _spriteBatch.Draw(player.playerTexture, new Vector2(player.playerPos.X - 50, player.playerPos.Y - 50), Color.White);
+                        normal = false;
+                    }
+                    else
+                    {
+                        normal = true;
+                    }
+                   
 
 
                 }
@@ -246,7 +264,7 @@ namespace TheShaman
          
 
             
-            _spriteBatch.Draw(player.playerTexture, new Vector2(player.playerPos.X - 50 , player.playerPos.Y - 50 ), Color.White);
+        
            
 
 
@@ -262,7 +280,7 @@ namespace TheShaman
 
             _spriteBatch.Begin();
 
-            _spriteBatch.DrawString(spriteFont, $"number of followers : {player.AcceptedEnemies}", new Vector2(1000, 50), Color.White);
+            _spriteBatch.DrawString(spriteFont, $"number of followers : {player.AcceptedHumans}", new Vector2(1000, 50), Color.White);
             _spriteBatch.End();
 
 
@@ -271,5 +289,8 @@ namespace TheShaman
 
             base.Draw(gameTime);
         }
+
     }
+
+    
 }

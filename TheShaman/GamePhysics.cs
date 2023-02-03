@@ -31,11 +31,20 @@ namespace TheShaman
 
                     if (humans[i].isFollowing == true)
                     {
-                        Vector2 movDir = player.playerPos  - humans[i].humanPos;
+                        Vector2 movDir = player.playerPos - humans[i].humanPos;
 
                         movDir.Normalize();
 
                         humans[i].humanPos += movDir  ;
+                        if(Vector2.Distance(player.playerPos , humans[i].humanPos) < 100)
+                        {
+                            movDir = player.playerPos - humans[i].humanPos;
+
+                            movDir.Normalize();
+
+                            humans[i].humanPos -= movDir;
+
+                        }
                     }
 
                     if (Vector2.Distance(player.playerPos, firePos) < 100 && Keyboard.GetState().IsKeyDown(Keys.Space) && humans[i].isFollowing)
@@ -53,6 +62,17 @@ namespace TheShaman
                             movDir.Normalize();
 
                             humans[i].humanPos += movDir;
+
+
+                        if (Vector2.Distance(humans[i].humanPos, firePos) <= 50)
+                        {
+
+                            movDir = firePos - humans[i].humanPos;
+
+                            movDir.Normalize();
+
+                            humans[i].humanPos -= movDir;
+                        }
 
 
                     }
@@ -88,9 +108,13 @@ namespace TheShaman
 
                             }
                         }
-                    } 
+                    }
                 }
+
             }
+
+
+            
 
 
             //for (int i = 0; i < humans.Length; i++)
