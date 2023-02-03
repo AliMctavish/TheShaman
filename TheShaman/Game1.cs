@@ -53,7 +53,7 @@ namespace TheShaman
             _graphics.PreferredBackBufferHeight = 600;
             _graphics.PreferredBackBufferWidth = 1200;
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
+            IsMouseVisible = false;
         }
 
         protected override void Initialize()
@@ -296,7 +296,7 @@ namespace TheShaman
 
                         }
                     }
-                    _spriteBatch.Draw(fireTexture, new Vector2(firePos.X - 50, firePos.Y - 100), Color.White);
+                    _spriteBatch.Draw(fireTexture, new Vector2(firePos.X + 800, firePos.Y + 100), Color.White);
 
 
 

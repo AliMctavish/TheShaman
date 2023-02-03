@@ -12,7 +12,7 @@ namespace TheShaman
     {
         public Texture2D playerTexture;
 
-        public Vector2 playerPos = new Vector2(1200/2,600/2);
+        public Vector2 playerPos = new Vector2(1200,800);
 
         public int playerAnimationCounter = 1;
         public int playerAnimationMovingCounter = 1;
