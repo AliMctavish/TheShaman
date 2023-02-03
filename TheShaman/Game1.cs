@@ -18,6 +18,7 @@ namespace TheShaman
         private Water[] water;
         private Vector2 firePos;
         private Texture2D fireTexture;
+      
         private float time;
         int fireAnimate = 1;
         float animateCounter = 0.1f;
@@ -25,7 +26,8 @@ namespace TheShaman
         private int selectLevel = 1;
         LevelEditor levelMapper = new LevelEditor();
         Ground[] ground;
-        Human[] human; 
+        Human[] human;
+        Tree[] tree;
         int xAxis = 0;
         int yAxis = 0;
         double timer = 20;
@@ -67,6 +69,7 @@ namespace TheShaman
             human = new Human[sumOfArrays];
             animals = new Animals[sumOfArrays];
             water = new Water[sumOfArrays];
+            tree = new Tree[sumOfArrays];
 
 
             player = new Player();
@@ -99,7 +102,7 @@ namespace TheShaman
 
             string[] map = level.LoadLevel(selectLevel);
 
-            levelMapper.StartMapping(ground, map ,human, animals, water, Content);
+            levelMapper.StartMapping(ground, map ,human, animals, water, tree, Content);
 
 
             firePos = new Vector2(500, 500);
@@ -142,6 +145,7 @@ namespace TheShaman
 
                 gamePhysics.playerBounderies(player, human, firePos);
                 gamePhysics.humansBounderies(human, animals, gameTime);
+                gamePhysics.treeColliders(player, human, animals, tree);
 
 
 
@@ -243,10 +247,6 @@ namespace TheShaman
             {
                 if(human != null)
                 {
-
-                 
-
-
                     if (Vector2.Distance(player.playerPos, firePos) <= 100 && human.isFollowing == true && human.isArrived == false)
                     {
                         _spriteBatch.DrawString(spriteFont, "Press 'Space' To Deliver", new Vector2(player.playerPos.X + 50, player.playerPos.Y - 20), Color.White);
@@ -310,7 +310,14 @@ namespace TheShaman
             _spriteBatch.Draw(fireTexture, new Vector2(firePos.X - 50, firePos.Y - 50), Color.White);
 
 
-       
+            foreach (var trees in tree)
+            {
+                if (trees != null)
+                {
+                    _spriteBatch.Draw(trees.treeTexture, new Vector2(trees.treePos.X - 50, trees.treePos.Y - 50), Color.White);
+
+                }
+            }
 
 
             _spriteBatch.End();

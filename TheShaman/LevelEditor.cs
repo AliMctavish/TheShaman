@@ -19,7 +19,7 @@ namespace TheShaman
         int num = 0;
         private int groundAxis = 50;
 
-        public void StartMapping(Ground[] ground , string[] map, Human[] humans , Animals[] animals, Water[] water , ContentManager Content)
+        public void StartMapping(Ground[] ground , string[] map, Human[] humans , Animals[] animals, Water[] water, Tree[] tree , ContentManager Content)
         {
 
             for (int i = 0; i < map.Length; i++)
@@ -95,12 +95,16 @@ namespace TheShaman
                         ground[num].groundTexture = Content.Load<Texture2D>("ground");
                         num++;
                     }
-                    //if (map[i][j] == '|')
-                    //{
-                    //    enemyColliders[num] = new EnemyCollider();
-                    //    enemyColliders[num].ColliderPos = new Rectangle(64 * j, i * 64, 60, 60);
-                    //    num++;
-                    //}
+                    if (map[i][j] == '|')
+                    {
+                        tree[num] = new Tree();
+                        tree[num].treePos = new Vector2(50 * j, i * 50);
+                        tree[num].treeTexture = Content.Load<Texture2D>("tree-export");
+                        ground[num] = new Ground(50 * j, i * 50 + 50);
+                        ground[num].groundTexture = Content.Load<Texture2D>("ground");
+
+                        num++;
+                    }
 
 
                 }

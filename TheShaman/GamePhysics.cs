@@ -84,7 +84,8 @@ namespace TheShaman
 
                         player.playerPos -= movDir2;
                     }
-
+                    
+                  
 
 
 
@@ -180,6 +181,69 @@ namespace TheShaman
                     }
                 }
             }
+        }
+
+
+        public void treeColliders(Player player, Human[] humans, Animals[] animals, Tree[] trees)
+        {
+
+            foreach(var tree in trees)
+            {
+                if (tree != null)
+                {
+                    foreach (var human in humans)
+                    {
+                        if (human != null)
+                        {
+
+                            if (Vector2.Distance(human.humanPos, tree.treePos) <= 100)
+                            {
+                                Vector2 movDir = human.humanPos - tree.treePos;
+
+                                movDir.Normalize();
+
+                                human.humanPos += movDir;
+                            }
+
+
+                        }
+                    }
+                    foreach (var animal in animals)
+                    {
+                        if (animal != null)
+                        {
+
+                            if (Vector2.Distance(animal.animalPos, tree.treePos) <= 100)
+                            {
+                                Vector2 movDir = animal.animalPos - tree.treePos;
+
+                                movDir.Normalize();
+
+                                animal.animalPos += movDir;
+                            }
+
+
+                        }
+
+                    }
+                    if (Vector2.Distance(player.playerPos, tree.treePos) <= 100)
+                    {
+                        Vector2 movDir = player.playerPos - tree.treePos;
+
+                        movDir.Normalize();
+
+                        player.playerPos += movDir;
+                    }
+                }
+               
+                
+
+            }
+
+
+
+
+
         }
 
 
