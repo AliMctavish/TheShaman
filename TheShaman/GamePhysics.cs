@@ -150,33 +150,50 @@ namespace TheShaman
         public void PushAnimals(Player player , Animals[] animals , GameTime gameTime)
         {
 
-            decreaseMana -= (float)gameTime.ElapsedGameTime.TotalSeconds * 2;
+          
+                decreaseMana -= (float)gameTime.ElapsedGameTime.TotalSeconds * 2;
 
 
-            for (int i = 0; i < animals.Length;i++)
-            {
+                for (int i = 0; i < animals.Length; i++)
+                {
+
 
                 if (animals[i] != null)
                 {
-                    if(Vector2.Distance(player.playerPos , animals[i].animalPos) <= 200 && player.mana != 0)
+
+                    if (Keyboard.GetState().IsKeyDown(Keys.LeftControl))
                     {
+                        if (Vector2.Distance(player.playerPos, animals[i].animalPos) <= 200 && player.mana != 0)
+                        {
 
 
-                        Vector2 movDir = player.playerPos - animals[i].animalPos;
+                            Vector2 movDir = player.playerPos - animals[i].animalPos;
 
-                        movDir.Normalize();
+                            movDir.Normalize();
 
-                        animals[i].animalPos -= movDir * 5;
+                            animals[i].animalPos -= movDir * 5;
 
-                        
+                            animals[i].isMoving = true;
+                        }
+
+
+
+
+                        if (decreaseMana <= 1 && player.mana != 0)
+                        {
+                            player.mana -= 1;
+                            decreaseMana = 2;
+                        }
                     }
-                    if (decreaseMana <= 1 && player.mana != 0)
+                    else
                     {
-                        player.mana -= 1;
-                        decreaseMana = 2;
+                        animals[i].isMoving = false;
                     }
+
+                  }
+                   
                 }
-            }
+          
         }
 
 

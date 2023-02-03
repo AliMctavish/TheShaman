@@ -174,19 +174,40 @@ namespace TheShaman
 
             foreach(Animals animal in animals)
             {
-                if (animal != null)
+                if (animal != null  )
                 {
-                    animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/animal{animal.AnimalCounter}");
-
-                    animal.AnimalCounter += 1;
-                    if (animal.AnimalCounter == 5)
+                    if(!animal.isMoving)
                     {
-                        animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/animal5");
+                        animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/animal{animal.AnimalCounter}");
 
-                        animal.AnimalCounter = 1;
+                        animal.AnimalCounter += 1;
+                        if (animal.AnimalCounter == 5)
+                        {
+                            animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/animal5");
 
+                            animal.AnimalCounter = 1;
+
+                        }
+                    }
+                    else
+                    {
+                        animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/AnimalWalking{animal.AnimalWalkingCounter}");
+
+                        animal.AnimalWalkingCounter += 1;
+                        if (animal.AnimalWalkingCounter == 4)
+                        {
+                            animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/AnimalWalking4");
+
+                            animal.AnimalWalkingCounter = 1;
+
+                        }
                     }
                 }
+
+
+                
+
+
 
                     
             }

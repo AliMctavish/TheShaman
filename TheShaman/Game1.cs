@@ -150,14 +150,13 @@ namespace TheShaman
 
 
 
-                if (Keyboard.GetState().IsKeyDown(Keys.LeftControl))
-                {
+               
 
 
                     gamePhysics.PushAnimals(player, animals, gameTime);
+
                 
 
-                }
 
 
 
@@ -228,6 +227,7 @@ namespace TheShaman
            
             _spriteBatch.Begin(transformMatrix : cam.GetViewMatrix());
 
+
             foreach (var water in water)
             {
                 if (water != null)
@@ -235,6 +235,7 @@ namespace TheShaman
                     _spriteBatch.Draw(water.waterTexture, new Vector2(water.waterPos.X - 50, water.waterPos.Y - 50), Color.White);
                 }
             }
+
 
 
             foreach (var ground in ground)
@@ -247,12 +248,20 @@ namespace TheShaman
 
             }
 
-           
+
+
+            foreach (var trees in tree)
+            {
+                if (trees != null)
+                {
+                    _spriteBatch.Draw(trees.treeTexture, new Vector2(trees.treePos.X - 50, trees.treePos.Y - 100), Color.White);
+
+                }
+            }
 
 
 
-
-            if(gameState == false)
+            if (gameState == false)
             {
                 _spriteBatch.Draw(player.playerTexture, new Rectangle(0, 0, 400, 400), Color.Black);
             }
@@ -274,14 +283,6 @@ namespace TheShaman
             _spriteBatch.Draw(fireTexture, new Vector2(firePos.X - 50, firePos.Y - 100), Color.White);
 
 
-            foreach (var trees in tree)
-            {
-                if (trees != null)
-                {
-                    _spriteBatch.Draw(trees.treeTexture, new Vector2(trees.treePos.X - 50, trees.treePos.Y - 100), Color.White);
-
-                }
-            }
 
             foreach (var human in human)
             {
@@ -320,6 +321,7 @@ namespace TheShaman
 
 
                 }
+
 
 
 
