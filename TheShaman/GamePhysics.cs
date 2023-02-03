@@ -48,7 +48,7 @@ namespace TheShaman
                         }
                     }
 
-                    if (Vector2.Distance(player.playerPos, firePos) < 100 && Keyboard.GetState().IsKeyDown(Keys.Space) && humans[i].isFollowing)
+                    if (Vector2.Distance(player.playerPos, firePos) < 100 && Keyboard.GetState().IsKeyDown(Keys.Space) && humans[i].isFollowing )
                     {
                         humans[i].isFollowing = false;
                         humans[i].isArrived = true;
@@ -100,7 +100,7 @@ namespace TheShaman
                     {
                         if (animals[j] != null)
                         {
-                            if (Vector2.Distance(humans[i].humanPos, animals[j].animalPos) <= 200)
+                            if (Vector2.Distance(humans[i].humanPos, animals[j].animalPos) <= 200 && !humans[i].isArrived)
                             {
                                 Vector2 movDir = humans[i].humanPos - animals[j].animalPos;
 
