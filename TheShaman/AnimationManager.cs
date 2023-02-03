@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Reflection.Metadata.Ecma335;
@@ -71,7 +72,7 @@ namespace TheShaman
 
                 }
 
-                if (player.isPushing == true && player.mana != 0)
+                if (player.isPushing == true && player.mana != 0 )
                 {
 
                     player.playerTexture = Content.Load<Texture2D>($"PlayerFlipAnimation/playerPushFlip{player.playerPushingAnimationCounter}");
@@ -80,7 +81,7 @@ namespace TheShaman
                     if (player.playerPushingAnimationCounter == 7)
                     {
                         player.playerTexture = Content.Load<Texture2D>($"PlayerFlipAnimation/playerPushFlip7");
-                        player.playerPushingAnimationCounter = 1;
+                        player.playerPushingAnimationCounter = 5;
                         player.isPushing = false;
                     }
 
@@ -107,7 +108,7 @@ namespace TheShaman
 
                 }
 
-                if (player.isPushing == true && player.mana != 0)
+                if (player.isPushing == true && player.mana != 0 && !player.isFlipped)
                 {
 
                     player.playerTexture = Content.Load<Texture2D>($"PlayerAnimation/playerPush{player.playerPushingAnimationCounter}");
@@ -116,13 +117,11 @@ namespace TheShaman
                     if (player.playerPushingAnimationCounter == 7)
                     {
                         player.playerTexture = Content.Load<Texture2D>($"PlayerAnimation/playerPush7");
-                        player.playerPushingAnimationCounter = 1;
+                        player.playerPushingAnimationCounter = 5;
                         player.isPushing = false;
                     }
-
-
-
                 }
+              
 
             }
 
@@ -177,12 +176,14 @@ namespace TheShaman
             {
                 if (animal != null)
                 {
-                    animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/animal{animal.AnimalIdleCounter}");
+                    animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/animal{animal.AnimalCounter}");
 
-                    animal.AnimalIdleCounter += 1;
-                    if (animal.AnimalIdleCounter == 5)
+                    animal.AnimalCounter += 1;
+                    if (animal.AnimalCounter == 5)
                     {
                         animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/animal5");
+
+                        animal.AnimalCounter = 1;
 
                     }
                 }

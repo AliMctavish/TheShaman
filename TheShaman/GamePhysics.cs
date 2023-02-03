@@ -168,11 +168,12 @@ namespace TheShaman
 
                         animals[i].animalPos -= movDir * 5;
 
-                        if (decreaseMana <= 1)
-                        {
-                            player.mana -= 1;
-                            decreaseMana = 2;
-                        }
+                        
+                    }
+                    if (decreaseMana <= 1 && player.mana != 0)
+                    {
+                        player.mana -= 1;
+                        decreaseMana = 2;
                     }
                 }
             }
