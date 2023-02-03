@@ -58,7 +58,7 @@ namespace TheShaman
                     {
                         animals[num] = new Animals();
                         animals[num].animalPos = new Vector2(50 * j, i * 50);
-                        animals[num].animalTexture = Content.Load<Texture2D>("animal");
+                        animals[num].animalTexture = Content.Load<Texture2D>("AnimalAnimation/animal1");
 
                         ground[num] = new Ground(50 * j, i * 50 + 50);
                         ground[num].groundTexture = Content.Load<Texture2D>("ground");

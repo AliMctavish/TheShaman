@@ -18,9 +18,6 @@ namespace TheShaman
 
         public void playerBounderies(Player player , Human[] humans, Vector2 firePos)
         {
-
-        
-
             for (int i = 0; i < humans.Length; i++)
             {
                 if (humans[i] != null)
@@ -29,7 +26,6 @@ namespace TheShaman
                     {
                         humans[i].isFollowing = true;
                     }
-
                     if (humans[i].isFollowing == true)
                     {
                         Vector2 movDir = player.playerPos - humans[i].humanPos;
@@ -170,7 +166,6 @@ namespace TheShaman
 
                         movDir.Normalize();
 
-
                         animals[i].animalPos -= movDir * 5;
 
                         if (decreaseMana <= 1)
@@ -247,24 +242,40 @@ namespace TheShaman
         }
 
 
-        public void WaterColliders(Player player, Human[] humans , Animals[] animals)
+        public void waterColliders( Water[] waters , Player player, Human[] humans , Animals[] animals)
         {
-            foreach(Human human in humans)
-            {
-
-            }
-
-
-            foreach(var animal in animals)
-            {
-
-            }
+          foreach(var water in waters)
+          {
+            if(water != null)
+                {
+                    foreach (var human in humans)
+                    {
 
 
-            
+
+
+                    }
+
+
+                    foreach (var animal in animals)
+                    {
+
+                    }
+
+
+                    if (Vector2.Distance(player.playerPos, water.waterPos) <= 50)
+                    {
+
+                        Vector2 movDir = player.playerPos - water.waterPos;
+
+                        movDir.Normalize();
+
+                        player.playerPos += movDir * 2;
+
+
+                    }
+                }
+            }  
         }
-
-
-
     }
 }

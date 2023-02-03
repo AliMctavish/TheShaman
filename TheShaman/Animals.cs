@@ -14,6 +14,9 @@ namespace TheShaman
         public Vector2 animalPos;
         public Texture2D animalTexture;
 
+        public bool isFlipped = false;
+        public int AnimalIdleCounter = 1; 
+
 
 
     }

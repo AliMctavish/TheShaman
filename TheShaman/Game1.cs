@@ -146,6 +146,7 @@ namespace TheShaman
                 gamePhysics.playerBounderies(player, human, firePos);
                 gamePhysics.humansBounderies(human, animals, gameTime);
                 gamePhysics.treeColliders(player, human, animals, tree);
+                gamePhysics.waterColliders(water,player, human, animals);
 
 
 
@@ -153,6 +154,7 @@ namespace TheShaman
                 {
 
                     gamePhysics.PushAnimals(player, animals, gameTime);
+                
 
                 }
 
@@ -167,6 +169,7 @@ namespace TheShaman
                     animationManager.playerAnimation(player, Content);
                     animationManager.HumanAnimation(human, Content, player, firePos);
                     animationManager.waterAnimation(water, Content);
+                    animationManager.AnimalAnimation(animals,human, Content);
 
                     fireTexture = Content.Load<Texture2D>($"fireAnimation{fireAnimate}");
                     if (fireAnimate == 3)
@@ -243,9 +246,45 @@ namespace TheShaman
 
             }
 
+           
+
+
+
+
+            if(gameState == false)
+            {
+                _spriteBatch.Draw(player.playerTexture, new Rectangle(0, 0, 400, 400), Color.Black);
+            }
+
+
+            _spriteBatch.Draw(player.playerTexture, new Vector2(player.playerPos.X - 50, player.playerPos.Y - 100), Color.White);
+
+
+
+
+            foreach (var animal in animals)
+            {
+                if (animal != null)
+                {
+                    _spriteBatch.Draw(animal.animalTexture, new Vector2(animal.animalPos.X - 50, animal.animalPos.Y - 50), Color.White); 
+              
+                }
+            }
+            _spriteBatch.Draw(fireTexture, new Vector2(firePos.X - 50, firePos.Y - 100), Color.White);
+
+
+            foreach (var trees in tree)
+            {
+                if (trees != null)
+                {
+                    _spriteBatch.Draw(trees.treeTexture, new Vector2(trees.treePos.X - 50, trees.treePos.Y - 100), Color.White);
+
+                }
+            }
+
             foreach (var human in human)
             {
-                if(human != null)
+                if (human != null)
                 {
                     if (Vector2.Distance(player.playerPos, firePos) <= 100 && human.isFollowing == true && human.isArrived == false)
                     {
@@ -255,7 +294,7 @@ namespace TheShaman
                     {
                         _spriteBatch.DrawString(spriteFont, "", new Vector2(0, 0), Color.White);
                     }
-                    _spriteBatch.Draw(human.humanTexture, new Vector2(human.humanPos.X - 50, human.humanPos.Y - 50), Color.White);
+                    _spriteBatch.Draw(human.humanTexture, new Vector2(human.humanPos.X - 50, human.humanPos.Y - 100), Color.White);
 
 
                     if (Vector2.Distance(player.playerPos, human.humanPos) <= 50 && human.isFollowing == false && human.isArrived == false)
@@ -269,11 +308,11 @@ namespace TheShaman
                     }
 
                     _spriteBatch.DrawString(spriteFont, $"humanHealth :{human.humanHealth}", new Vector2(human.humanPos.X - 30, human.humanPos.Y + 80), Color.White);
-                    
-              
 
 
-                    if(human.humanHealth <= 0)
+
+
+                    if (human.humanHealth <= 0)
                     {
                         gameState = false;
                     }
@@ -284,42 +323,6 @@ namespace TheShaman
 
 
             }
-
-
-
-
-            if(gameState == false)
-            {
-                _spriteBatch.Draw(player.playerTexture, new Rectangle(0, 0, 400, 400), Color.Black);
-            }
-
-
-            _spriteBatch.Draw(player.playerTexture, new Vector2(player.playerPos.X - 50, player.playerPos.Y - 50), Color.White);
-
-
-
-
-            foreach (var animal in animals)
-            {
-                if (animal != null)
-                {
-                    _spriteBatch.Draw(animal.animalTexture, new Vector2(animal.animalPos.X - 50, animal.animalPos.Y - 50), Color.White); 
-              
-                }
-            }
-            _spriteBatch.Draw(fireTexture, new Vector2(firePos.X - 50, firePos.Y - 50), Color.White);
-
-
-            foreach (var trees in tree)
-            {
-                if (trees != null)
-                {
-                    _spriteBatch.Draw(trees.treeTexture, new Vector2(trees.treePos.X - 50, trees.treePos.Y - 50), Color.White);
-
-                }
-            }
-
-
             _spriteBatch.End();
 
 
@@ -342,6 +345,8 @@ namespace TheShaman
 
               _spriteBatch.DrawString(spriteFont, $"Player Mana : {player.mana} / 20", new Vector2(1000, 100), Color.White);
             }
+
+
 
 
 

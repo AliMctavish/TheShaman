@@ -19,8 +19,10 @@ namespace TheShaman
         public int playerAnimationHitCounter = 1;
         public int playerAnimationMovingUpCounter = 1;
         public int playerAnimationMovingDownCounter = 1;
+        public int playerPushingAnimationCounter = 1;
         public bool isFlipped = false;
         public bool isHitting = false;
+        public bool isPushing = false;
 
 
         public int mana = 20;

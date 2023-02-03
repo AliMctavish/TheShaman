@@ -70,6 +70,24 @@ namespace TheShaman
                     }
 
                 }
+
+                if (player.isPushing == true && player.mana != 0)
+                {
+
+                    player.playerTexture = Content.Load<Texture2D>($"PlayerFlipAnimation/playerPushFlip{player.playerPushingAnimationCounter}");
+
+                    player.playerPushingAnimationCounter += 1;
+                    if (player.playerPushingAnimationCounter == 7)
+                    {
+                        player.playerTexture = Content.Load<Texture2D>($"PlayerFlipAnimation/playerPushFlip7");
+                        player.playerPushingAnimationCounter = 1;
+                        player.isPushing = false;
+                    }
+
+
+
+                }
+
             }
             else
             {
@@ -82,11 +100,30 @@ namespace TheShaman
                     player.playerAnimationHitCounter += 1;
                     if (player.playerAnimationHitCounter == 11)
                     {
+
                         player.playerAnimationHitCounter = 1;
                         player.isHitting = false;
                     }
 
                 }
+
+                if (player.isPushing == true && player.mana != 0)
+                {
+
+                    player.playerTexture = Content.Load<Texture2D>($"PlayerAnimation/playerPush{player.playerPushingAnimationCounter}");
+
+                    player.playerPushingAnimationCounter += 1;
+                    if (player.playerPushingAnimationCounter == 7)
+                    {
+                        player.playerTexture = Content.Load<Texture2D>($"PlayerAnimation/playerPush7");
+                        player.playerPushingAnimationCounter = 1;
+                        player.isPushing = false;
+                    }
+
+
+
+                }
+
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
@@ -94,7 +131,13 @@ namespace TheShaman
                 player.isHitting = true;
             }
 
-            if(Keyboard.GetState().IsKeyDown(Keys.Up) &&  player.isHitting == false)
+            if(Keyboard.GetState().IsKeyDown(Keys.LeftControl))
+            {
+                player.isPushing = true;
+            }
+
+
+            if(Keyboard.GetState().IsKeyDown(Keys.Up) &&  player.isHitting == false && player.isPushing == false)
             {
 
                 player.isFlipped = false;
@@ -109,7 +152,7 @@ namespace TheShaman
                 }
             } 
             
-            if(Keyboard.GetState().IsKeyDown(Keys.Down) &&  player.isHitting == false)
+            if(Keyboard.GetState().IsKeyDown(Keys.Down) &&  player.isHitting == false && player.isPushing == false)
             {
 
                 player.isFlipped = false;
@@ -122,11 +165,34 @@ namespace TheShaman
                         player.playerAnimationMovingDownCounter = 1;
                     }
                 }
-
-
-
-
             }
+        }
+
+
+
+        public void AnimalAnimation(Animals[] animals,Human[] humans , ContentManager content)
+        {
+
+            foreach(Animals animal in animals)
+            {
+                if (animal != null)
+                {
+                    animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/animal{animal.AnimalIdleCounter}");
+
+                    animal.AnimalIdleCounter += 1;
+                    if (animal.AnimalIdleCounter == 5)
+                    {
+                        animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/animal5");
+
+                    }
+                }
+
+                    
+            }
+               
+            
+
+          
         }
 
 
