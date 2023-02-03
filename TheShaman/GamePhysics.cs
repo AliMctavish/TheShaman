@@ -113,7 +113,8 @@ namespace TheShaman
                                     humans[i].humanHealth -= 1;
                                     decreaseHealth = 2;
                                 }
-                        
+
+                              
 
                                 humans[i].isFollowing = false;
 

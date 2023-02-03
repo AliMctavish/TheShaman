@@ -33,6 +33,7 @@ namespace TheShaman
         AnimationManager animationManager;
             bool zrba = false;
         GamePhysics gamePhysics;
+        public bool gameState = true;
 
         Animals[] animals;
         float sum = 0;
@@ -110,82 +111,99 @@ namespace TheShaman
 
         protected override void Update(GameTime gameTime)
         {
-
-           
-            timer -= gameTime.TotalGameTime.TotalSeconds;
-            waitingTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-
-
-
-
-
-            gamePhysics.playerBounderies(player , human , firePos );
-            gamePhysics.humansBounderies(human, animals, gameTime);
-
-
-
-            if (Keyboard.GetState().IsKeyDown(Keys.LeftControl))
+            if (gameState == false && Keyboard.GetState().IsKeyDown(Keys.Space))
             {
 
-                gamePhysics.PushAnimals(player , animals, gameTime);
+                gameState = true;
 
-            }
-
-
-
-
-
-
-
-            if (waitingTime > animateCounter)
-            {
-                animationManager.playerAnimation(player, Content);
-                animationManager.HumanAnimation(human, Content, player);
-
-                fireTexture = Content.Load<Texture2D>($"fireAnimation{fireAnimate}");
-                if(fireAnimate == 3)
+                for(int i = 0; i < human.Length; i++)
                 {
-                    fireTexture = Content.Load<Texture2D>($"fireAnimation3");
-                    fireAnimate = 1;
+                    if (human[i] != null)
+                    {
+                    human[i].humanHealth = 20;
+                    }
                 }
-                fireAnimate += 1;
-            animateCounter += 0.1f;
+
             }
-
-
-
-
-
-
-            float time = (float)gameTime.TotalGameTime.TotalSeconds;
-
-
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
-            if(Keyboard.GetState().IsKeyDown(Keys.Up))
+            if (gameState == true)
             {
-                player.playerPos.Y -= 2;
+
+
+                timer -= gameTime.TotalGameTime.TotalSeconds;
+                waitingTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+
+
+
+
+
+                gamePhysics.playerBounderies(player, human, firePos);
+                gamePhysics.humansBounderies(human, animals, gameTime);
+
+
+
+                if (Keyboard.GetState().IsKeyDown(Keys.LeftControl))
+                {
+
+                    gamePhysics.PushAnimals(player, animals, gameTime);
+
+                }
+
+
+
+
+
+
+
+                if (waitingTime > animateCounter)
+                {
+                    animationManager.playerAnimation(player, Content);
+                    animationManager.HumanAnimation(human, Content, player);
+
+                    fireTexture = Content.Load<Texture2D>($"fireAnimation{fireAnimate}");
+                    if (fireAnimate == 3)
+                    {
+                        fireTexture = Content.Load<Texture2D>($"fireAnimation3");
+                        fireAnimate = 1;
+                    }
+                    fireAnimate += 1;
+                    animateCounter += 0.1f;
+                }
+
+
+
+
+
+
+                float time = (float)gameTime.TotalGameTime.TotalSeconds;
+
+
+                if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                    Exit();
+
+                if (Keyboard.GetState().IsKeyDown(Keys.Up))
+                {
+                    player.playerPos.Y -= 2;
+                }
+                if (Keyboard.GetState().IsKeyDown(Keys.Down))
+                {
+                    player.playerPos.Y += 2;
+
+                }
+                if (Keyboard.GetState().IsKeyDown(Keys.Right))
+                {
+                    player.playerPos.X += 2;
+
+                }
+                if (Keyboard.GetState().IsKeyDown(Keys.Left))
+                {
+                    player.playerPos.X -= 2;
+
+                }
+                cam.LookAt(player.playerPos);
+
+                // TODO: Add your update logic here
             }
-            if(Keyboard.GetState().IsKeyDown(Keys.Down))
-            {
-                player.playerPos.Y += 2;
-              
-            }  
-            if(Keyboard.GetState().IsKeyDown(Keys.Right))
-            {
-                player.playerPos.X += 2;
-               
-            } 
-            if(Keyboard.GetState().IsKeyDown(Keys.Left))
-            {
-               player.playerPos.X -= 2;
-              
-            }
-            cam.LookAt(player.playerPos);
-
-            // TODO: Add your update logic here
 
             base.Update(gameTime);
         }
@@ -243,11 +261,10 @@ namespace TheShaman
               
 
 
-
-
-
-
-
+                    if(human.humanHealth <= 0)
+                    {
+                        gameState = false;
+                    }
 
                 }
 
@@ -256,6 +273,12 @@ namespace TheShaman
             }
 
 
+
+
+            if(gameState == false)
+            {
+                _spriteBatch.Draw(player.playerTexture, new Rectangle(0, 0, 400, 400), Color.Black);
+            }
 
 
             _spriteBatch.Draw(player.playerTexture, new Vector2(player.playerPos.X - 50, player.playerPos.Y - 50), Color.White);
