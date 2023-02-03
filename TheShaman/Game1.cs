@@ -15,6 +15,7 @@ namespace TheShaman
         private SpriteBatch _spriteBatch;
         private Maps level = new Maps();
         private Player player;
+        private Water[] water;
         private Vector2 firePos;
         private Texture2D fireTexture;
         private float time;
@@ -65,6 +66,7 @@ namespace TheShaman
             ground = new Ground[sumOfArrays];
             human = new Human[sumOfArrays];
             animals = new Animals[sumOfArrays];
+            water = new Water[sumOfArrays];
 
 
             player = new Player();
@@ -97,7 +99,7 @@ namespace TheShaman
 
             string[] map = level.LoadLevel(selectLevel);
 
-            levelMapper.StartMapping(ground, map ,human, animals, Content);
+            levelMapper.StartMapping(ground, map ,human, animals, water, Content);
 
 
             firePos = new Vector2(500, 500);
@@ -122,6 +124,7 @@ namespace TheShaman
                     {
                     human[i].humanHealth = 20;
                     }
+                    player.mana = 20;
                 }
 
             }
@@ -158,7 +161,8 @@ namespace TheShaman
                 if (waitingTime > animateCounter)
                 {
                     animationManager.playerAnimation(player, Content);
-                    animationManager.HumanAnimation(human, Content, player);
+                    animationManager.HumanAnimation(human, Content, player, firePos);
+                    animationManager.waterAnimation(water, Content);
 
                     fireTexture = Content.Load<Texture2D>($"fireAnimation{fireAnimate}");
                     if (fireAnimate == 3)
@@ -216,6 +220,15 @@ namespace TheShaman
            
             _spriteBatch.Begin(transformMatrix : cam.GetViewMatrix());
 
+            foreach (var water in water)
+            {
+                if (water != null)
+                {
+                    _spriteBatch.Draw(water.waterTexture, new Vector2(water.waterPos.X - 50, water.waterPos.Y - 50), Color.White);
+                }
+            }
+
+
             foreach (var ground in ground)
             {
                 if (ground != null)
@@ -225,7 +238,6 @@ namespace TheShaman
                 }
 
             }
-            _spriteBatch.Draw(fireTexture, new Vector2 (firePos.X - 50 , firePos.Y - 50), Color.White);
 
             foreach (var human in human)
             {
@@ -235,7 +247,7 @@ namespace TheShaman
                  
 
 
-                    if (Vector2.Distance(player.playerPos, firePos) <= 50 && human.isFollowing == true && human.isArrived == false)
+                    if (Vector2.Distance(player.playerPos, firePos) <= 100 && human.isFollowing == true && human.isArrived == false)
                     {
                         _spriteBatch.DrawString(spriteFont, "Press 'Space' To Deliver", new Vector2(player.playerPos.X + 50, player.playerPos.Y - 20), Color.White);
                     }
@@ -266,6 +278,7 @@ namespace TheShaman
                         gameState = false;
                     }
 
+
                 }
 
 
@@ -294,6 +307,11 @@ namespace TheShaman
               
                 }
             }
+            _spriteBatch.Draw(fireTexture, new Vector2(firePos.X - 50, firePos.Y - 50), Color.White);
+
+
+       
+
 
             _spriteBatch.End();
 

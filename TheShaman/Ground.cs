@@ -17,7 +17,7 @@ namespace TheShaman
 
         public Ground(int posX, int posY)
         {
-            this.groundPos = new Rectangle(posX, posY, 50, 64);
+            this.groundPos = new Rectangle(posX, posY, 50, 50);
         }
 
 

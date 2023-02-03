@@ -19,7 +19,7 @@ namespace TheShaman
         int num = 0;
         private int groundAxis = 50;
 
-        public void StartMapping(Ground[] ground , string[] map, Human[] humans , Animals[] animals , ContentManager Content)
+        public void StartMapping(Ground[] ground , string[] map, Human[] humans , Animals[] animals, Water[] water , ContentManager Content)
         {
 
             for (int i = 0; i < map.Length; i++)
@@ -38,21 +38,23 @@ namespace TheShaman
                         ground[num].groundTexture = Content.Load<Texture2D>("ground");
                         num++;
                     }
-                    //if (map[i][j] == '%')
-                    //{
-                    //    ground[num] = new Ground(64 * j, i * 64 + 50);
-                    //    ground[num].groundTexture = Content.Load<Texture2D>("groundBase");
-                    //    num++;
+                    if (map[i][j] == '%')
+                    {
+                        ground[num] = new Ground(50 * j, i * 50 + 50);
+                        ground[num].groundTexture = Content.Load<Texture2D>("ground2");
 
-                    //}
-                    //if (map[i][j] == 'y')
-                    //{
-                    //    ground[num] = new Ground(64 * j, i * 64 + 50);
-                    //    ground[num].groundTexture = Content.Load<Texture2D>("ground4");
-                    //    num++;
+                        num++;
+                    }
 
-                    //}
-                    if (map[i][j] == 'x')
+                       
+                        //if (map[i][j] == 'y')
+                        //{
+                        //    ground[num] = new Ground(64 * j, i * 64 + 50);
+                        //    ground[num].groundTexture = Content.Load<Texture2D>("ground4");
+                        //    num++;
+
+                        //}
+                        if (map[i][j] == 'x')
                     {
                         animals[num] = new Animals();
                         animals[num].animalPos = new Vector2(50 * j, i * 50);
@@ -67,14 +69,14 @@ namespace TheShaman
                     {
                         num++;
                     }
-                    //if (map[i][j] == '@')
-                    //{
-                    //    items[num] = new Items();
-                    //    items[num].coinsPos = new Rectangle(64 * j, i * 64 + 50, 60, 60);
-                    //    items[num].coinsTexture = Content.Load<Texture2D>("coin1");
+                    if (map[i][j] == '@')
+                    {
+                        water[num] = new Water();
+                        water[num].waterPos = new Vector2(50 * j, i * 50 + 50);
+                        water[num].waterTexture = Content.Load<Texture2D>("waterMove1");
 
-                    //    num++;
-                    //}
+                        num++;
+                    }
                     //if (map[i][j] == '?')
                     //{
                     //    humans[num] = new Human();

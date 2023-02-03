@@ -56,15 +56,13 @@ namespace TheShaman
 
                     if (humans[i].isArrived == true)
                     {
-
-                      
                             Vector2 movDir = firePos - humans[i].humanPos;
 
                             movDir.Normalize();
 
                             humans[i].humanPos = humans[i].humanPos +  movDir ;
 
-                        if (Vector2.Distance(humans[i].humanPos, firePos) <= 70)
+                        if (Vector2.Distance(humans[i].humanPos, firePos) <= 100)
                         {
 
                             movDir = firePos - humans[i].humanPos;
@@ -78,6 +76,16 @@ namespace TheShaman
                     }
 
 
+                    if(Vector2.Distance(player.playerPos , firePos) <= 50)
+                    {
+                        Vector2 movDir2 = firePos - player.playerPos;
+
+                        movDir2.Normalize();
+
+                        player.playerPos -= movDir2;
+                    }
+
+
 
 
 
@@ -87,7 +95,6 @@ namespace TheShaman
                 }
             }
         }
-
         public void humansBounderies(Human[] humans, Animals[] animals, GameTime gameTime)
         {
             decreaseHealth -= (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -113,12 +120,7 @@ namespace TheShaman
                                     humans[i].humanHealth -= 1;
                                     decreaseHealth = 2;
                                 }
-
-                              
-
                                 humans[i].isFollowing = false;
-
-                            
 
                             }
                         }
@@ -177,14 +179,25 @@ namespace TheShaman
                         }
                     }
                 }
+            }
+        }
 
+
+        public void WaterColliders(Player player, Human[] humans , Animals[] animals)
+        {
+            foreach(Human human in humans)
+            {
 
             }
 
 
+            foreach(var animal in animals)
+            {
+
+            }
 
 
-
+            
         }
 
 

@@ -11,14 +11,21 @@ namespace TheShaman
     internal class Human
     {
         public Texture2D humanTexture;
+
         public Vector2 humanPos;
+
         public bool isFollowing = false;
+
         public bool isArrived = false;
+
         public bool isAdded = false;
+
+        public bool isGettingHit = false;
 
         public int humanHealth = 20;
 
         public int humanIdleAnimationCounter = 1;
+
         public int humanWalkingAnimationCounter= 1;
 
       
@@ -26,4 +33,6 @@ namespace TheShaman
 
 
     }
+
+
 }

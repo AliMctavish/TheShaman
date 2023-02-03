@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -13,8 +14,6 @@ namespace TheShaman
 {
     internal class AnimationManager
     {
-
-      
         public void playerAnimation(Player player, ContentManager Content)
         {
 
@@ -131,32 +130,32 @@ namespace TheShaman
         }
 
 
-        public void HumanAnimation(Human[] humans, ContentManager content, Player player)
+        public void HumanAnimation(Human[] humans, ContentManager content, Player player,Vector2 firePos)
         {
             for (int i = 0; i < humans.Length; i++)
             {
                 if (humans[i] != null)
                 {
-                    if (humans[i].isFollowing== false)
+                    if (humans[i].isFollowing == false)
                     {
-                       humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanSecondary{humans[i].humanIdleAnimationCounter}");
+                        humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanSecondary{humans[i].humanIdleAnimationCounter}");
 
-                    humans[i].humanIdleAnimationCounter += 1;
+                        humans[i].humanIdleAnimationCounter += 1;
 
-                       if (humans[i].humanIdleAnimationCounter == 5)
-                       {
-                           humans[i].humanTexture = content.Load<Texture2D>("HumansAnimation/HumanSecondary5");
-                       
-                           humans[i].humanIdleAnimationCounter = 1;
-                       
-                       }
+                        if (humans[i].humanIdleAnimationCounter == 5)
+                        {
+                            humans[i].humanTexture = content.Load<Texture2D>("HumansAnimation/HumanSecondary5");
+
+                            humans[i].humanIdleAnimationCounter = 1;
+
+                        }
 
                     }
                     else
                     {
                         if (humans[i].humanPos.X <= player.playerPos.X)
                         {
-                        humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanSecondaryWalking{humans[i].humanWalkingAnimationCounter}");
+                            humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanSecondaryWalking{humans[i].humanWalkingAnimationCounter}");
                             humans[i].humanWalkingAnimationCounter += 1;
 
                             if (humans[i].humanWalkingAnimationCounter == 4)
@@ -177,19 +176,32 @@ namespace TheShaman
                             }
                         }
 
-                    }
-
-                  
-
-                   
+                    }   
                     
                 }
-
-
-
             }
 
 
+        }
+
+        public void waterAnimation(Water[] water , ContentManager content)
+        {
+
+            foreach(var waters in water)
+            {
+                if (waters != null)
+                {
+
+                waters.waterTexture = content.Load<Texture2D>($"waterMove{waters.animationCounter}");
+                    waters.animationCounter += 1; 
+
+                if(waters.animationCounter == 10)
+                {
+                    waters.waterTexture = content.Load<Texture2D>($"waterMove10");
+                    waters.animationCounter = 1;
+                }
+                }
+            }
 
 
 
