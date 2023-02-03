@@ -25,6 +25,10 @@ namespace TheShaman
         public bool isPushing = false;
 
 
+        public Texture2D manaBarTexture;
+
+
+
         public int mana = 20;
         
         public int AcceptedHumans = 0;

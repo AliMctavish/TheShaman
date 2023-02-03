@@ -28,6 +28,9 @@ namespace TheShaman
 
         public int humanWalkingAnimationCounter= 1;
 
+        public Texture2D HealthBar;
+        public int HealthCounter = 1;
+
       
 
 

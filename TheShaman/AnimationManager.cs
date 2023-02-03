@@ -165,6 +165,49 @@ namespace TheShaman
                     }
                 }
             }
+            if(player.mana == 20)
+            {
+            player.manaBarTexture = Content.Load<Texture2D>("ManaBar1");
+            }
+            if (player.mana <= 18)
+            {
+                player.manaBarTexture = Content.Load<Texture2D>("ManaBar1");
+            }
+            if (player.mana <= 16)
+            {
+                player.manaBarTexture = Content.Load<Texture2D>("ManaBar2");
+            }
+            if (player.mana <= 14)
+            {
+                player.manaBarTexture = Content.Load<Texture2D>("ManaBar3");
+            }
+            if (player.mana <= 12)
+            {
+                player.manaBarTexture = Content.Load<Texture2D>("ManaBar4");
+            }
+            if (player.mana <= 8)
+            {
+                player.manaBarTexture = Content.Load<Texture2D>("ManaBar5");
+            }
+            if (player.mana <= 7)
+            {
+                player.manaBarTexture = Content.Load<Texture2D>("ManaBar6");
+            }
+            if (player.mana <= 5)
+            {
+                player.manaBarTexture = Content.Load<Texture2D>($"ManaBar7");
+            }
+            if (player.mana <= 3)
+            {
+                player.manaBarTexture = Content.Load<Texture2D>($"ManaBar8");
+            }
+            if (player.mana <= 1)
+            {
+                player.manaBarTexture = Content.Load<Texture2D>($"ManaBar9");
+            }
+
+
+
         }
 
 
@@ -264,8 +307,48 @@ namespace TheShaman
                             }
                         }
 
-                    }   
-                    
+                    }
+
+                
+
+
+                    if (humans[i].humanHealth <= 18)
+                    {
+                        humans[i].HealthBar = content.Load<Texture2D>("HealthBar1");
+                    }
+                    if(humans[i].humanHealth <= 16)
+                    {
+                        humans[i].HealthBar = content.Load<Texture2D>("HealthBar2");
+                    }
+                    if(humans[i].humanHealth <= 14)
+                    {
+                        humans[i].HealthBar = content.Load<Texture2D>("HealthBar3");
+                    }
+                    if(humans[i].humanHealth <= 12)
+                    {
+                        humans[i].HealthBar = content.Load<Texture2D>("HealthBar4");
+                    }
+                    if (humans[i].humanHealth <= 8)
+                    {
+                        humans[i].HealthBar = content.Load<Texture2D>("HealthBar5");
+                    }
+                    if(humans[i].humanHealth <= 7)
+                    {
+                        humans[i].HealthBar = content.Load<Texture2D>("HealthBar6");
+                    }
+                    if (humans[i].humanHealth <= 5)
+                    {
+                        humans[i].HealthBar = content.Load<Texture2D>($"HealthBar7");
+                    }
+                    if (humans[i].humanHealth <= 3)
+                    {
+                        humans[i].HealthBar = content.Load<Texture2D>($"HealthBar8");
+                    }
+                    if (humans[i].humanHealth <= 1)
+                    {
+                        humans[i].HealthBar = content.Load<Texture2D>($"HealthBar9");
+                    }
+
                 }
             }
 

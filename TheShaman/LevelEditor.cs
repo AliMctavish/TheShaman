@@ -91,6 +91,7 @@ namespace TheShaman
                         humans[num] = new Human();
                         humans[num].humanPos = new Vector2(50 * j, i * 50);
                         humans[num].humanTexture = Content.Load<Texture2D>("HumansAnimation/HumanSecondary1");
+                        humans[num].HealthBar = Content.Load<Texture2D>("HealthBar1");
                         ground[num] = new Ground(50 * j, i * 50 + 50);
                         ground[num].groundTexture = Content.Load<Texture2D>("ground");
                         num++;
