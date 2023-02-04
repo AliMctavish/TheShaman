@@ -7,6 +7,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Reflection.Emit;
 using System.Collections.Generic;
 using System.Threading;
+using System.Transactions;
+using System.Xml.Schema;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 
 namespace TheShaman
 {
@@ -22,6 +26,8 @@ namespace TheShaman
         private Texture2D GameOver;
         private bool winState = false;
         private Texture2D StartGame;
+        private SoundEffect sound;
+        private Texture2D infoGame;
         private float time;
         int fireAnimate = 1;
         float animateCounter = 0.1f;
@@ -43,6 +49,9 @@ namespace TheShaman
         public bool startGameState = false;
         Animals[] animals;
         float sum = 0;
+        bool infoState = false;
+
+        private Texture2D background;
 
         List<Human> hum = new List<Human>();
 
@@ -102,19 +111,28 @@ namespace TheShaman
             spriteFont = Content.Load<SpriteFont>("File");
             StartGame = Content.Load<Texture2D>("StartGame1");
             player.manaBarTexture = Content.Load<Texture2D>("ManaBar1");
+
+            sound = Content.Load<SoundEffect>("backgroundMusic");
+
+  
             GameOver = Content.Load<Texture2D>("GameOver1");
+
+            infoGame = Content.Load<Texture2D>("info");
+
+
+            background = Content.Load<Texture2D>("background");
 
 
 
 
 
             cam = new OrthographicCamera(GraphicsDevice);
-
+            
             string[] map = level.LoadLevel(selectLevel);
 
             levelMapper.StartMapping(ground, map ,human, animals, water, tree, Content);
 
-
+            sound.Play();
             firePos = new Vector2(1500, 700);
 
             // ground =level.Map(Content);
@@ -126,12 +144,27 @@ namespace TheShaman
 
         protected override void Update(GameTime gameTime)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+
+           
+
+
+            if(startGameState == false)
             {
+                if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                {
 
-                startGameState= true;
+                    infoState = true;
 
+                }
             }
+         
+          
+                if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+                {
+                    startGameState = true;
+                    infoState= false;
+                }
+            
 
             if (loseGameState == false && startGameState == true && Keyboard.GetState().IsKeyDown(Keys.Enter))
             {
@@ -194,7 +227,7 @@ namespace TheShaman
                         fireTexture = Content.Load<Texture2D>($"fireAnimation3");
                         fireAnimate = 1;
                     }
-                    fireAnimate += 1;
+                    fireAnimate += 1;  
                     animateCounter += 0.1f;
                 }
 
@@ -358,7 +391,13 @@ namespace TheShaman
                     {
                         GraphicsDevice.Clear(Color.White);
                         _spriteBatch.Begin();
-                        _spriteBatch.Draw(StartGame, new Vector2(350, 100), Color.White);
+                        _spriteBatch.Draw(background, new Rectangle(0, 0, 1200, 600), Color.White);
+                        _spriteBatch.Draw(StartGame, new Rectangle(160, 10, 900, 600), Color.White);
+                        _spriteBatch.DrawString(spriteFont, "Press 'Space' For Help !", new Vector2(900, 500), Color.White);
+                        if (infoState == true)
+                        {
+                            _spriteBatch.Draw(infoGame, new Vector2(0, 0), Color.White);
+                        }
                         _spriteBatch.End();
                     }
                 }
@@ -366,14 +405,22 @@ namespace TheShaman
                 {
                     GraphicsDevice.Clear(Color.White);
                     _spriteBatch.Begin();
-                    _spriteBatch.Draw(StartGame, new Vector2(350,100), Color.White);
+                  _spriteBatch.Draw(background, new Rectangle(0,0, 1200, 600), Color.White);
+                    _spriteBatch.Draw(StartGame, new Rectangle(160, 10, 900, 600), Color.White);
+                    _spriteBatch.DrawString(spriteFont, "Press 'Space' For Help !", new Vector2(900,500), Color.White);
+                    if(infoState == true)
+                    {
+                    _spriteBatch.Draw(infoGame, new Vector2(0,0), Color.White);
+                    }
+
                     _spriteBatch.End();
                 }
             }
             else
             {
                 _spriteBatch.Begin();
-                _spriteBatch.Draw(GameOver, new Vector2(0,0), Color.White);
+                _spriteBatch.Draw(background, new Rectangle(0, 0, 1200, 600), Color.White);
+                _spriteBatch.Draw(GameOver, new Rectangle(160, 10, 900, 600), Color.White);
                 _spriteBatch.End();
             }
 
@@ -400,8 +447,11 @@ namespace TheShaman
                         }
                     }
                     }
+                    if(startGameState== true)
+                {
+                    _spriteBatch.DrawString(spriteFont, $"number of followers : {hum.Count} / 8", new Vector2(800, 50), Color.White);
 
-                    _spriteBatch.DrawString(spriteFont, $"number of followers : {hum.Count} / 8", new Vector2(1000, 50), Color.White);
+                }
 
 
             }

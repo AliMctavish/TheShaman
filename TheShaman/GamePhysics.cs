@@ -48,7 +48,18 @@ namespace TheShaman
                     {
                         humans[i].isFollowing = false;
                         humans[i].isArrived = true;
-                       
+
+                     
+
+                    }
+
+                    if (Vector2.Distance(humans[i].humanPos, firePos) <= 100)
+                    {
+                        Vector2 movDir = firePos - humans[i].humanPos;
+
+                        movDir.Normalize();
+
+                        humans[i].humanPos -= movDir;
                     }
 
                     if (humans[i].isArrived == true)
@@ -70,6 +81,10 @@ namespace TheShaman
                             movDir.Normalize();
 
                             humans[i].humanPos -= movDir;
+
+                          
+
+
                         }
 
 

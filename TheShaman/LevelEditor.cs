@@ -29,7 +29,7 @@ namespace TheShaman
                     if (map[i][j] == '#')
                     {
                         ground[num] = new Ground(50 * j, i * 50 + 50);
-                        ground[num].groundTexture = Content.Load<Texture2D>("ground");
+                        ground[num].groundTexture = Content.Load<Texture2D>("Mashroom");
                         num++;
                     }
                     if (map[i][j] == '$')
