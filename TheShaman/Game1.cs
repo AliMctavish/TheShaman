@@ -112,12 +112,12 @@ namespace TheShaman
             StartGame = Content.Load<Texture2D>("StartGame1");
             player.manaBarTexture = Content.Load<Texture2D>("ManaBar1");
 
-            sound = Content.Load<SoundEffect>("backgroundMusic");
 
   
             GameOver = Content.Load<Texture2D>("GameOver1");
 
             infoGame = Content.Load<Texture2D>("info");
+            sound = Content.Load<SoundEffect>("backgroundMusic");
 
 
             background = Content.Load<Texture2D>("background");
@@ -131,7 +131,7 @@ namespace TheShaman
             string[] map = level.LoadLevel(selectLevel);
 
             levelMapper.StartMapping(ground, map ,human, animals, water, tree, Content);
-
+            
             sound.Play();
             firePos = new Vector2(1500, 700);
 
