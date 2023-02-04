@@ -24,6 +24,9 @@ namespace TheShaman
 
         public int humanHealth = 20;
 
+
+        public Color damageColor = Color.White;
+
         public int humanIdleAnimationCounter = 1;
 
         public int humanWalkingAnimationCounter= 1;

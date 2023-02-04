@@ -248,6 +248,23 @@ namespace TheShaman
 
                         }
                     }
+
+
+                    if(animal.isAttacking)
+                    {
+                        animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/AnimalAttacking{animal.AnimalWalkingCounter}");
+
+                        animal.AnimalWalkingCounter += 1;
+                        if (animal.AnimalWalkingCounter == 4)
+                        {
+                            animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/AnimalAttacking4");
+
+                            animal.AnimalWalkingCounter = 1;
+
+                        }
+                    }
+
+
                 }
 
 

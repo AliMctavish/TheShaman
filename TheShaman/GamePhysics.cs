@@ -48,6 +48,7 @@ namespace TheShaman
                     {
                         humans[i].isFollowing = false;
                         humans[i].isArrived = true;
+                       
                     }
 
                     if (humans[i].isArrived == true)
@@ -56,7 +57,10 @@ namespace TheShaman
 
                             movDir.Normalize();
 
-                            humans[i].humanPos = humans[i].humanPos +  movDir ;
+                       
+
+
+                        humans[i].humanPos = humans[i].humanPos +  movDir ;
 
                         if (Vector2.Distance(humans[i].humanPos, firePos) <= 100)
                         {
@@ -115,10 +119,17 @@ namespace TheShaman
                                 if(decreaseHealth <= 1)
                                 {
                                     humans[i].humanHealth -= 1;
-                                    decreaseHealth = 2;
+                                    decreaseHealth = 1.4f;
+
+                                    animals[j].isAttacking = true;
                                 }
                                 humans[i].isFollowing = false;
+                                humans[i].damageColor = Color.Red;
 
+                            }
+                            else
+                            {
+                                humans[i].damageColor = Color.White;
                             }
                         }
                     }
@@ -168,6 +179,8 @@ namespace TheShaman
                             animals[i].animalPos -= movDir * 5;
 
                             animals[i].isMoving = true;
+
+                            animals[i].isAttacking = false;
                         }
 
 

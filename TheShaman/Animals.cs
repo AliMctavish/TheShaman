@@ -18,6 +18,8 @@ namespace TheShaman
 
         public bool isMoving = false;
 
+        public bool isAttacking = false;
+
         public int AnimalCounter = 1; 
         public int AnimalWalkingCounter = 1; 
 
