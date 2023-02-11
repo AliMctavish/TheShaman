@@ -78,7 +78,7 @@ namespace TheShaman
             {
                for(int j = 0; j < animals.Count; j++)
                {
-                   if (Vector2.Distance(humans[i].humanPos, animals[j].animalPos)<=200&&hu[i].isArrived)
+                   if (Vector2.Distance(humans[i].humanPos, animals[j].animalPos)<=200&&!humans[i].isArrived)
                    {
                        Vector2 movDir = humans[i].humanPos - animals[j].animalPos;
                        movDir.Normalize();

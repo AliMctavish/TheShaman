@@ -44,14 +44,11 @@ namespace TheShaman
         public bool loseGameState = true;
         public bool startGameState = false;
         bool infoState = false;
-
         private Texture2D background;
-
         List<Human> hum = new List<Human>();
-
         OrthographicCamera cam;
+        private bool startStateClicked = false;
 
-     
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -60,7 +57,6 @@ namespace TheShaman
             Content.RootDirectory = "Content";
             IsMouseVisible = false;
         }
-
         protected override void Initialize()
         {
             int sumOfArrays = -1;
@@ -68,27 +64,15 @@ namespace TheShaman
             {
                 sumOfArrays += cell.Length;
             }
-
            animationManager = new AnimationManager();
             gamePhysics = new GamePhysics();
-
             ground = new List<Ground>();
             human = new List<Human>();  
             tree = new List<Tree>();
             water = new List<Water>();
             animals = new List<Animals>();
-
             player = new Player();
-            
-
-
-
-
-
-
-
             // TODO: Add your initialization logic here
-
             base.Initialize();
         }
 
@@ -104,84 +88,66 @@ namespace TheShaman
             infoGame = Content.Load<Texture2D>("info");
             sound = Content.Load<SoundEffect>("backgroundMusic");
             background = Content.Load<Texture2D>("background");
-
-
-
-
-
             cam = new OrthographicCamera(GraphicsDevice);
-            
-            string[] map = level.LoadLevel(selectLevel);
-
-            levelMapper.StartMapping(ground, map ,human, animals, water, tree, Content);
-            
             //sound.Play();
             firePos = new Vector2(1500, 700);
-
             // ground =level.Map(Content);
-
-
-
             // TODO: use this.Content to load your game content here
         }
 
         protected override void Update(GameTime gameTime)
         {
-
-           
-
-
-            if(startGameState == false)
+            if (startGameState == false)
             {
                 if (Keyboard.GetState().IsKeyDown(Keys.Space))
                 {
-
                     infoState = true;
-
                 }
             }
-         
-          
                 if (Keyboard.GetState().IsKeyDown(Keys.Enter))
                 {
                     startGameState = true;
+                    startStateClicked= true;
+                    player.playerPos = new Vector2(1200,800);
+                    human.Clear();
+                    animals.Clear();
+                    water.Clear();
+                    tree.Clear();
+                    ground.Clear();
                     infoState= false;
                 }
-            
+            if(startStateClicked)
+            {
+                string[] map = level.LoadLevel(selectLevel);
+                levelMapper.StartMapping(ground, map, human, animals, water, tree, Content);
+                startStateClicked = false;
+            }
+
+
 
             if (loseGameState == false && startGameState == true && Keyboard.GetState().IsKeyDown(Keys.Enter))
             {
-
                 loseGameState = true;
-
                 for(int i = 0; i < human.Count; i++)
                 {
                     human[i].humanHealth = 20;
                     player.mana = 20;
                 }
-
             }
             if (loseGameState == true)
             {
-
-
                 waitingTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-
                 gamePhysics.playerBounderies(player, human, firePos);
                 gamePhysics.humansBounderies(human, animals, gameTime);
                 gamePhysics.treeColliders(player, human, animals, tree);
                 gamePhysics.waterColliders(water,player, human, animals);
                 gamePhysics.PushAnimals(player, animals, gameTime);
-
-
                 if (waitingTime > animateCounter)
                 {
                     animationManager.playerAnimation(player, Content);
                     animationManager.HumanAnimation(human, Content, player, firePos);
                     animationManager.waterAnimation(water, Content);
                     animationManager.AnimalAnimation(animals,human, Content);
-
                     fireTexture = Content.Load<Texture2D>($"fireAnimation{fireAnimate}");
                     if (fireAnimate == 3)
                     {
@@ -192,11 +158,8 @@ namespace TheShaman
                     animateCounter += 0.1f;
                 }
                 float time = (float)gameTime.TotalGameTime.TotalSeconds;
-
-
                 if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                     Exit();
-
                 if (Keyboard.GetState().IsKeyDown(Keys.Up))
                 {
                     player.playerPos.Y -= 2;
@@ -204,7 +167,6 @@ namespace TheShaman
                 if (Keyboard.GetState().IsKeyDown(Keys.Down))
                 {
                     player.playerPos.Y += 2;
-
                 }
                 if (Keyboard.GetState().IsKeyDown(Keys.Right))
                 {
@@ -217,132 +179,67 @@ namespace TheShaman
 
                 }
                 cam.LookAt(player.playerPos);
-
                 // TODO: Add your update logic here
             }
-
-
-
-
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-
-
             if (loseGameState)
             {
                 if (startGameState == true)
                 {
                     if (winState == false)
                     {
-
-
-
-
-
                         _spriteBatch.Begin(transformMatrix: cam.GetViewMatrix());
-
-
                         foreach (var water in water)
                         {
-                            if (water != null)
-                            {
                                 _spriteBatch.Draw(water.waterTexture, new Vector2(water.waterPos.X - 50, water.waterPos.Y - 50), Color.White);
-                            }
                         }
-
-
-
                         foreach (var ground in ground)
                         {
-                            if (ground != null)
-                            {
-
-                                _spriteBatch.Draw(ground.groundTexture, new Vector2(ground.groundPos.X - 50, ground.groundPos.Y - 50), Color.White);
-                            }
-
+                            _spriteBatch.Draw(ground.groundTexture, new Vector2(ground.groundPos.X - 50, ground.groundPos.Y - 50), Color.White);
                         }
-
-
-
                         foreach (var trees in tree)
                         {
-                            if (trees != null)
-                            {
-                                _spriteBatch.Draw(trees.treeTexture, new Vector2(trees.treePos.X - 50, trees.treePos.Y - 100), Color.White);
-
-                            }
+                            _spriteBatch.Draw(trees.treeTexture, new Vector2(trees.treePos.X - 50, trees.treePos.Y - 100), Color.White);
                         }
-
-
-
-
-
                         _spriteBatch.Draw(player.playerTexture, new Vector2(player.playerPos.X - 50, player.playerPos.Y - 100), Color.White);
-
-
-
-
                         foreach (var animal in animals)
                         {
-                            if (animal != null)
-                            {
                                 _spriteBatch.Draw(animal.animalTexture, new Vector2(animal.animalPos.X - 50, animal.animalPos.Y - 50), Color.White);
-
-                            }
                         }
                         _spriteBatch.Draw(fireTexture, new Vector2(firePos.X - 50, firePos.Y - 100), Color.White);
-
-
-
                         foreach (var human in human)
                         {
-                            if (human != null)
+                            if (Vector2.Distance(player.playerPos, firePos) <= 100 && human.isFollowing == true && human.isArrived == false)
                             {
-                                if (Vector2.Distance(player.playerPos, firePos) <= 100 && human.isFollowing == true && human.isArrived == false)
-                                {
-                                    _spriteBatch.DrawString(spriteFont, "Press 'Space' To Deliver", new Vector2(player.playerPos.X + 50, player.playerPos.Y - 20), Color.White);
-                                }
-                                else
-                                {
-                                    _spriteBatch.DrawString(spriteFont, "", new Vector2(0, 0), Color.White);
-                                }
-                                _spriteBatch.Draw(human.humanTexture, new Vector2(human.humanPos.X - 50, human.humanPos.Y - 100), human.damageColor);
-
-
-                                if (Vector2.Distance(player.playerPos, human.humanPos) <= 50 && human.isFollowing == false && human.isArrived == false)
-                                {
-
-                                    _spriteBatch.DrawString(spriteFont, "Press 'Space' To Follow", new Vector2(player.playerPos.X + 50, player.playerPos.Y - 20), Color.White);
-                                }
-                                else
-                                {
-                                    _spriteBatch.DrawString(spriteFont, "", new Vector2(0, 0), Color.AntiqueWhite);
-                                }
-
-                                _spriteBatch.Draw(human.HealthBar, new Vector2(human.humanPos.X - 30, human.humanPos.Y - 100), Color.White);
-
-
-
-
-                                if (human.humanHealth <= 0)
-                                {
-                                    loseGameState = false;
-                                }
-
-
+                                _spriteBatch.DrawString(spriteFont, "Press 'Space' To Deliver", new Vector2(player.playerPos.X + 50, player.playerPos.Y - 20), Color.White);
                             }
+                            else
+                            {
+                                _spriteBatch.DrawString(spriteFont, "", new Vector2(0, 0), Color.White);
+                            }
+                            _spriteBatch.Draw(human.humanTexture, new Vector2(human.humanPos.X - 50, human.humanPos.Y - 100), human.damageColor);
 
 
-
-
+                            if (Vector2.Distance(player.playerPos, human.humanPos) <= 50 && human.isFollowing == false && human.isArrived == false)
+                            {
+                                _spriteBatch.DrawString(spriteFont, "Press 'Space' To Follow", new Vector2(player.playerPos.X + 50, player.playerPos.Y - 20), Color.White);
+                            }
+                            else
+                            {
+                                _spriteBatch.DrawString(spriteFont, "", new Vector2(0, 0), Color.AntiqueWhite);
+                            }
+                            _spriteBatch.Draw(human.HealthBar, new Vector2(human.humanPos.X - 30, human.humanPos.Y - 100), Color.White);
+                            if (human.humanHealth <= 0)
+                            {
+                                loseGameState = false;
+                            }
                         }
-
                         _spriteBatch.Draw(player.manaBarTexture, new Vector2(player.playerPos.X - 40, player.playerPos.Y - 110), Color.White);
-
                         _spriteBatch.End();
                     }
                     else
@@ -381,49 +278,30 @@ namespace TheShaman
                 _spriteBatch.Draw(GameOver, new Rectangle(160, 10, 900, 600), Color.White);
                 _spriteBatch.End();
             }
-
-
-
             _spriteBatch.Begin();
-
                 foreach (Human huma in human)
                 {
-                    if (huma != null)
+                if (huma.isArrived == true && huma.isAdded == false)
+                {
+                    hum.Add(huma);
+                    huma.isAdded = true;
+                    if (player.mana < 20)
                     {
-                        if (huma.isArrived == true && huma.isAdded == false)
-                        {
-                            hum.Add(huma);
-                            huma.isAdded = true;
-                        if (player.mana < 20)
-                        {
-                            player.mana += 2;
-                        }
+                        player.mana += 2;
+                    }
 
-                       if(hum.Count >= 8)
-                        {
-                            winState = true;
-                        }
+                    if (hum.Count >= 8)
+                    {
+                        winState = true;
                     }
-                    }
+                }   
                     if(startGameState== true)
                 {
                     _spriteBatch.DrawString(spriteFont, $"number of followers : {hum.Count} / 8", new Vector2(800, 50), Color.White);
-
                 }
-
-
             }
-
-
-           
-
-
             _spriteBatch.End();
-
-
-
             // TODO: Add your drawing code here
-
             base.Draw(gameTime);
         }
 

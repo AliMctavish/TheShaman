@@ -19,6 +19,7 @@ namespace TheShaman
       
         int num = 0;
         private int groundAxis = 50;
+        Random random= new Random();
         private Ground ground;
         private Human human;
         private Animals animal;
@@ -95,7 +96,7 @@ namespace TheShaman
                     if (map[i][j] == '!')
                     {
                         human = new Human();
-                        human.humanPos = new Vector2(50 * j, i * 50);
+                        human.humanPos = new Vector2(random.Next(600,1500), i * 50);
                         human.humanTexture = Content.Load<Texture2D>("HumansAnimation/HumanSecondary1");
                         human.HealthBar = Content.Load<Texture2D>("HealthBar1");
                         ground = new Ground(50 * j, i * 50 + 50);
