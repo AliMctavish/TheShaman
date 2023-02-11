@@ -17,7 +17,6 @@ namespace TheShaman
     {
         public void playerAnimation(Player player, ContentManager Content)
         {
-
             if (player.isFlipped == false)
             {
                 player.playerTexture = Content.Load<Texture2D>($"PlayerAnimation/playerIdle{player.playerAnimationCounter}");
@@ -69,14 +68,11 @@ namespace TheShaman
                         player.playerAnimationHitCounter = 1;
                         player.isHitting = false;
                     }
-
                 }
-
                 if (player.isPushing == true && player.mana != 0 )
                 {
 
                     player.playerTexture = Content.Load<Texture2D>($"PlayerFlipAnimation/playerPushFlip{player.playerPushingAnimationCounter}");
-
                     player.playerPushingAnimationCounter += 1;
                     if (player.playerPushingAnimationCounter == 7)
                     {
@@ -84,18 +80,12 @@ namespace TheShaman
                         player.playerPushingAnimationCounter = 5;
                         player.isPushing = false;
                     }
-
-
-
                 }
-
             }
             else
             {
                 if (player.isHitting == true)
                 {
-                    
-
                     player.playerTexture = Content.Load<Texture2D>($"PlayerAnimation/playerHit{player.playerAnimationHitCounter}");
 
                     player.playerAnimationHitCounter += 1;
@@ -105,14 +95,12 @@ namespace TheShaman
                         player.playerAnimationHitCounter = 1;
                         player.isHitting = false;
                     }
-
                 }
 
                 if (player.isPushing == true && player.mana != 0 && !player.isFlipped)
                 {
 
                     player.playerTexture = Content.Load<Texture2D>($"PlayerAnimation/playerPush{player.playerPushingAnimationCounter}");
-
                     player.playerPushingAnimationCounter += 1;
                     if (player.playerPushingAnimationCounter == 7)
                     {
@@ -121,8 +109,6 @@ namespace TheShaman
                         player.isPushing = false;
                     }
                 }
-              
-
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
@@ -215,191 +201,137 @@ namespace TheShaman
 
 
 
-        public void AnimalAnimation(Animals[] animals,Human[] humans , ContentManager content)
+        public void AnimalAnimation(List<Animals> animals, List<Human> humans, ContentManager content)
         {
 
-            foreach(Animals animal in animals)
+            foreach (Animals animal in animals)
             {
-                if (animal != null  )
+                if (!animal.isMoving)
                 {
-                    if(!animal.isMoving)
+                    animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/animal{animal.AnimalCounter}");
+                    animal.AnimalCounter += 1;
+                    if (animal.AnimalCounter == 5)
                     {
-                        animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/animal{animal.AnimalCounter}");
+                        animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/animal5");
+                        animal.AnimalCounter = 1;
+                    }
+                }
+                else
+                {
+                    animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/AnimalWalking{animal.AnimalWalkingCounter}");
+                    animal.AnimalWalkingCounter += 1;
+                    if (animal.AnimalWalkingCounter == 4)
+                    {
+                        animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/AnimalWalking4");
+                        animal.AnimalWalkingCounter = 1;
 
-                        animal.AnimalCounter += 1;
-                        if (animal.AnimalCounter == 5)
+                    }
+                }
+                if (animal.isAttacking)
+                {
+                    animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/AnimalAttacking{animal.AnimalWalkingCounter}");
+                    animal.AnimalWalkingCounter += 1;
+                    if (animal.AnimalWalkingCounter == 4)
+                    {
+                        animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/AnimalAttacking4");
+                        animal.AnimalWalkingCounter = 1;
+                    }
+                }
+            }
+        }
+
+
+        public void HumanAnimation(List<Human> humans, ContentManager content, Player player,Vector2 firePos)
+        {
+            for (int i = 0; i < humans.Count; i++)
+            {
+                if (humans[i].isFollowing == false)
+                {
+                    humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanSecondary{humans[i].humanIdleAnimationCounter}");
+                    humans[i].humanIdleAnimationCounter += 1;
+                    if (humans[i].humanIdleAnimationCounter == 5)
+                    {
+                        humans[i].humanTexture = content.Load<Texture2D>("HumansAnimation/HumanSecondary5");
+                        humans[i].humanIdleAnimationCounter = 1;
+                    }
+
+                }
+                else
+                {
+                    if (humans[i].humanPos.X <= player.playerPos.X)
+                    {
+                        humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanSecondaryWalking{humans[i].humanWalkingAnimationCounter}");
+                        humans[i].humanWalkingAnimationCounter += 1;
+                        if (humans[i].humanWalkingAnimationCounter == 4)
                         {
-                            animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/animal5");
-
-                            animal.AnimalCounter = 1;
-
+                            humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanSecondaryWalking1");
+                            humans[i].humanWalkingAnimationCounter = 1;
                         }
                     }
                     else
                     {
-                        animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/AnimalWalking{animal.AnimalWalkingCounter}");
-
-                        animal.AnimalWalkingCounter += 1;
-                        if (animal.AnimalWalkingCounter == 4)
+                        humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanSecondaryWalkingFlip{humans[i].humanWalkingAnimationCounter}");
+                        humans[i].humanWalkingAnimationCounter += 1;
+                        if (humans[i].humanWalkingAnimationCounter == 4)
                         {
-                            animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/AnimalWalking4");
-
-                            animal.AnimalWalkingCounter = 1;
-
+                            humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanSecondaryWalkingFlip1");
+                            humans[i].humanWalkingAnimationCounter = 1;
                         }
                     }
-
-
-                    if(animal.isAttacking)
-                    {
-                        animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/AnimalAttacking{animal.AnimalWalkingCounter}");
-
-                        animal.AnimalWalkingCounter += 1;
-                        if (animal.AnimalWalkingCounter == 4)
-                        {
-                            animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/AnimalAttacking4");
-
-                            animal.AnimalWalkingCounter = 1;
-
-                        }
-                    }
-
 
                 }
-
-
-                
-
-
-
-                    
+                //sorry again dont have time to fix it xD
+                if (humans[i].humanHealth <= 18)
+                {
+                    humans[i].HealthBar = content.Load<Texture2D>("HealthBar1");
+                }
+                if (humans[i].humanHealth <= 16)
+                {
+                    humans[i].HealthBar = content.Load<Texture2D>("HealthBar2");
+                }
+                if (humans[i].humanHealth <= 14)
+                {
+                    humans[i].HealthBar = content.Load<Texture2D>("HealthBar3");
+                }
+                if (humans[i].humanHealth <= 12)
+                {
+                    humans[i].HealthBar = content.Load<Texture2D>("HealthBar4");
+                }
+                if (humans[i].humanHealth <= 8)
+                {
+                    humans[i].HealthBar = content.Load<Texture2D>("HealthBar5");
+                }
+                if (humans[i].humanHealth <= 7)
+                {
+                    humans[i].HealthBar = content.Load<Texture2D>("HealthBar6");
+                }
+                if (humans[i].humanHealth <= 5)
+                {
+                    humans[i].HealthBar = content.Load<Texture2D>($"HealthBar7");
+                }
+                if (humans[i].humanHealth <= 3)
+                {
+                    humans[i].HealthBar = content.Load<Texture2D>($"HealthBar8");
+                }
+                if (humans[i].humanHealth <= 1)
+                {
+                    humans[i].HealthBar = content.Load<Texture2D>($"HealthBar9");
+                }
             }
-               
-            
-
-          
         }
-
-
-        public void HumanAnimation(Human[] humans, ContentManager content, Player player,Vector2 firePos)
+        public void waterAnimation(List<Water> waters, ContentManager content)
         {
-            for (int i = 0; i < humans.Length; i++)
+            foreach (var water in waters)
             {
-                if (humans[i] != null)
+                water.waterTexture = content.Load<Texture2D>($"waterMove{water.animationCounter}");
+                water.animationCounter += 1;
+
+                if (water.animationCounter == 10)
                 {
-                    if (humans[i].isFollowing == false)
-                    {
-                        humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanSecondary{humans[i].humanIdleAnimationCounter}");
-
-                        humans[i].humanIdleAnimationCounter += 1;
-
-                        if (humans[i].humanIdleAnimationCounter == 5)
-                        {
-                            humans[i].humanTexture = content.Load<Texture2D>("HumansAnimation/HumanSecondary5");
-
-                            humans[i].humanIdleAnimationCounter = 1;
-
-                        }
-
-                    }
-                    else
-                    {
-                        if (humans[i].humanPos.X <= player.playerPos.X)
-                        {
-                            humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanSecondaryWalking{humans[i].humanWalkingAnimationCounter}");
-                            humans[i].humanWalkingAnimationCounter += 1;
-
-                            if (humans[i].humanWalkingAnimationCounter == 4)
-                            {
-                                humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanSecondaryWalking1");
-                                humans[i].humanWalkingAnimationCounter = 1;
-                            }
-                        }
-                        else
-                        {
-                            humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanSecondaryWalkingFlip{humans[i].humanWalkingAnimationCounter}");
-                            humans[i].humanWalkingAnimationCounter += 1;
-
-                            if (humans[i].humanWalkingAnimationCounter == 4)
-                            {
-                                humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanSecondaryWalkingFlip1");
-                                humans[i].humanWalkingAnimationCounter = 1;
-                            }
-                        }
-
-                    }
-
-                
-                    //sorry again dont have time to fix it xD
-
-                    if (humans[i].humanHealth <= 18)
-                    {
-                        humans[i].HealthBar = content.Load<Texture2D>("HealthBar1");
-                    }
-                    if(humans[i].humanHealth <= 16)
-                    {
-                        humans[i].HealthBar = content.Load<Texture2D>("HealthBar2");
-                    }
-                    if(humans[i].humanHealth <= 14)
-                    {
-                        humans[i].HealthBar = content.Load<Texture2D>("HealthBar3");
-                    }
-                    if(humans[i].humanHealth <= 12)
-                    {
-                        humans[i].HealthBar = content.Load<Texture2D>("HealthBar4");
-                    }
-                    if (humans[i].humanHealth <= 8)
-                    {
-                        humans[i].HealthBar = content.Load<Texture2D>("HealthBar5");
-                    }
-                    if(humans[i].humanHealth <= 7)
-                    {
-                        humans[i].HealthBar = content.Load<Texture2D>("HealthBar6");
-                    }
-                    if (humans[i].humanHealth <= 5)
-                    {
-                        humans[i].HealthBar = content.Load<Texture2D>($"HealthBar7");
-                    }
-                    if (humans[i].humanHealth <= 3)
-                    {
-                        humans[i].HealthBar = content.Load<Texture2D>($"HealthBar8");
-                    }
-                    if (humans[i].humanHealth <= 1)
-                    {
-                        humans[i].HealthBar = content.Load<Texture2D>($"HealthBar9");
-                    }
-
+                    water.waterTexture = content.Load<Texture2D>($"waterMove10");
+                    water.animationCounter = 1;
                 }
             }
-
-
         }
-
-        public void waterAnimation(Water[] water , ContentManager content)
-        {
-
-            foreach(var waters in water)
-            {
-                if (waters != null)
-                {
-
-                waters.waterTexture = content.Load<Texture2D>($"waterMove{waters.animationCounter}");
-                    waters.animationCounter += 1; 
-
-                if(waters.animationCounter == 10)
-                {
-                    waters.waterTexture = content.Load<Texture2D>($"waterMove10");
-                    waters.animationCounter = 1;
-                }
-                }
-            }
-
-
-
-        }
-
-        
-
-
     }
 }

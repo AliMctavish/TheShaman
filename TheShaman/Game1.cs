@@ -95,23 +95,14 @@ namespace TheShaman
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
             player.playerTexture = Content.Load<Texture2D>("PlayerAnimation/playerIdle1");
-
             fireTexture = Content.Load<Texture2D>("fireAnimation1");
-
             spriteFont = Content.Load<SpriteFont>("File");
             StartGame = Content.Load<Texture2D>("StartGame1");
             player.manaBarTexture = Content.Load<Texture2D>("ManaBar1");
-
-
-  
             GameOver = Content.Load<Texture2D>("GameOver1");
-
             infoGame = Content.Load<Texture2D>("info");
             sound = Content.Load<SoundEffect>("backgroundMusic");
-
-
             background = Content.Load<Texture2D>("background");
 
 
