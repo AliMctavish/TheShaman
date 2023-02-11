@@ -20,7 +20,6 @@ namespace TheShaman
         private SpriteBatch _spriteBatch;
         private Maps level = new Maps();
         private Player player;
-        private Water[] water;
         private Vector2 firePos;
         private Texture2D fireTexture;
         private Texture2D GameOver;
@@ -34,21 +33,16 @@ namespace TheShaman
         float waitingTime = 0;
         private int selectLevel = 1;
         LevelEditor levelMapper = new LevelEditor();
-        Ground[] ground;
-        Human[] human;
-        Tree[] tree;
-        int xAxis = 0;
-        int yAxis = 0;
-        double timer = 20;
-        private bool startFollow = false;
+        List<Ground> ground;
+        List<Human> human;
+        List<Tree> tree;
+        List<Water> water;
+        List<Animals> animals;
         SpriteFont spriteFont;
         AnimationManager animationManager;
-            bool zrba = false;
         GamePhysics gamePhysics;
         public bool loseGameState = true;
         public bool startGameState = false;
-        Animals[] animals;
-        float sum = 0;
         bool infoState = false;
 
         private Texture2D background;
@@ -77,14 +71,12 @@ namespace TheShaman
 
            animationManager = new AnimationManager();
             gamePhysics = new GamePhysics();
-            ground = new Ground[sumOfArrays];
-            human = new Human[sumOfArrays];
-            animals = new Animals[sumOfArrays];
-            water = new Water[sumOfArrays];
-            tree = new Tree[sumOfArrays];
 
-            
-
+            ground = new List<Ground>();
+            human = new List<Human>();  
+            tree = new List<Tree>();
+            water = new List<Water>();
+            animals = new List<Animals>();
 
             player = new Player();
             
@@ -132,7 +124,7 @@ namespace TheShaman
 
             levelMapper.StartMapping(ground, map ,human, animals, water, tree, Content);
             
-            sound.Play();
+            //sound.Play();
             firePos = new Vector2(1500, 700);
 
             // ground =level.Map(Content);
@@ -171,12 +163,9 @@ namespace TheShaman
 
                 loseGameState = true;
 
-                for(int i = 0; i < human.Length; i++)
+                for(int i = 0; i < human.Count; i++)
                 {
-                    if (human[i] != null)
-                    {
                     human[i].humanHealth = 20;
-                    }
                     player.mana = 20;
                 }
 
@@ -185,33 +174,14 @@ namespace TheShaman
             {
 
 
-                timer -= gameTime.TotalGameTime.TotalSeconds;
                 waitingTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-
-
-
 
 
                 gamePhysics.playerBounderies(player, human, firePos);
                 gamePhysics.humansBounderies(human, animals, gameTime);
                 gamePhysics.treeColliders(player, human, animals, tree);
                 gamePhysics.waterColliders(water,player, human, animals);
-
-
-
-               
-
-
-                    gamePhysics.PushAnimals(player, animals, gameTime);
-
-                
-
-
-
-
-
-
+                gamePhysics.PushAnimals(player, animals, gameTime);
 
 
                 if (waitingTime > animateCounter)
@@ -230,12 +200,6 @@ namespace TheShaman
                     fireAnimate += 1;  
                     animateCounter += 0.1f;
                 }
-
-
-
-
-
-
                 float time = (float)gameTime.TotalGameTime.TotalSeconds;
 
 
@@ -265,6 +229,9 @@ namespace TheShaman
 
                 // TODO: Add your update logic here
             }
+
+
+
 
             base.Update(gameTime);
         }

@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Content;
 using System.Reflection.Metadata;
+using MonoGame.Extended.Collections;
 
 namespace TheShaman
 {
@@ -18,8 +19,15 @@ namespace TheShaman
       
         int num = 0;
         private int groundAxis = 50;
+        private Ground ground;
+        private Human human;
+        private Animals animal;
+        private Water water;
+        private Tree tree;
 
-        public void StartMapping(Ground[] ground , string[] map, Human[] humans , Animals[] animals, Water[] water, Tree[] tree , ContentManager Content)
+
+
+        public void StartMapping(List<Ground> grounds , string[] map, List<Human> humans , List<Animals> animals, List<Water> waters, List<Tree> trees , ContentManager Content)
         {
 
             for (int i = 0; i < map.Length; i++)
@@ -28,22 +36,21 @@ namespace TheShaman
                 {
                     if (map[i][j] == '#')
                     {
-                        ground[num] = new Ground(50 * j, i * 50 + 50);
-                        ground[num].groundTexture = Content.Load<Texture2D>("Mashroom");
-                        num++;
+                        ground = new Ground(50 * j, i * 50 + 50);
+                        ground.groundTexture = Content.Load<Texture2D>("Mashroom");
+                        grounds.Add(ground);
                     }
                     if (map[i][j] == '$')
                     {
-                        ground[num] = new Ground(50 * j, i * 50 + 50);
-                        ground[num].groundTexture = Content.Load<Texture2D>("ground");
-                        num++;
+                        ground = new Ground(50 * j, i * 50 + 50);
+                        ground.groundTexture = Content.Load<Texture2D>("ground");
+                        grounds.Add(ground);
                     }
                     if (map[i][j] == '%')
                     {
-                        ground[num] = new Ground(50 * j, i * 50 + 50);
-                        ground[num].groundTexture = Content.Load<Texture2D>("ground2");
-
-                        num++;
+                        ground = new Ground(50 * j, i * 50 + 50);
+                        ground.groundTexture = Content.Load<Texture2D>("ground2");
+                        grounds.Add(ground);
                     }
 
                        
@@ -56,13 +63,13 @@ namespace TheShaman
                         //}
                         if (map[i][j] == 'x')
                     {
-                        animals[num] = new Animals();
-                        animals[num].animalPos = new Vector2(50 * j, i * 50);
-                        animals[num].animalTexture = Content.Load<Texture2D>("AnimalAnimation/animal1");
-
-                        ground[num] = new Ground(50 * j, i * 50 + 50);
-                        ground[num].groundTexture = Content.Load<Texture2D>("ground");
-                        num++;
+                        animal = new Animals();
+                        animal.animalPos = new Vector2(50 * j, i * 50);
+                        animal.animalTexture = Content.Load<Texture2D>("AnimalAnimation/animal1");
+                        animals.Add(animal);
+                        ground = new Ground(50 * j, i * 50 + 50);
+                        ground.groundTexture = Content.Load<Texture2D>("ground");
+                        grounds.Add(ground); 
 
                     }
                     if (map[i][j] == '.')
@@ -71,11 +78,10 @@ namespace TheShaman
                     }
                     if (map[i][j] == '@')
                     {
-                        water[num] = new Water();
-                        water[num].waterPos = new Vector2(50 * j, i * 50 + 50);
-                        water[num].waterTexture = Content.Load<Texture2D>("waterMove1");
-
-                        num++;
+                        water = new Water();
+                        water.waterPos = new Vector2(50 * j, i * 50 + 50);
+                        water.waterTexture = Content.Load<Texture2D>("waterMove1");
+                        waters.Add(water);
                     }
                     //if (map[i][j] == '?')
                     //{
@@ -88,23 +94,24 @@ namespace TheShaman
                     //}
                     if (map[i][j] == '!')
                     {
-                        humans[num] = new Human();
-                        humans[num].humanPos = new Vector2(50 * j, i * 50);
-                        humans[num].humanTexture = Content.Load<Texture2D>("HumansAnimation/HumanSecondary1");
-                        humans[num].HealthBar = Content.Load<Texture2D>("HealthBar1");
-                        ground[num] = new Ground(50 * j, i * 50 + 50);
-                        ground[num].groundTexture = Content.Load<Texture2D>("ground");
-                        num++;
+                        human = new Human();
+                        human.humanPos = new Vector2(50 * j, i * 50);
+                        human.humanTexture = Content.Load<Texture2D>("HumansAnimation/HumanSecondary1");
+                        human.HealthBar = Content.Load<Texture2D>("HealthBar1");
+                        ground = new Ground(50 * j, i * 50 + 50);
+                        ground.groundTexture = Content.Load<Texture2D>("ground");
+                        humans.Add(human);
+                        grounds.Add(ground);
                     }
                     if (map[i][j] == '|')
                     {
-                        tree[num] = new Tree();
-                        tree[num].treePos = new Vector2(50 * j, i * 50);
-                        tree[num].treeTexture = Content.Load<Texture2D>("tree-export");
-                        ground[num] = new Ground(50 * j, i * 50 + 50);
-                        ground[num].groundTexture = Content.Load<Texture2D>("ground");
-
-                        num++;
+                        tree = new Tree();
+                        tree.treePos = new Vector2(50 * j, i * 50);
+                        tree.treeTexture = Content.Load<Texture2D>("tree-export");
+                        ground= new Ground(50 * j, i * 50 + 50);
+                        ground.groundTexture = Content.Load<Texture2D>("ground");
+                        trees.Add(tree);
+                        grounds.Add(ground);
                     }
 
 
