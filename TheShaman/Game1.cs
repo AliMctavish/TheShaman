@@ -58,13 +58,8 @@ namespace TheShaman
             IsMouseVisible = false;
         }
         protected override void Initialize()
-        {
-            int sumOfArrays = -1;
-            foreach (var cell in level.LoadLevel(selectLevel))
-            {
-                sumOfArrays += cell.Length;
-            }
-           animationManager = new AnimationManager();
+        {      
+            animationManager = new AnimationManager();
             gamePhysics = new GamePhysics();
             ground = new List<Ground>();
             human = new List<Human>();  
@@ -108,7 +103,9 @@ namespace TheShaman
                 {
                     startGameState = true;
                     startStateClicked= true;
+                    winState = false;
                     player.playerPos = new Vector2(1200,800);
+                    hum.Clear();
                     human.Clear();
                     animals.Clear();
                     water.Clear();
@@ -187,6 +184,8 @@ namespace TheShaman
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
+
+
             if (loseGameState)
             {
                 if (startGameState == true)
@@ -194,6 +193,8 @@ namespace TheShaman
                     if (winState == false)
                     {
                         _spriteBatch.Begin(transformMatrix: cam.GetViewMatrix());
+
+
                         foreach (var water in water)
                         {
                                 _spriteBatch.Draw(water.waterTexture, new Vector2(water.waterPos.X - 50, water.waterPos.Y - 50), Color.White);
@@ -244,15 +245,11 @@ namespace TheShaman
                     }
                     else
                     {
-                        GraphicsDevice.Clear(Color.White);
+                        GraphicsDevice.Clear(Color.Black);
                         _spriteBatch.Begin();
-                        _spriteBatch.Draw(background, new Rectangle(0, 0, 1200, 600), Color.White);
-                        _spriteBatch.Draw(StartGame, new Rectangle(160, 10, 900, 600), Color.White);
-                        _spriteBatch.DrawString(spriteFont, "Press 'Space' For Help !", new Vector2(900, 500), Color.White);
-                        if (infoState == true)
-                        {
-                            _spriteBatch.Draw(infoGame, new Vector2(0, 0), Color.White);
-                        }
+                        _spriteBatch.DrawString(spriteFont, "You Won !", new Vector2(1200/2, 600/2), Color.White);
+                        _spriteBatch.DrawString(spriteFont, "press Enter To Move To The Next Level", new Vector2(1200/2, 200), Color.White);
+                       
                         _spriteBatch.End();
                     }
                 }
@@ -290,15 +287,18 @@ namespace TheShaman
                         player.mana += 2;
                     }
 
-                    if (hum.Count >= 8)
+                    if (hum.Count == human.Count)
                     {
-                        winState = true;
+                        winState= true;
+                        selectLevel += 1;
                     }
-                }   
-                    if(startGameState== true)
-                {
-                    _spriteBatch.DrawString(spriteFont, $"number of followers : {hum.Count} / 8", new Vector2(800, 50), Color.White);
                 }
+                if(startGameState== true)
+                {
+                    _spriteBatch.DrawString(spriteFont, $"Level : {selectLevel} / 6", new Vector2(850, 30), Color.White);
+                    _spriteBatch.DrawString(spriteFont, $"number of followers : {hum.Count} / {human.Count}", new Vector2(850,60), Color.White);
+                }
+          
             }
             _spriteBatch.End();
             // TODO: Add your drawing code here
