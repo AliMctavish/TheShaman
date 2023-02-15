@@ -28,12 +28,14 @@ namespace TheShaman
         public bool isHitting = false;
         public bool isPushing = false;
 
-
+        public Texture2D HealthBar;
         public Texture2D manaBarTexture;
+        public Color playerColor = Color.White;
 
 
 
         public int mana = 20;
+        public int health = 20;
         
         public int AcceptedHumans = 0;
 

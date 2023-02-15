@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended.Timers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,12 +13,14 @@ namespace TheShaman
     internal class GamePhysics
     {
         float decreaseHealth = 2;
+        float playerDecreaseHealth = 2;
         float decreaseMana = 2;
         Random random= new Random();    
      
 
-        public void playerBounderies(Player player , List<Human> humans, Vector2 firePos)
+        public void playerBounderies(Player player , List<Human> humans, List<Animals> animals , Vector2 firePos, GameTime gameTime)
         {
+
             for (int i = 0; i < humans.Count; i++)
             {
                 if (humans[i] != null)
@@ -67,6 +70,48 @@ namespace TheShaman
                         movDir2.Normalize();
                         player.playerPos -= movDir2;
                     }  
+
+                    foreach(Animals animal in animals)
+                    {
+                    if(Vector2.Distance(player.playerPos , animal.animalPos) <= 200)
+                    {
+                        Vector2 movDir = player.playerPos - animal.animalPos;
+                        movDir.Normalize();
+                        animal.animalPos += movDir;
+                        animal.isMoving = true;    
+                            if (Vector2.Distance(player.playerPos ,  animal.animalPos) <= 70)
+                            {
+                                playerDecreaseHealth -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                                movDir = player.playerPos - animal.animalPos;
+                                movDir.Normalize();
+                                animal.animalPos -= movDir;
+                                if (playerDecreaseHealth <= 1)
+                                {
+                                    player.health -= 1;
+                                    playerDecreaseHealth = 1.4f;
+                                    player.playerColor = Color.Red;
+                                    animal.isAttacking = true;
+                                }
+                                else
+                                {
+                                    player.playerColor = Color.White;
+                                }
+                            }
+                            else
+                            {
+                                player.playerColor = Color.White;
+                                animal.isAttacking = false;
+                            }
+                        }
+                        else
+                        {
+                            animal.isMoving = false;
+                        }
+
+                    }
+                    
+
+
                 }
             }
         }
@@ -124,7 +169,7 @@ namespace TheShaman
                     }
                     else
                     {
-                        animals[i].isMoving = false;
+                        //animals[i].isMoving = false;
                     }
                 }
                 

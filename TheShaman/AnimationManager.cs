@@ -195,6 +195,47 @@ namespace TheShaman
                 player.manaBarTexture = Content.Load<Texture2D>($"ManaBar9");
             }
 
+            if(player.health == 20)
+            {
+                player.HealthBar= Content.Load<Texture2D>("HealthBar1");
+            }
+            if(player.health <= 18)
+            {
+                player.HealthBar = Content.Load<Texture2D>("HealthBar2");
+            }
+            if(player.health <= 16)
+            {
+                player.HealthBar = Content.Load<Texture2D>("HealthBar3");
+            }  
+            if(player.health <= 14)
+            {
+                player.HealthBar = Content.Load<Texture2D>("HealthBar4");
+            } 
+            if(player.health <= 12)
+            {
+                player.HealthBar = Content.Load<Texture2D>("HealthBar5");
+            } 
+            if(player.health <= 8)
+            {
+                player.HealthBar = Content.Load<Texture2D>("HealthBar6");
+            }  
+            if(player.health <= 7)
+            {
+                player.HealthBar = Content.Load<Texture2D>("HealthBar7");
+            }  
+            if(player.health <= 5)
+            {
+                player.HealthBar = Content.Load<Texture2D>("HealthBar8");
+            }
+            if (player.health <= 3)
+            {
+                player.HealthBar = Content.Load<Texture2D>("HealthBar8");
+            }
+            if(player.health <= 1)
+            {
+                player.HealthBar = Content.Load<Texture2D>("HealthBar9");
+            }
+
 
 
         }

@@ -134,7 +134,7 @@ namespace TheShaman
             if (loseGameState == true)
             {
                 waitingTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                gamePhysics.playerBounderies(player, human, firePos);
+                gamePhysics.playerBounderies(player, human, animals, firePos, gameTime);
                 gamePhysics.humansBounderies(human, animals, gameTime);
                 gamePhysics.treeColliders(player, human, animals, tree);
                 gamePhysics.waterColliders(water,player, human, animals);
@@ -207,7 +207,11 @@ namespace TheShaman
                         {
                             _spriteBatch.Draw(trees.treeTexture, new Vector2(trees.treePos.X - 50, trees.treePos.Y - 100), Color.White);
                         }
-                        _spriteBatch.Draw(player.playerTexture, new Vector2(player.playerPos.X - 50, player.playerPos.Y - 100), Color.White);
+
+
+                        _spriteBatch.Draw(player.playerTexture, new Vector2(player.playerPos.X - 50, player.playerPos.Y - 100), player.playerColor);
+
+
                         foreach (var animal in animals)
                         {
                                 _spriteBatch.Draw(animal.animalTexture, new Vector2(animal.animalPos.X - 50, animal.animalPos.Y - 50), Color.White);
@@ -240,7 +244,8 @@ namespace TheShaman
                                 loseGameState = false;
                             }
                         }
-                        _spriteBatch.Draw(player.manaBarTexture, new Vector2(player.playerPos.X - 40, player.playerPos.Y - 110), Color.White);
+                        _spriteBatch.Draw(player.manaBarTexture, new Vector2(player.playerPos.X - 40, player.playerPos.Y - 100), Color.White);
+                        _spriteBatch.Draw(player.HealthBar, new Vector2(player.playerPos.X - 40, player.playerPos.Y - 110), Color.White);
                         _spriteBatch.End();
                     }
                     else
