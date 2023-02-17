@@ -16,6 +16,7 @@ namespace TheShaman
         public bool isArrived = false;
         public bool isAdded = false;
         public bool isGettingHit = false;
+        public bool isArriving = false;
         public int humanHealth = 20;
         public Color damageColor = Color.White;
         public int humanIdleAnimationCounter = 1;

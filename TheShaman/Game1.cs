@@ -46,6 +46,7 @@ namespace TheShaman
         bool infoState = false;
         private Texture2D background;
         List<Human> hum = new List<Human>();
+        List<Animals> enchantedAnimal = new List<Animals>();
         OrthographicCamera cam;
         private bool startStateClicked = false;
 
@@ -119,9 +120,6 @@ namespace TheShaman
                 levelMapper.StartMapping(ground, map, human, animals, water, tree, Content);
                 startStateClicked = false;
             }
-
-
-
             if (loseGameState == false && startGameState == true && Keyboard.GetState().IsKeyDown(Keys.Enter))
             {
                 loseGameState = true;
@@ -175,6 +173,11 @@ namespace TheShaman
                     player.playerPos.X -= 2;
 
                 }
+                if(Keyboard.GetState().IsKeyDown(Keys.LeftAlt))
+                {
+
+                    gamePhysics.enchantAnimals(player, animals, gameTime);
+                }
                 cam.LookAt(player.playerPos);
                 // TODO: Add your update logic here
             }
@@ -214,7 +217,7 @@ namespace TheShaman
 
                         foreach (var animal in animals)
                         {
-                                _spriteBatch.Draw(animal.animalTexture, new Vector2(animal.animalPos.X - 50, animal.animalPos.Y - 50), Color.White);
+                                _spriteBatch.Draw(animal.animalTexture, new Vector2(animal.animalPos.X - 50, animal.animalPos.Y - 50), animal.animalColor);
                         }
                         _spriteBatch.Draw(fireTexture, new Vector2(firePos.X - 50, firePos.Y - 100), Color.White);
                         foreach (var human in human)
@@ -228,8 +231,6 @@ namespace TheShaman
                                 _spriteBatch.DrawString(spriteFont, "", new Vector2(0, 0), Color.White);
                             }
                             _spriteBatch.Draw(human.humanTexture, new Vector2(human.humanPos.X - 50, human.humanPos.Y - 100), human.damageColor);
-
-
                             if (Vector2.Distance(player.playerPos, human.humanPos) <= 50 && human.isFollowing == false && human.isArrived == false)
                             {
                                 _spriteBatch.DrawString(spriteFont, "Press 'Space' To Follow", new Vector2(player.playerPos.X + 50, player.playerPos.Y - 20), Color.White);
@@ -254,7 +255,6 @@ namespace TheShaman
                         _spriteBatch.Begin();
                         _spriteBatch.DrawString(spriteFont, "You Won !", new Vector2(1200/2, 600/2), Color.White);
                         _spriteBatch.DrawString(spriteFont, "press Enter To Move To The Next Level", new Vector2(1200/2, 200), Color.White);
-                       
                         _spriteBatch.End();
                     }
                 }
@@ -292,7 +292,7 @@ namespace TheShaman
                         player.mana += 2;
                     }
 
-                    if (hum.Count == human.Count)
+                    if (hum.Count == human.Count )
                     {
                         winState= true;
                         selectLevel += 1;

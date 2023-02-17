@@ -17,6 +17,7 @@ namespace TheShaman
         public bool isFlipped = false;
 
         public bool isMoving = false;
+        public Color animalColor = Color.White;
 
         public bool isAttacking = false;
 
