@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -19,16 +20,43 @@ namespace TheShaman
         public bool isArriving = false;
         public int humanHealth = 20;
         public Color damageColor = Color.White;
-        public int humanIdleAnimationCounter = 1;
+        private int humanIdleAnimationCounter = 1;
         public int humanWalkingAnimationCounter= 1;
         public Texture2D HealthBar;
         public int HealthCounter = 1;
+
+
+
+
+        public void AnimateIdleHuman(ContentManager content)
+        {
+            humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanSecondary{humanIdleAnimationCounter}");
+            humanIdleAnimationCounter += 1;
+            if (humanIdleAnimationCounter == 5)
+            {
+                humanTexture = content.Load<Texture2D>("HumansAnimation/HumanSecondary5");
+                humanIdleAnimationCounter = 1;
+            }
+        }
     }
 
     class SecondaryHuman : Human
     {
-        
+        private int humanIdleAnimationCounter = 1;
+        public void animateIdleHuman(ContentManager content)
+        {
+            humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanIdle{humanIdleAnimationCounter}");
+            humanIdleAnimationCounter += 1;
+            if (humanIdleAnimationCounter == 5)
+            {
+                humanTexture = content.Load<Texture2D>("HumansAnimation/HumanSecondary5");
+                humanIdleAnimationCounter = 1;
+            }
+        }
     }
+
+
+
         
 
 

@@ -288,14 +288,7 @@ namespace TheShaman
             {
                 if (humans[i].isFollowing == false)
                 {
-                    humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanSecondary{humans[i].humanIdleAnimationCounter}");
-                    humans[i].humanIdleAnimationCounter += 1;
-                    if (humans[i].humanIdleAnimationCounter == 5)
-                    {
-                        humans[i].humanTexture = content.Load<Texture2D>("HumansAnimation/HumanSecondary5");
-                        humans[i].humanIdleAnimationCounter = 1;
-                    }
-
+                    humans[i].AnimateIdleHuman(content);
                 }
                 else
                 {

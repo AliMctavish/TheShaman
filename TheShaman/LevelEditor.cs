@@ -16,7 +16,6 @@ namespace TheShaman
 {
     internal class LevelEditor
     {
-      
         int num = 0;
         private int groundAxis = 50;
         Random random= new Random();
@@ -25,12 +24,8 @@ namespace TheShaman
         private Animals animal;
         private Water water;
         private Tree tree;
-
-
-
         public void StartMapping(List<Ground> grounds , string[] map, List<Human> humans , List<Animals> animals, List<Water> waters, List<Tree> trees , ContentManager Content)
         {
-
             for (int i = 0; i < map.Length; i++)
             {
                 for (int j = 0; j < map[i].Length; j++)
@@ -52,9 +47,7 @@ namespace TheShaman
                         ground = new Ground(50 * j, i * 50 + 50);
                         ground.groundTexture = Content.Load<Texture2D>("ground2");
                         grounds.Add(ground);
-                    }
-
-                       
+                    }  
                         //if (map[i][j] == 'y')
                         //{
                         //    ground[num] = new Ground(64 * j, i * 64 + 50);
@@ -114,26 +107,9 @@ namespace TheShaman
                         trees.Add(tree);
                         grounds.Add(ground);
                     }
-
-
                 }
                 groundAxis += 50;
             }
-
-
-
-
         }
-
-       
-      
-
-
-
-
-
-
-
-
     }
 }

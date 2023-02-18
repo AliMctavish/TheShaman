@@ -12,12 +12,7 @@ namespace TheShaman
     internal class Player
     {
         public Texture2D playerTexture;
-
-
-
-
         public Vector2 playerPos = new Vector2(1200,800);
-
         public int playerAnimationCounter = 1;
         public int playerAnimationMovingCounter = 1;
         public int playerAnimationHitCounter = 1;
@@ -27,22 +22,12 @@ namespace TheShaman
         public bool isFlipped = false;
         public bool isHitting = false;
         public bool isPushing = false;
-
         public Texture2D HealthBar;
         public Texture2D manaBarTexture;
         public Color playerColor = Color.White;
-
-
-
         public int mana = 20;
         public int health = 20;
-        
         public int AcceptedHumans = 0;
-
-
-
-
-
     }
 
 
