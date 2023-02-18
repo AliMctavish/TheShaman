@@ -15,6 +15,7 @@ namespace TheShaman
 {
     internal class AnimationManager
     {
+        public int counter = 1;
         public void playerAnimation(Player player, ContentManager Content)
         {
             if (player.isFlipped == false)
@@ -235,53 +236,25 @@ namespace TheShaman
             {
                 player.HealthBar = Content.Load<Texture2D>("HealthBar9");
             }
-
-
-
         }
-
-
-
-        public void AnimalAnimation(List<Animals> animals, List<Human> humans, ContentManager content)
+        public void AnimalAnimation(List<Animals> animals, ContentManager content)
         {
-
             foreach (Animals animal in animals)
             {
                 if (!animal.isMoving)
                 {
-                    animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/animal{animal.AnimalCounter}");
-                    animal.AnimalCounter += 1;
-                    if (animal.AnimalCounter == 5)
-                    {
-                        animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/animal5");
-                        animal.AnimalCounter = 1;
-                    }
+                    animal.AnimateAnimal("AnimalAnimation/animal", 5 , content);
                 }
                 else
                 {
-                    animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/AnimalWalking{animal.AnimalWalkingCounter}");
-                    animal.AnimalWalkingCounter += 1;
-                    if (animal.AnimalWalkingCounter == 4)
-                    {
-                        animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/AnimalWalking4");
-                        animal.AnimalWalkingCounter = 1;
-
-                    }
+                    animal.AnimateAnimal("AnimalAnimation/AnimalWalking", 4 , content);
                 }
                 if (animal.isAttacking)
                 {
-                    animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/AnimalAttacking{animal.AnimalWalkingCounter}");
-                    animal.AnimalWalkingCounter += 1;
-                    if (animal.AnimalWalkingCounter == 4)
-                    {
-                        animal.animalTexture = content.Load<Texture2D>($"AnimalAnimation/AnimalAttacking4");
-                        animal.AnimalWalkingCounter = 1;
-                    }
+                    animal.AnimateAnimal("AnimalAnimation/AnimalAttacking", 4 , content);
                 }
             }
         }
-
-
         public void HumanAnimation(List<Human> humans, ContentManager content, Player player,Vector2 firePos)
         {
             for (int i = 0; i < humans.Count; i++)
@@ -304,23 +277,23 @@ namespace TheShaman
                     {
                         if (humans[i].GetType()==typeof(Human))
                         {
-                            humans[i].AnimateHuman("HumansAnimation/HumanSecondaryWalking",4,content);
+                            humans[i].AnimateMovingHuman("HumansAnimation/HumanSecondaryWalking",4,content);
                         }
                         if (humans[i].GetType() == typeof(SecondaryHuman))
                         {
-                            humans[i].AnimateHuman("HumansAnimation/HumanWalking", 4, content);
+                            humans[i].AnimateMovingHuman("HumansAnimation/HumanWalking", 4, content);
                         }
                     }
                     else
                     {
                         if (humans[i].GetType() == typeof(Human))
                         {
-                            humans[i].AnimateHuman("HumansAnimation/HumanSecondaryWalkingFlip", 4, content);
+                            humans[i].AnimateMovingHuman("HumansAnimation/HumanSecondaryWalkingFlip", 4, content);
                         }
 
                         if (humans[i].GetType() == typeof(SecondaryHuman))
                         {
-                            humans[i].AnimateHuman("HumansAnimation/HumanWalkingFlip", 4, content);
+                            humans[i].AnimateMovingHuman("HumansAnimation/HumanWalkingFlip", 4, content);
                         }
                     }
                 }

@@ -26,6 +26,7 @@ namespace TheShaman
         public int humanWalkingAnimationCounter= 1;
         public Texture2D HealthBar;
         public int HealthCounter = 1;
+        private int movingAnimationCounter = 1;
         public virtual void AnimateHuman(string filepath , int counter ,ContentManager content)
         {
             humanTexture = content.Load<Texture2D>($"{filepath}{idleAnimationCounter}");
@@ -36,11 +37,22 @@ namespace TheShaman
              idleAnimationCounter = 1;
             }
         }
+        public virtual void AnimateMovingHuman(string filepath , int counter ,ContentManager content)
+        {
+            humanTexture = content.Load<Texture2D>($"{filepath}{movingAnimationCounter}");
+            movingAnimationCounter += 1;
+            if (movingAnimationCounter == counter)
+            {
+             humanTexture = content.Load<Texture2D>($"{filepath}{counter}");
+                movingAnimationCounter = 1;
+            }
+        }
     }
 
     class SecondaryHuman : Human
     {
         private int idleAnimationCounter = 1;
+        private int movingAnimationCounter = 1;
         public override void AnimateHuman(string filepath, int counter, ContentManager content)
         {
             humanTexture = content.Load<Texture2D>($"{filepath}{idleAnimationCounter}");
@@ -51,12 +63,15 @@ namespace TheShaman
                 idleAnimationCounter = 1;
             }
         }
+        public override void AnimateMovingHuman(string filepath, int counter, ContentManager content)
+        {
+            humanTexture = content.Load<Texture2D>($"{filepath}{movingAnimationCounter}");
+            movingAnimationCounter += 1;
+            if (movingAnimationCounter == counter)
+            {
+                humanTexture = content.Load<Texture2D>($"{filepath}{counter}");
+                movingAnimationCounter = 1;
+            }
+        }
     }
-
-
-
-        
-
-
-
 }

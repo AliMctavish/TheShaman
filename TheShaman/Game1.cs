@@ -140,7 +140,7 @@ namespace TheShaman
                     animationManager.playerAnimation(player, Content);
                     animationManager.HumanAnimation(human, Content, player, firePos);
                     animationManager.waterAnimation(water, Content);
-                    animationManager.AnimalAnimation(animals,human, Content);
+                    animationManager.AnimalAnimation(animals, Content);
                     fireTexture = Content.Load<Texture2D>($"fireAnimation{fireAnimate}");
                     if (fireAnimate == 3)
                     {
