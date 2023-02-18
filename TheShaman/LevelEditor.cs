@@ -21,6 +21,7 @@ namespace TheShaman
         Random random= new Random();
         private Ground ground;
         private Human human;
+        private SecondaryHuman secondaryHuman;
         private Animals animal;
         private Water water;
         private Tree tree;
@@ -95,6 +96,17 @@ namespace TheShaman
                         ground = new Ground(50 * j, i * 50 + 50);
                         ground.groundTexture = Content.Load<Texture2D>("ground");
                         humans.Add(human);
+                        grounds.Add(ground);
+                    }  
+                    if (map[i][j] == '?')
+                    {
+                        secondaryHuman = new SecondaryHuman();
+                        secondaryHuman.humanPos = new Vector2( j * 50, i * 50);
+                        secondaryHuman.humanTexture = Content.Load<Texture2D>("HumansAnimation/HumanIdle1");
+                        human.HealthBar = Content.Load<Texture2D>("HealthBar1");
+                        ground = new Ground(50 * j, i * 50 + 50);
+                        ground.groundTexture = Content.Load<Texture2D>("ground");
+                        humans.Add(secondaryHuman);
                         grounds.Add(ground);
                     }
                     if (map[i][j] == '|')

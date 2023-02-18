@@ -3,7 +3,9 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,37 +22,33 @@ namespace TheShaman
         public bool isArriving = false;
         public int humanHealth = 20;
         public Color damageColor = Color.White;
-        private int humanIdleAnimationCounter = 1;
+        private int idleAnimationCounter = 1;
         public int humanWalkingAnimationCounter= 1;
         public Texture2D HealthBar;
         public int HealthCounter = 1;
-
-
-
-
-        public void AnimateIdleHuman(ContentManager content)
+        public virtual void AnimateHuman(string filepath , int counter ,ContentManager content)
         {
-            humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanSecondary{humanIdleAnimationCounter}");
-            humanIdleAnimationCounter += 1;
-            if (humanIdleAnimationCounter == 5)
+            humanTexture = content.Load<Texture2D>($"{filepath}{idleAnimationCounter}");
+            idleAnimationCounter += 1;
+            if (idleAnimationCounter == counter)
             {
-                humanTexture = content.Load<Texture2D>("HumansAnimation/HumanSecondary5");
-                humanIdleAnimationCounter = 1;
+             humanTexture = content.Load<Texture2D>($"{filepath}{counter}");
+             idleAnimationCounter = 1;
             }
         }
     }
 
     class SecondaryHuman : Human
     {
-        private int humanIdleAnimationCounter = 1;
-        public void animateIdleHuman(ContentManager content)
+        private int idleAnimationCounter = 1;
+        public override void AnimateHuman(string filepath, int counter, ContentManager content)
         {
-            humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanIdle{humanIdleAnimationCounter}");
-            humanIdleAnimationCounter += 1;
-            if (humanIdleAnimationCounter == 5)
+            humanTexture = content.Load<Texture2D>($"{filepath}{idleAnimationCounter}");
+            idleAnimationCounter += 1;
+            if (idleAnimationCounter == counter)
             {
-                humanTexture = content.Load<Texture2D>("HumansAnimation/HumanSecondary5");
-                humanIdleAnimationCounter = 1;
+                humanTexture = content.Load<Texture2D>($"{filepath}{counter}");
+                idleAnimationCounter = 1;
             }
         }
     }

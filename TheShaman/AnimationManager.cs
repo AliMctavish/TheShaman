@@ -288,31 +288,41 @@ namespace TheShaman
             {
                 if (humans[i].isFollowing == false)
                 {
-                    humans[i].AnimateIdleHuman(content);
+
+                    if (humans[i].GetType() == typeof(Human))
+                    {
+                    humans[i].AnimateHuman("HumansAnimation/HumanSecondary",5,content);
+                    }
+                    if(humans[i].GetType() == typeof(SecondaryHuman))
+                    {
+                    humans[i].AnimateHuman("HumansAnimation/HumanIdle",10,content);
+                    }
                 }
                 else
                 {
                     if (humans[i].humanPos.X <= player.playerPos.X)
                     {
-                        humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanSecondaryWalking{humans[i].humanWalkingAnimationCounter}");
-                        humans[i].humanWalkingAnimationCounter += 1;
-                        if (humans[i].humanWalkingAnimationCounter == 4)
+                        if (humans[i].GetType()==typeof(Human))
                         {
-                            humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanSecondaryWalking1");
-                            humans[i].humanWalkingAnimationCounter = 1;
+                            humans[i].AnimateHuman("HumansAnimation/HumanSecondaryWalking",4,content);
+                        }
+                        if (humans[i].GetType() == typeof(SecondaryHuman))
+                        {
+                            humans[i].AnimateHuman("HumansAnimation/HumanWalking", 4, content);
                         }
                     }
                     else
                     {
-                        humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanSecondaryWalkingFlip{humans[i].humanWalkingAnimationCounter}");
-                        humans[i].humanWalkingAnimationCounter += 1;
-                        if (humans[i].humanWalkingAnimationCounter == 4)
+                        if (humans[i].GetType() == typeof(Human))
                         {
-                            humans[i].humanTexture = content.Load<Texture2D>($"HumansAnimation/HumanSecondaryWalkingFlip1");
-                            humans[i].humanWalkingAnimationCounter = 1;
+                            humans[i].AnimateHuman("HumansAnimation/HumanSecondaryWalkingFlip", 4, content);
+                        }
+
+                        if (humans[i].GetType() == typeof(SecondaryHuman))
+                        {
+                            humans[i].AnimateHuman("HumansAnimation/HumanWalkingFlip", 4, content);
                         }
                     }
-
                 }
                 //sorry again dont have time to fix it xD
                 if (humans[i].humanHealth <= 18)

@@ -237,6 +237,7 @@ namespace TheShaman
                             {
                                 _spriteBatch.DrawString(spriteFont, "", new Vector2(0, 0), Color.AntiqueWhite);
                             }
+                            if(human.HealthBar != null)
                             _spriteBatch.Draw(human.HealthBar, new Vector2(human.humanPos.X - 30, human.humanPos.Y - 100), Color.White);
                             if (human.humanHealth <= 0)
                             {
