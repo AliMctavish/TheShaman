@@ -243,7 +243,7 @@ namespace TheShaman
             {
                 if (!animal.isMoving)
                 {
-                    animal.AnimateAnimal("AnimalAnimation/animal", 5 , content);
+                    animal.AnimateAnimal("AnimalAnimation/animal", 4 , content);
                 }
                 else
                 {
