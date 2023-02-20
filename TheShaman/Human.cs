@@ -48,7 +48,6 @@ namespace TheShaman
             }
         }
     }
-
     class SecondaryHuman : Human
     {
         private int idleAnimationCounter = 1;
@@ -63,7 +62,7 @@ namespace TheShaman
                 idleAnimationCounter = 1;
             }
         }
-        public override void AnimateMovingHuman(string filepath, int counter, ContentManager content)
+        public override void AnimateMovingHuman(string filepath,  int counter , ContentManager content)
         {
             humanTexture = content.Load<Texture2D>($"{filepath}{movingAnimationCounter}");
             movingAnimationCounter += 1;

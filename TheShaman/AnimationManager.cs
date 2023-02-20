@@ -247,7 +247,7 @@ namespace TheShaman
                 }
                 else
                 {
-                    animal.AnimateAnimal("AnimalAnimation/AnimalWalking", 4 , content);
+                    animal.AnimateAnimal("AnimalAnimation/AnimalWalking", 4  , content);
                 }
                 if (animal.isAttacking)
                 {
