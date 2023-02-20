@@ -27,7 +27,9 @@
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\AnimalAnimation\" />
+    <Folder Include="Content\AnimalAnimation\animalAttacking\" />
+    <Folder Include="Content\AnimalAnimation\animalWalking\" />
+    <Folder Include="Content\AnimalAnimation\animal\" />
   </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
     <Message Text="Restoring dotnet tools" Importance="High" />

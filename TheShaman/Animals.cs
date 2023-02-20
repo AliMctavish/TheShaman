@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
@@ -19,16 +20,14 @@ namespace TheShaman
         public Color animalColor = Color.White;
         public bool isAttacking = false;
         int fileCounter = 1;
-        public void AnimateAnimal(string filepath , int counter,  ContentManager content)
+        public void AnimateAnimal(string filepath , int counter ,  ContentManager content)
         {
-            if(animalTexture.Name != filepath)
+            animalTexture = content.Load<Texture2D>($"{filepath}{fileCounter}");
+            fileCounter += 1;
+            if(fileCounter == counter) 
             {
-                animalTexture = content.Load<Texture2D>($"{filepath}{fileCounter}");
-                fileCounter += 1;
-            }else
-            {
-                animalTexture = content.Load<Texture2D>($"{filepath}{fileCounter}");
-                fileCounter = 1;
+              animalTexture = content.Load<Texture2D>($"{filepath}{fileCounter}");
+              fileCounter = 1;
             }
         }
     }

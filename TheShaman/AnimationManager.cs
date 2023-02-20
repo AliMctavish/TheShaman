@@ -15,7 +15,8 @@ namespace TheShaman
 {
     internal class AnimationManager
     {
-        public int counter = 1;
+        public int counter = 0;
+        public int state = 1;
         public void playerAnimation(Player player, ContentManager Content)
         {
             if (player.isFlipped == false)
@@ -26,31 +27,18 @@ namespace TheShaman
             {
                 player.playerTexture = Content.Load<Texture2D>($"PlayerFlipAnimation/playerIdle{player.playerAnimationCounter}");
             }
-        
-            
             if (Keyboard.GetState().IsKeyDown(Keys.Right) && player.isHitting == false )
             {
                     player.isFlipped = false;
                 if (player.isFlipped == false)
                 {
-                    player.playerTexture = Content.Load<Texture2D>($"PlayerAnimation/playerMoving{player.playerAnimationMovingCounter}");
-                    player.playerAnimationMovingCounter += 1;
-                    if (player.playerAnimationMovingCounter == 4)
-                    {
-                        player.playerAnimationMovingCounter = 1;
-                    }
+                 player.PlayerMovingAnimation("PlayerAnimation/playerMoving", 4, Content);
                 }
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Left) && player.isHitting == false)
             {
                 player.isFlipped = true;
-                    player.playerTexture = Content.Load<Texture2D>($"PlayerFlipAnimation/playerMoving{player.playerAnimationMovingCounter}");
-
-                    player.playerAnimationMovingCounter += 1;
-                    if (player.playerAnimationMovingCounter == 4)
-                    {
-                        player.playerAnimationMovingCounter = 1;
-                    }
+                player.PlayerMovingAnimation("PlayerFlipAnimation/playerMoving", 4, Content);
             }
             player.playerAnimationCounter += 1;
             if (player.playerAnimationCounter == 6)
@@ -61,26 +49,11 @@ namespace TheShaman
             {
                 if (player.isHitting == true)
                 {
-                    player.playerTexture = Content.Load<Texture2D>($"PlayerFlipAnimation/playerHitFilp{player.playerAnimationHitCounter}");
-
-                    player.playerAnimationHitCounter += 1;
-                    if (player.playerAnimationHitCounter == 11)
-                    {
-                        player.playerAnimationHitCounter = 1;
-                        player.isHitting = false;
-                    }
+                 player.PlayerIsHittingFlipAnimation("PlayerFlipAnimation/playerHitFilp", 11, Content); 
                 }
                 if (player.isPushing == true && player.mana != 0 )
                 {
-
-                    player.playerTexture = Content.Load<Texture2D>($"PlayerFlipAnimation/playerPushFlip{player.playerPushingAnimationCounter}");
-                    player.playerPushingAnimationCounter += 1;
-                    if (player.playerPushingAnimationCounter == 7)
-                    {
-                        player.playerTexture = Content.Load<Texture2D>($"PlayerFlipAnimation/playerPushFlip7");
-                        player.playerPushingAnimationCounter = 5;
-                        player.isPushing = false;
-                    }
+                 player.PlayerIsPushingFlipAnimation("PlayerFlipAnimation/playerPushFlip" , 7 , Content);
                 }
             }
             else
@@ -88,27 +61,17 @@ namespace TheShaman
                 if (player.isHitting == true)
                 {
                     player.playerTexture = Content.Load<Texture2D>($"PlayerAnimation/playerHit{player.playerAnimationHitCounter}");
-
                     player.playerAnimationHitCounter += 1;
                     if (player.playerAnimationHitCounter == 11)
                     {
-
-                        player.playerAnimationHitCounter = 1;
-                        player.isHitting = false;
+                      player.playerAnimationHitCounter = 1;
+                      player.isHitting = false;
                     }
                 }
-
                 if (player.isPushing == true && player.mana != 0 && !player.isFlipped)
                 {
-
-                    player.playerTexture = Content.Load<Texture2D>($"PlayerAnimation/playerPush{player.playerPushingAnimationCounter}");
-                    player.playerPushingAnimationCounter += 1;
-                    if (player.playerPushingAnimationCounter == 7)
-                    {
-                        player.playerTexture = Content.Load<Texture2D>($"PlayerAnimation/playerPush7");
-                        player.playerPushingAnimationCounter = 5;
-                        player.isPushing = false;
-                    }
+                    player.PlayerIsPushingAnimation("PlayerAnimation/playerPush", 7, Content);
+                   
                 }
             }
 
@@ -144,12 +107,7 @@ namespace TheShaman
                 player.isFlipped = false;
                 if (player.isFlipped == false)
                 {
-                    player.playerTexture = Content.Load<Texture2D>($"PlayerAnimation/playerWalkingDown{player.playerAnimationMovingDownCounter}");
-                    player.playerAnimationMovingDownCounter += 1;
-                    if (player.playerAnimationMovingDownCounter == 3)
-                    {
-                        player.playerAnimationMovingDownCounter = 1;
-                    }
+                 player.PlayerWalkingDownAnimation("PlayerAnimation/playerWalkingDown", 3, Content);
                 }
             }
 
@@ -241,12 +199,12 @@ namespace TheShaman
         {
             foreach (Animals animal in animals)
             {
-                if (!animal.isMoving)
+                if (!animal.isMoving )
                 {
-                    animal.AnimateAnimal("AnimalAnimation/animal", 4 , content);
+                     animal.AnimateAnimal("AnimalAnimation/animal", 4 , content);   
                 }
-                else
-                {
+                if(animal.isMoving)
+                { 
                     animal.AnimateAnimal("AnimalAnimation/AnimalWalking", 4  , content);
                 }
                 if (animal.isAttacking)
