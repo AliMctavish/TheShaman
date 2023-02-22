@@ -196,7 +196,6 @@ namespace TheShaman
             {
                 if (humans[i].isFollowing == false)
                 {
-
                     if (humans[i].GetType() == typeof(Human))
                     {
                     humans[i].AnimateHuman("HumansAnimation/HumanSecondary",5 , 1,content);

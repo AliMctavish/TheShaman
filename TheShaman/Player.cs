@@ -25,13 +25,13 @@ namespace TheShaman
         public int health = 20;
         public int AcceptedHumans = 0;
         private int[] fileCounter = { 1, 2, 3, 4, 5, 6 };
-        public void PlayerAnimation(string filePath, int counter, int type, ContentManager content)
+        public void PlayerAnimation(string filePath, int animationCounter, int type, ContentManager content)
         {
             if (type != 3)
             {
                 playerTexture = content.Load<Texture2D>($"{filePath}{fileCounter[type]}");
                 fileCounter[type] += 1;
-                if (fileCounter[type] == counter)
+                if (fileCounter[type] == animationCounter)
                 {
                     fileCounter[type] = 1;
                 }
@@ -40,7 +40,7 @@ namespace TheShaman
             {
                 playerTexture = content.Load<Texture2D>($"{filePath}{fileCounter[type]}");
                 fileCounter[type] += 1;
-                if (fileCounter[type] == counter)
+                if (fileCounter[type] == animationCounter)
                 {
                     fileCounter[type] = 5;
                 }
@@ -49,7 +49,7 @@ namespace TheShaman
             {
                 playerTexture = content.Load<Texture2D>($"{filePath}{fileCounter[type]}");
                 fileCounter[type] += 1;
-                if (fileCounter[type] == counter)
+                if (fileCounter[type] == animationCounter)
                 {
                     fileCounter[type] = 1;
                     isHitting = false;
