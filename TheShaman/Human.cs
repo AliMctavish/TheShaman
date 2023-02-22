@@ -24,7 +24,7 @@ namespace TheShaman
         public Color damageColor = Color.White;
         public Texture2D HealthBar;
         public int HealthCounter = 1;
-        private int[] fileCounter = { 1, 2 };
+        private int[] fileCounter = { 1, 2 , 3 };
         public virtual void AnimateHuman(string filepath , int counter, int type  ,ContentManager content)
         {
             humanTexture = content.Load<Texture2D>($"{filepath}{fileCounter[type]}");
@@ -38,7 +38,7 @@ namespace TheShaman
     }
     class SecondaryHuman : Human
     {
-        private int[] fileCounter = { 1, 2 };
+        private int[] fileCounter = { 1, 2, 3 };
 
         public override void AnimateHuman(string filepath, int counter , int type, ContentManager content)
         {

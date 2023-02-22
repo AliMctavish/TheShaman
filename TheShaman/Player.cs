@@ -45,6 +45,16 @@ namespace TheShaman
                     fileCounter[type] = 5;
                 }
             }
+            if(type == 4)
+            {
+                playerTexture = content.Load<Texture2D>($"{filePath}{fileCounter[type]}");
+                fileCounter[type] += 1;
+                if (fileCounter[type] == counter)
+                {
+                    fileCounter[type] = 1;
+                    isHitting = false;
+                }
+            }
         }
     }
 }

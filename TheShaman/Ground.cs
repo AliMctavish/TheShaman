@@ -19,9 +19,5 @@ namespace TheShaman
         {
             this.groundPos = new Rectangle(posX, posY, 50, 50);
         }
-
-
-      
-
     }
 }

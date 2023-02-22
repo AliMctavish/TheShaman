@@ -51,18 +51,16 @@ namespace TheShaman
                  player.PlayerAnimation("PlayerFlipAnimation/playerPushFlip" , 7 , 3, Content);
                     player.isPushing = true;
                 }
+                else
+                {
+                    player.isPushing = false;
+                }
             }
             else
             {
                 if (player.isHitting == true)
                 {
                     player.PlayerAnimation("PlayerAnimation/playerHit", 11, 4, Content);
-                 
-                }
-                if (player.isPushing == true && player.mana != 0 && !player.isFlipped)
-                {
-                   // player.PlayerAnimation("PlayerAnimation/playerPush", 7, 3, Content);
-                   
                 }
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
@@ -201,11 +199,11 @@ namespace TheShaman
 
                     if (humans[i].GetType() == typeof(Human))
                     {
-                    humans[i].AnimateHuman("HumansAnimation/HumanSecondary",5 , 0,content);
+                    humans[i].AnimateHuman("HumansAnimation/HumanSecondary",5 , 1,content);
                     }
                     if(humans[i].GetType() == typeof(SecondaryHuman))
                     {
-                    humans[i].AnimateHuman("HumansAnimation/HumanIdle",10 , 1,content);
+                    humans[i].AnimateHuman("HumansAnimation/HumanIdle",10 , 2,content);
                     }
                 }
                 else
@@ -218,7 +216,7 @@ namespace TheShaman
                         }
                         if (humans[i].GetType() == typeof(SecondaryHuman))
                         {
-                            humans[i].AnimateHuman("HumansAnimation/HumanWalking", 4 ,1, content);
+                            humans[i].AnimateHuman("HumansAnimation/HumanWalking", 4 ,0, content);
                         }
                     }
                     else
@@ -230,7 +228,7 @@ namespace TheShaman
 
                         if (humans[i].GetType() == typeof(SecondaryHuman))
                         {
-                            humans[i].AnimateHuman("HumansAnimation/HumanWalkingFlip", 4 ,1, content);
+                            humans[i].AnimateHuman("HumansAnimation/HumanWalkingFlip", 4 ,0, content);
                         }
                     }
                 }
