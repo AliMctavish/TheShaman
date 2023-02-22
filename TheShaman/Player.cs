@@ -14,13 +14,7 @@ namespace TheShaman
     internal class Player
     {
         public Texture2D playerTexture;
-        public Vector2 playerPos = new Vector2(1200,800);
-        public int playerAnimationCounter = 1;
-        public int playerAnimationMovingCounter = 1;
-        public int playerAnimationHitCounter = 1;
-        public int playerAnimationMovingUpCounter = 1;
-        public int playerAnimationMovingDownCounter = 1;
-        public int playerPushingAnimationCounter = 1;
+        public Vector2 playerPos = new Vector2(1200, 800);
         public bool isFlipped = false;
         public bool isHitting = false;
         public bool isPushing = false;
@@ -30,68 +24,27 @@ namespace TheShaman
         public int mana = 20;
         public int health = 20;
         public int AcceptedHumans = 0;
-
-
-
-        public void PlayerWalkingDownAnimation(string filePath , int counter , ContentManager content)
+        private int[] fileCounter = { 1, 2, 3, 4, 5, 6 };
+        public void PlayerAnimation(string filePath, int counter, int type, ContentManager content)
         {
-            playerTexture = content.Load<Texture2D>($"{filePath}{playerAnimationMovingDownCounter}");
-            playerAnimationMovingDownCounter += 1;
-            if (playerAnimationMovingDownCounter == counter)
+            if (type != 3)
             {
-                playerAnimationMovingDownCounter = 1;
+                playerTexture = content.Load<Texture2D>($"{filePath}{fileCounter[type]}");
+                fileCounter[type] += 1;
+                if (fileCounter[type] == counter)
+                {
+                    fileCounter[type] = 1;
+                }
             }
-        }
-
-
-        public void PlayerIsPushingAnimation(string filePath , int counter , ContentManager content)
-        {
-            playerTexture = content.Load<Texture2D>($"{filePath}{playerPushingAnimationCounter}");
-            playerPushingAnimationCounter += 1;
-            if (playerPushingAnimationCounter == counter)
+            else
             {
-                playerTexture = content.Load<Texture2D>($"PlayerAnimation/playerPush7");
-                playerPushingAnimationCounter = 5;
-                isPushing = false;
-            }
-        }
-        public void PlayerMovingAnimation(string filePath , int counter , ContentManager content)
-        {
-            playerTexture = content.Load<Texture2D>($"{filePath}{playerAnimationMovingCounter}");
-            playerAnimationMovingCounter += 1;
-            if (playerAnimationMovingCounter == counter)
-            {
-                playerAnimationMovingCounter = 1;
-            }
-        }
-        public void PlayerIsHittingFlipAnimation(string filePath, int counter, ContentManager content)
-        {
-            playerTexture = content.Load<Texture2D>($"{filePath}{playerAnimationHitCounter}");
-
-            playerAnimationHitCounter += 1;
-            if (playerAnimationHitCounter == counter)
-            {
-                playerAnimationHitCounter = 1;
-                isHitting = false;
-            }
-        }
-        public void PlayerIsPushingFlipAnimation(string filePath , int counter , ContentManager content)
-        {
-            playerTexture = content.Load<Texture2D>($"{filePath}{playerPushingAnimationCounter}");
-            playerPushingAnimationCounter += 1;
-            if (playerPushingAnimationCounter == counter)
-            {
-                playerTexture = content.Load<Texture2D>("PlayerFlipAnimation/playerPushFlip7");
-                playerPushingAnimationCounter = 5;
-                isPushing = false;
+                playerTexture = content.Load<Texture2D>($"{filePath}{fileCounter[type]}");
+                fileCounter[type] += 1;
+                if (fileCounter[type] == counter)
+                {
+                    fileCounter[type] = 5;
+                }
             }
         }
     }
-
-
-
-
-
-   
-  
 }

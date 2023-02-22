@@ -136,48 +136,41 @@ namespace TheShaman
                }
             }
         }
-
         public void enchantAnimals(Player player , List<Animals> animals , GameTime gameTime)
         {
             foreach(var animal in animals)
             {
-                if(Vector2.Distance(player.playerPos , animal.animalPos) <= 50)
+                if (Vector2.Distance(player.playerPos, animal.animalPos) <= 50)
                 {
-                    Vector2 movDir = player.playerPos- animal.animalPos;
+                    Vector2 movDir = player.playerPos - animal.animalPos;
                     movDir.Normalize();
                     animal.animalPos -= movDir * 2;
-                    animal.animalColor= Color.Green;
+                    animal.animalColor = Color.Green;
                 }
-                
-
             }
-
         }
-
-
-
-        public void PushAnimals(Player player , List<Animals> animals , GameTime gameTime)
+        public void PushAnimals(Player player, List<Animals> animals, GameTime gameTime)
         {
-          decreaseMana -= (float)gameTime.ElapsedGameTime.TotalSeconds * 2;
-          for (int i = 0; i < animals.Count; i++)
-          {
-              if (Keyboard.GetState().IsKeyDown(Keys.LeftControl))
-              {
-              if (Vector2.Distance(player.playerPos, animals[i].animalPos) <= 200 && player.mana != 0)
-              {
-                  Vector2 movDir = player.playerPos - animals[i].animalPos;
-                  movDir.Normalize();
-                  animals[i].animalPos -= movDir * 5;
-                  animals[i].isMoving = true;
-                  animals[i].isAttacking = false;
-              }
-                  if (decreaseMana <= 1 && player.mana != 0)
-                  {
-                      player.mana -= 1;
-                      decreaseMana = 2;
-                  }
-              }  
-          }
+            decreaseMana -= (float)gameTime.ElapsedGameTime.TotalSeconds * 2;
+            for (int i = 0; i < animals.Count; i++)
+            {
+                if (Keyboard.GetState().IsKeyDown(Keys.LeftControl))
+                {
+                    if (Vector2.Distance(player.playerPos, animals[i].animalPos) <= 200 && player.mana != 0)
+                    {
+                        Vector2 movDir = player.playerPos - animals[i].animalPos;
+                        movDir.Normalize();
+                        animals[i].animalPos -= movDir * 5;
+                        animals[i].isMoving = true;
+                        animals[i].isAttacking = false;
+                    }
+                    if (decreaseMana <= 1 && player.mana != 0)
+                    {
+                        player.mana -= 1;
+                        decreaseMana = 2;
+                    }
+                }
+            }
         }
         public void treeColliders(Player player, List<Human> humans, List<Animals> animals, List<Tree> trees)
         {
@@ -228,7 +221,6 @@ namespace TheShaman
                     movDir.Normalize();
                     player.playerPos += movDir * 2;
                 }
-
             }  
         }
     }

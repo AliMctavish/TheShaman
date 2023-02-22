@@ -21,96 +21,75 @@ namespace TheShaman
         {
             if (player.isFlipped == false)
             {
-                player.playerTexture = Content.Load<Texture2D>($"PlayerAnimation/playerIdle{player.playerAnimationCounter}");
+                player.PlayerAnimation("PlayerAnimation/playerIdle", 6, 2, Content);
             }
             else
             {
-                player.playerTexture = Content.Load<Texture2D>($"PlayerFlipAnimation/playerIdle{player.playerAnimationCounter}");
+                 player.PlayerAnimation("PlayerFlipAnimation/playerIdle", 6, 2, Content);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Right) && player.isHitting == false )
             {
                     player.isFlipped = false;
                 if (player.isFlipped == false)
                 {
-                 player.PlayerMovingAnimation("PlayerAnimation/playerMoving", 4, Content);
+                 player.PlayerAnimation("PlayerAnimation/playerMoving", 4, 1, Content);
                 }
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Left) && player.isHitting == false)
             {
                 player.isFlipped = true;
-                player.PlayerMovingAnimation("PlayerFlipAnimation/playerMoving", 4, Content);
-            }
-            player.playerAnimationCounter += 1;
-            if (player.playerAnimationCounter == 6)
-            {
-                player.playerAnimationCounter = 1;
+                player.PlayerAnimation("PlayerFlipAnimation/playerMoving", 4 , 1, Content);
             }
             if (player.isFlipped)
             {
                 if (player.isHitting == true)
                 {
-                 player.PlayerIsHittingFlipAnimation("PlayerFlipAnimation/playerHitFilp", 11, Content); 
+                 player.PlayerAnimation("PlayerFlipAnimation/playerHitFilp", 11, 4, Content); 
                 }
-                if (player.isPushing == true && player.mana != 0 )
+                if (Keyboard.GetState().IsKeyDown(Keys.LeftControl) &&  player.mana != 0 )
                 {
-                 player.PlayerIsPushingFlipAnimation("PlayerFlipAnimation/playerPushFlip" , 7 , Content);
+                 player.PlayerAnimation("PlayerFlipAnimation/playerPushFlip" , 7 , 3, Content);
+                    player.isPushing = true;
                 }
             }
             else
             {
                 if (player.isHitting == true)
                 {
-                    player.playerTexture = Content.Load<Texture2D>($"PlayerAnimation/playerHit{player.playerAnimationHitCounter}");
-                    player.playerAnimationHitCounter += 1;
-                    if (player.playerAnimationHitCounter == 11)
-                    {
-                      player.playerAnimationHitCounter = 1;
-                      player.isHitting = false;
-                    }
+                    player.PlayerAnimation("PlayerAnimation/playerHit", 11, 4, Content);
+                 
                 }
                 if (player.isPushing == true && player.mana != 0 && !player.isFlipped)
                 {
-                    player.PlayerIsPushingAnimation("PlayerAnimation/playerPush", 7, Content);
+                   // player.PlayerAnimation("PlayerAnimation/playerPush", 7, 3, Content);
                    
                 }
             }
-
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
             {
                 player.isHitting = true;
             }
-
-            if(Keyboard.GetState().IsKeyDown(Keys.LeftControl))
+            if(Keyboard.GetState().IsKeyDown(Keys.LeftControl) && player.mana != 0 && !player.isFlipped)
             {
+                player.PlayerAnimation("PlayerAnimation/playerPush", 7, 3, Content);
                 player.isPushing = true;
             }
-
-
             if(Keyboard.GetState().IsKeyDown(Keys.Up) &&  player.isHitting == false && player.isPushing == false)
             {
-
                 player.isFlipped = false;
                 if (player.isFlipped == false)
                 {
-                    player.playerTexture = Content.Load<Texture2D>($"PlayerAnimation/playerWalkingUp{player.playerAnimationMovingUpCounter}");
-                    player.playerAnimationMovingUpCounter += 1;
-                    if (player.playerAnimationMovingUpCounter == 7)
-                    {
-                        player.playerAnimationMovingUpCounter = 1;
-                    }
+                    player.PlayerAnimation("PlayerAnimation/playerWalkingUp" , 7 , 3 , Content);
                 }
             } 
-            
             if(Keyboard.GetState().IsKeyDown(Keys.Down) &&  player.isHitting == false && player.isPushing == false)
             {
-
                 player.isFlipped = false;
                 if (player.isFlipped == false)
                 {
-                 player.PlayerWalkingDownAnimation("PlayerAnimation/playerWalkingDown", 3, Content);
+                 player.PlayerAnimation("PlayerAnimation/playerWalkingDown", 3 ,0, Content);
                 }
             }
-
             //sorry for the recurrtion :p
 
             if(player.mana == 20)
@@ -201,15 +180,15 @@ namespace TheShaman
             {
                 if (!animal.isMoving )
                 {
-                     animal.AnimateAnimal("AnimalAnimation/animal", 4 , content);   
+                     animal.AnimateAnimal("AnimalAnimation/animal", 5 , 0 , content);   
                 }
                 if(animal.isMoving)
                 { 
-                    animal.AnimateAnimal("AnimalAnimation/AnimalWalking", 4  , content);
+                    animal.AnimateAnimal("AnimalAnimation/AnimalWalking", 4  , 1 , content);
                 }
                 if (animal.isAttacking)
                 {
-                    animal.AnimateAnimal("AnimalAnimation/AnimalAttacking", 4 , content);
+                    animal.AnimateAnimal("AnimalAnimation/AnimalAttacking", 4 , 2 , content);
                 }
             }
         }
@@ -222,11 +201,11 @@ namespace TheShaman
 
                     if (humans[i].GetType() == typeof(Human))
                     {
-                    humans[i].AnimateHuman("HumansAnimation/HumanSecondary",5,content);
+                    humans[i].AnimateHuman("HumansAnimation/HumanSecondary",5 , 0,content);
                     }
                     if(humans[i].GetType() == typeof(SecondaryHuman))
                     {
-                    humans[i].AnimateHuman("HumansAnimation/HumanIdle",10,content);
+                    humans[i].AnimateHuman("HumansAnimation/HumanIdle",10 , 1,content);
                     }
                 }
                 else
@@ -235,23 +214,23 @@ namespace TheShaman
                     {
                         if (humans[i].GetType()==typeof(Human))
                         {
-                            humans[i].AnimateMovingHuman("HumansAnimation/HumanSecondaryWalking",4,content);
+                            humans[i].AnimateHuman("HumansAnimation/HumanSecondaryWalking",4 , 0,content);
                         }
                         if (humans[i].GetType() == typeof(SecondaryHuman))
                         {
-                            humans[i].AnimateMovingHuman("HumansAnimation/HumanWalking", 4, content);
+                            humans[i].AnimateHuman("HumansAnimation/HumanWalking", 4 ,1, content);
                         }
                     }
                     else
                     {
                         if (humans[i].GetType() == typeof(Human))
                         {
-                            humans[i].AnimateMovingHuman("HumansAnimation/HumanSecondaryWalkingFlip", 4, content);
+                            humans[i].AnimateHuman("HumansAnimation/HumanSecondaryWalkingFlip", 4 ,0 , content);
                         }
 
                         if (humans[i].GetType() == typeof(SecondaryHuman))
                         {
-                            humans[i].AnimateMovingHuman("HumansAnimation/HumanWalkingFlip", 4, content);
+                            humans[i].AnimateHuman("HumansAnimation/HumanWalkingFlip", 4 ,1, content);
                         }
                     }
                 }

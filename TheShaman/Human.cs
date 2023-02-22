@@ -22,54 +22,32 @@ namespace TheShaman
         public bool isArriving = false;
         public int humanHealth = 20;
         public Color damageColor = Color.White;
-        private int idleAnimationCounter = 1;
-        public int humanWalkingAnimationCounter= 1;
         public Texture2D HealthBar;
         public int HealthCounter = 1;
-        private int movingAnimationCounter = 1;
-        public virtual void AnimateHuman(string filepath , int counter ,ContentManager content)
+        private int[] fileCounter = { 1, 2 };
+        public virtual void AnimateHuman(string filepath , int counter, int type  ,ContentManager content)
         {
-            humanTexture = content.Load<Texture2D>($"{filepath}{idleAnimationCounter}");
-            idleAnimationCounter += 1;
-            if (idleAnimationCounter == counter)
+            humanTexture = content.Load<Texture2D>($"{filepath}{fileCounter[type]}");
+            fileCounter[type] += 1;
+            if (fileCounter[type] == counter)
             {
              humanTexture = content.Load<Texture2D>($"{filepath}{counter}");
-             idleAnimationCounter = 1;
-            }
-        }
-        public virtual void AnimateMovingHuman(string filepath , int counter ,ContentManager content)
-        {
-            humanTexture = content.Load<Texture2D>($"{filepath}{movingAnimationCounter}");
-            movingAnimationCounter += 1;
-            if (movingAnimationCounter == counter)
-            {
-             humanTexture = content.Load<Texture2D>($"{filepath}{counter}");
-                movingAnimationCounter = 1;
+             fileCounter[type] = 1;
             }
         }
     }
     class SecondaryHuman : Human
     {
-        private int idleAnimationCounter = 1;
-        private int movingAnimationCounter = 1;
-        public override void AnimateHuman(string filepath, int counter, ContentManager content)
+        private int[] fileCounter = { 1, 2 };
+
+        public override void AnimateHuman(string filepath, int counter , int type, ContentManager content)
         {
-            humanTexture = content.Load<Texture2D>($"{filepath}{idleAnimationCounter}");
-            idleAnimationCounter += 1;
-            if (idleAnimationCounter == counter)
+            humanTexture = content.Load<Texture2D>($"{filepath}{fileCounter[type]}");
+            fileCounter[type] += 1;
+            if (fileCounter[type] == counter)
             {
                 humanTexture = content.Load<Texture2D>($"{filepath}{counter}");
-                idleAnimationCounter = 1;
-            }
-        }
-        public override void AnimateMovingHuman(string filepath,  int counter , ContentManager content)
-        {
-            humanTexture = content.Load<Texture2D>($"{filepath}{movingAnimationCounter}");
-            movingAnimationCounter += 1;
-            if (movingAnimationCounter == counter)
-            {
-                humanTexture = content.Load<Texture2D>($"{filepath}{counter}");
-                movingAnimationCounter = 1;
+                fileCounter[type] = 1;
             }
         }
     }
