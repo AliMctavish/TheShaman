@@ -21,11 +21,12 @@ namespace TheShaman
         Random random= new Random();
         private Ground ground;
         private Human human;
+        private hony hony;
         private SecondaryHuman secondaryHuman;
         private Animals animal;
         private Water water;
         private Tree tree;
-        public void StartMapping(List<Ground> grounds , string[] map, List<Human> humans , List<Animals> animals, List<Water> waters, List<Tree> trees , ContentManager Content)
+        public void StartMapping(List<Ground> grounds , string[] map, List<Human> humans , List<Animals> animals, List<Water> waters, List<Tree> trees , List<Items> items , ContentManager Content)
         {
             for (int i = 0; i < map.Length; i++)
             {
@@ -71,15 +72,16 @@ namespace TheShaman
                         water.waterTexture = Content.Load<Texture2D>("waterMove1");
                         waters.Add(water);
                     }
-                    //if (map[i][j] == '?')
-                    //{
-                    //    humans[num] = new Human();
-                    //    humans[num].humanPos = new Vector2(50 * j, i * 50);
-                    //    humans[num].humanTexture = Content.Load<Texture2D>("HumansAnimation/HumanSecondary1");
-                    //    ground[num] = new Ground(50 * j, i * 50 + 50);
-                    //    ground[num].groundTexture = Content.Load<Texture2D>("ground");
-                    //    num++;
-                    //}
+                    if (map[i][j] == '*')
+                    {
+                        hony = new hony();
+                        hony.ItemPos= new Vector2(50 * j, i * 50);
+                        hony.honyTexture = Content.Load<Texture2D>("hony-export");
+                        ground = new Ground(50 * j, i * 50 + 50);
+                        ground.groundTexture = Content.Load<Texture2D>("ground");
+                        grounds.Add(ground);
+                        items.Add(hony);
+                    }
                     if (map[i][j] == '!')
                     {
                         human = new Human();

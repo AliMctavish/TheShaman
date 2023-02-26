@@ -30,6 +30,7 @@
     <Folder Include="Content\AnimalAnimation\animalAttacking\" />
     <Folder Include="Content\AnimalAnimation\animalWalking\" />
     <Folder Include="Content\AnimalAnimation\animal\" />
+    <Folder Include="Content\Items\" />
   </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
     <Message Text="Restoring dotnet tools" Importance="High" />

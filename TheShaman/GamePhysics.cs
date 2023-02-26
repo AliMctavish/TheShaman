@@ -105,6 +105,22 @@ namespace TheShaman
                 }
             }
         }
+
+        public void takeHony(Player player, List<Items> items) 
+        {
+        
+            foreach(hony item in items.ToList())
+            {
+                if(item.GetType() == typeof(hony))
+                {
+                if(Vector2.Distance(player.playerPos, item.ItemPos) <= 50)
+                {
+                    items.Remove(item);
+                }
+                }
+            }
+        
+        }
         public void humansBounderies(List<Human> humans, List<Animals> animals, GameTime gameTime)
         {
             decreaseHealth -= (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -160,7 +176,7 @@ namespace TheShaman
                     {
                         Vector2 movDir = player.playerPos - animals[i].animalPos;
                         movDir.Normalize();
-                        animals[i].animalPos -= movDir * 5;
+                        animals[i].animalPos -= movDir * 10;
                         animals[i].isMoving = true;
                         animals[i].isAttacking = false;
                     }

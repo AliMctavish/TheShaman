@@ -38,6 +38,7 @@ namespace TheShaman
         List<Tree> tree;
         List<Water> water;
         List<Animals> animals;
+        List<Items> items;
         SpriteFont spriteFont;
         AnimationManager animationManager;
         GamePhysics gamePhysics;
@@ -67,6 +68,7 @@ namespace TheShaman
             tree = new List<Tree>();
             water = new List<Water>();
             animals = new List<Animals>();
+            items = new List<Items>();
             player = new Player();
             // TODO: Add your initialization logic here
             base.Initialize();
@@ -118,7 +120,7 @@ namespace TheShaman
             if(startStateClicked)
             {
                 string[] map = level.LoadLevel(selectLevel);
-                levelMapper.StartMapping(ground, map, human, animals, water, tree, Content);
+                levelMapper.StartMapping(ground, map, human, animals, water, tree , items, Content);
                 startStateClicked = false;
             }
             if (loseGameState == false && startGameState == true && Keyboard.GetState().IsKeyDown(Keys.Enter))
@@ -138,6 +140,7 @@ namespace TheShaman
                 gamePhysics.treeColliders(player, human, animals, tree);
                 gamePhysics.waterColliders(water,player, human, animals);
                 gamePhysics.PushAnimals(player, animals, gameTime);
+                gamePhysics.takeHony(player, items);
                 if (waitingTime > animateCounter)
                 {
                     animationManager.playerAnimation(player, Content);
@@ -214,6 +217,16 @@ namespace TheShaman
 
 
                         _spriteBatch.Draw(player.playerTexture, new Vector2(player.playerPos.X - 50, player.playerPos.Y - 100), player.playerColor);
+
+
+                        foreach(hony item in items)
+                        {
+                            if(item.GetType() == typeof(hony))
+                            {
+                                _spriteBatch.Draw(item.honyTexture, new Vector2(item.ItemPos.X - 50, item.ItemPos.Y - 100), Color.White);
+                            }
+                        }
+
 
 
                         foreach (var animal in animals)
