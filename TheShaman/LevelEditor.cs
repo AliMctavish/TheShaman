@@ -49,14 +49,7 @@ namespace TheShaman
                         ground.groundTexture = Content.Load<Texture2D>("ground2");
                         grounds.Add(ground);
                     }  
-                        //if (map[i][j] == 'y')
-                        //{
-                        //    ground[num] = new Ground(64 * j, i * 64 + 50);
-                        //    ground[num].groundTexture = Content.Load<Texture2D>("ground4");
-                        //    num++;
-
-                        //}
-                        if (map[i][j] == 'x')
+                    if (map[i][j] == 'x')
                     {
                         animal = new Animals();
                         animal.animalPos = new Vector2(50 * j, i * 50);

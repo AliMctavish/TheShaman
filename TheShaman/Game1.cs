@@ -104,6 +104,9 @@ namespace TheShaman
                     startStateClicked= true;
                     winState = false;
                     player.playerPos = new Vector2(1200,800);
+                    player.health = 20;
+                    player.mana = 20;
+                    player.playerColor= Color.White;
                     hum.Clear();
                     human.Clear();
                     animals.Clear();
@@ -240,6 +243,10 @@ namespace TheShaman
                             if(human.HealthBar != null)
                             _spriteBatch.Draw(human.HealthBar, new Vector2(human.humanPos.X - 30, human.humanPos.Y - 100), Color.White);
                             if (human.humanHealth <= 0)
+                            {
+                                loseGameState = false;
+                            }
+                            if(player.health <= 0)
                             {
                                 loseGameState = false;
                             }
