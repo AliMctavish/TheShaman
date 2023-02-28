@@ -18,42 +18,24 @@ namespace TheShaman
         public bool isFlipped = false;
         public bool isHitting = false;
         public bool isPushing = false;
+        public bool isIdle = true;
         public Texture2D HealthBar;
         public Texture2D manaBarTexture;
         public Color playerColor = Color.White;
         public int mana = 20;
         public int health = 20;
         public int AcceptedHumans = 0;
-        private int[] fileCounter = { 1, 2, 3, 4, 5, 6 };
-        public void PlayerAnimation(string filePath, int animationCounter, int type, ContentManager content)
+        private int fileCounter = 1;
+        public void PlayerAnimation(List<string> filePath , ContentManager content)
         {
-            if (type != 3)
+            if (fileCounter >= filePath.Count)
             {
-                playerTexture = content.Load<Texture2D>($"{filePath}{fileCounter[type]}");
-                fileCounter[type] += 1;
-                if (fileCounter[type] == animationCounter)
-                {
-                    fileCounter[type] = 1;
-                }
+                fileCounter = 0;
             }
             else
             {
-                playerTexture = content.Load<Texture2D>($"{filePath}{fileCounter[type]}");
-                fileCounter[type] += 1;
-                if (fileCounter[type] == animationCounter)
-                {
-                    fileCounter[type] = 5;
-                }
-            }
-            if(type == 4)
-            {
-                playerTexture = content.Load<Texture2D>($"{filePath}{fileCounter[type]}");
-                fileCounter[type] += 1;
-                if (fileCounter[type] == animationCounter)
-                {
-                    fileCounter[type] = 1;
-                    isHitting = false;
-                }
+                playerTexture = content.Load<Texture2D>($"{filePath[fileCounter]}");
+                fileCounter += 1;
             }
         }
     }

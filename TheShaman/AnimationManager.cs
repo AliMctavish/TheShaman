@@ -15,40 +15,44 @@ namespace TheShaman
 {
     internal class AnimationManager
     {
+        private FileManager _fileManager = new FileManager();
         public int counter = 0;
         public int state = 1;
         public void playerAnimation(Player player, ContentManager Content)
         {
-            if (player.isFlipped == false)
+            if(player.isIdle)
             {
-                player.PlayerAnimation("PlayerAnimation/playerIdle", 6, 2, Content);
-            }
-            else
-            {
-                 player.PlayerAnimation("PlayerFlipAnimation/playerIdle", 6, 2, Content);
+                if (player.isFlipped == false)
+                {
+                    player.PlayerAnimation(_fileManager.PlayerIdle, Content);
+                }
+                else
+                {
+                    player.PlayerAnimation(_fileManager.playerIdleFlip, Content);
+                }
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Right) && player.isHitting == false )
             {
                     player.isFlipped = false;
                 if (player.isFlipped == false)
                 {
-                 player.PlayerAnimation("PlayerAnimation/playerMoving", 4, 1, Content);
+                 player.PlayerAnimation(_fileManager.playerMoving , Content);
                 }
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Left) && player.isHitting == false)
             {
                 player.isFlipped = true;
-                player.PlayerAnimation("PlayerFlipAnimation/playerMoving", 4 , 1, Content);
+                player.PlayerAnimation(_fileManager.playerMovingFlip,Content);
             }
             if (player.isFlipped)
             {
                 if (player.isHitting == true)
                 {
-                 player.PlayerAnimation("PlayerFlipAnimation/playerHitFilp", 11, 4, Content); 
+                 player.PlayerAnimation(_fileManager.playerHtiFlip, Content); 
                 }
                 if (Keyboard.GetState().IsKeyDown(Keys.LeftControl) &&  player.mana != 0 )
                 {
-                 player.PlayerAnimation("PlayerFlipAnimation/playerPushFlip" , 7 , 3, Content);
+                 player.PlayerAnimation(_fileManager.playerPushFlip, Content);
                     player.isPushing = true;
                 }
                 else
@@ -60,7 +64,7 @@ namespace TheShaman
             {
                 if (player.isHitting == true)
                 {
-                    player.PlayerAnimation("PlayerAnimation/playerHit", 11, 4, Content);
+                    player.PlayerAnimation(_fileManager.playerHit, Content);
                 }
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
@@ -69,7 +73,7 @@ namespace TheShaman
             }
             if(Keyboard.GetState().IsKeyDown(Keys.LeftControl) && player.mana != 0 && !player.isFlipped)
             {
-                player.PlayerAnimation("PlayerAnimation/playerPush", 7, 3, Content);
+                player.PlayerAnimation(_fileManager.playerPush,Content);
                 player.isPushing = true;
             }
             if(Keyboard.GetState().IsKeyDown(Keys.Up) &&  player.isHitting == false && player.isPushing == false)
@@ -77,7 +81,7 @@ namespace TheShaman
                 player.isFlipped = false;
                 if (player.isFlipped == false)
                 {
-                    player.PlayerAnimation("PlayerAnimation/playerWalkingUp" , 7 , 3 , Content);
+                    player.PlayerAnimation(_fileManager.playerWalkingUp, Content);
                 }
             } 
             if(Keyboard.GetState().IsKeyDown(Keys.Down) &&  player.isHitting == false && player.isPushing == false)
@@ -85,7 +89,7 @@ namespace TheShaman
                 player.isFlipped = false;
                 if (player.isFlipped == false)
                 {
-                 player.PlayerAnimation("PlayerAnimation/playerWalkingDown", 3 ,0, Content);
+                 player.PlayerAnimation(_fileManager.playerWalkingDown,Content);
                 }
             }
             //sorry for the recurrtion :p
@@ -176,17 +180,17 @@ namespace TheShaman
         {
             foreach (Animals animal in animals)
             {
-                if (!animal.isMoving )
+                if (!animal.isMoving && animal.isAttacking == false)
                 {
-                     animal.AnimateAnimal("AnimalAnimation/animal", 5 , 0 , content);   
+                     animal.AnimateAnimal(_fileManager.animalFiles, content);
                 }
                 if(animal.isMoving)
                 { 
-                    animal.AnimateAnimal("AnimalAnimation/AnimalWalking", 4  , 1 , content);
+                     animal.AnimateAnimal(_fileManager.animalWalkingFiles, content);
                 }
                 if (animal.isAttacking)
                 {
-                    animal.AnimateAnimal("AnimalAnimation/AnimalAttacking", 4 , 2 , content);
+                     animal.AnimateAnimal(_fileManager.animalAttackingFiles,content);
                 }
             }
         }
@@ -198,11 +202,11 @@ namespace TheShaman
                 {
                     if (humans[i].GetType() == typeof(Human))
                     {
-                    humans[i].AnimateHuman("HumansAnimation/HumanSecondary",5 , 1,content);
+                    humans[i].AnimateHuman(_fileManager.humanIdle,content);
                     }
                     if(humans[i].GetType() == typeof(SecondaryHuman))
                     {
-                    humans[i].AnimateHuman("HumansAnimation/HumanIdle",10 , 2,content);
+                    humans[i].AnimateHuman(_fileManager.secondaryHumanIdle,content);
                     }
                 }
                 else
@@ -211,23 +215,23 @@ namespace TheShaman
                     {
                         if (humans[i].GetType()==typeof(Human))
                         {
-                            humans[i].AnimateHuman("HumansAnimation/HumanSecondaryWalking",4 , 0,content);
+                            humans[i].AnimateHuman(_fileManager.humanWalking,content);
                         }
                         if (humans[i].GetType() == typeof(SecondaryHuman))
                         {
-                            humans[i].AnimateHuman("HumansAnimation/HumanWalking", 4 ,0, content);
+                            humans[i].AnimateHuman(_fileManager.secondaryHumanWalking, content);
                         }
                     }
                     else
                     {
                         if (humans[i].GetType() == typeof(Human))
                         {
-                            humans[i].AnimateHuman("HumansAnimation/HumanSecondaryWalkingFlip", 4 ,0 , content);
+                            humans[i].AnimateHuman(_fileManager.humanWalkingFlip,content);
                         }
 
                         if (humans[i].GetType() == typeof(SecondaryHuman))
                         {
-                            humans[i].AnimateHuman("HumansAnimation/HumanWalkingFlip", 4 ,0, content);
+                            humans[i].AnimateHuman(_fileManager.secondaryHumanWalkingFlip,content);
                         }
                     }
                 }

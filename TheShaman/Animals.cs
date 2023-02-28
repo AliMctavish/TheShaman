@@ -20,16 +20,18 @@ namespace TheShaman
         public bool isMoving = false;
         public Color animalColor = Color.White;
         public bool isAttacking = false;
-        int[] fileCounter = {1,2,3};
-        public void AnimateAnimal(string filepath , int counter , int type ,  ContentManager content)
+        int fileCounter = 0;
+        public void AnimateAnimal(List<string> filepath ,  ContentManager content)
         {
-             animalTexture = content.Load<Texture2D>($"{filepath}{fileCounter[type]}");
-             fileCounter[type] += 1;
-             if (fileCounter[type] == counter)
-             {
-               animalTexture = content.Load<Texture2D>($"{filepath}{fileCounter[type]}");
-               fileCounter[type] = 1;
-             }
+            if (fileCounter >= filepath.Count)
+            {
+                fileCounter = 0;
+            }
+            else
+            {
+              animalTexture = content.Load<Texture2D>($"{filepath[fileCounter]}");
+              fileCounter += 1;
+            }
         }
     }
 }

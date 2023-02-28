@@ -17,10 +17,8 @@ namespace TheShaman
         float decreaseMana = 2;
         Random random= new Random();    
      
-
         public void playerBounderies(Player player , List<Human> humans, List<Animals> animals , Vector2 firePos, GameTime gameTime)
         {
-
             for (int i = 0; i < humans.Count; i++)
             {
                 if (humans[i] != null)
@@ -80,6 +78,7 @@ namespace TheShaman
                                 movDir = player.playerPos - animal.animalPos;
                                 movDir.Normalize();
                                 animal.animalPos -= movDir;
+                                animal.isMoving = false;
                                 if (playerDecreaseHealth <= 1)
                                 {
                                     player.health -= 1;

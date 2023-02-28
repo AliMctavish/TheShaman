@@ -162,20 +162,22 @@ namespace TheShaman
                 if (Keyboard.GetState().IsKeyDown(Keys.Up))
                 {
                     player.playerPos.Y -= 2;
+                    player.isIdle = false;
                 }
                 if (Keyboard.GetState().IsKeyDown(Keys.Down))
                 {
                     player.playerPos.Y += 2;
+                    player.isIdle = false;
                 }
                 if (Keyboard.GetState().IsKeyDown(Keys.Right))
                 {
                     player.playerPos.X += 2;
-
+                    player.isIdle = false;
                 }
                 if (Keyboard.GetState().IsKeyDown(Keys.Left))
                 {
                     player.playerPos.X -= 2;
-
+                    player.isIdle = false;
                 }
                 if(Keyboard.GetState().IsKeyDown(Keys.LeftAlt))
                 {
