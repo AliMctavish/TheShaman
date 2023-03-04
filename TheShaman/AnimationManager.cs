@@ -92,88 +92,13 @@ namespace TheShaman
                  player.PlayerAnimation(_fileManager.playerWalkingDown,Content);
                 }
             }
-            //sorry for the recurrtion :p
-
-            if(player.mana == 20)
+            for(int i = 9; player.mana / 2.4 <= i; i--)
             {
-            player.manaBarTexture = Content.Load<Texture2D>("ManaBar1");
+            player.manaBarTexture = Content.Load<Texture2D>($"ManaBar{i}");
             }
-            if (player.mana <= 18)
+            for (int i = 9; player.health / 2.4 <= i; i--)
             {
-                player.manaBarTexture = Content.Load<Texture2D>("ManaBar1");
-            }
-            if (player.mana <= 16)
-            {
-                player.manaBarTexture = Content.Load<Texture2D>("ManaBar2");
-            }
-            if (player.mana <= 14)
-            {
-                player.manaBarTexture = Content.Load<Texture2D>("ManaBar3");
-            }
-            if (player.mana <= 12)
-            {
-                player.manaBarTexture = Content.Load<Texture2D>("ManaBar4");
-            }
-            if (player.mana <= 8)
-            {
-                player.manaBarTexture = Content.Load<Texture2D>("ManaBar5");
-            }
-            if (player.mana <= 7)
-            {
-                player.manaBarTexture = Content.Load<Texture2D>("ManaBar6");
-            }
-            if (player.mana <= 5)
-            {
-                player.manaBarTexture = Content.Load<Texture2D>($"ManaBar7");
-            }
-            if (player.mana <= 3)
-            {
-                player.manaBarTexture = Content.Load<Texture2D>($"ManaBar8");
-            }
-            if (player.mana <= 1)
-            {
-                player.manaBarTexture = Content.Load<Texture2D>($"ManaBar9");
-            }
-
-            if(player.health == 20)
-            {
-                player.HealthBar= Content.Load<Texture2D>("HealthBar1");
-            }
-            if(player.health <= 18)
-            {
-                player.HealthBar = Content.Load<Texture2D>("HealthBar2");
-            }
-            if(player.health <= 16)
-            {
-                player.HealthBar = Content.Load<Texture2D>("HealthBar3");
-            }  
-            if(player.health <= 14)
-            {
-                player.HealthBar = Content.Load<Texture2D>("HealthBar4");
-            } 
-            if(player.health <= 12)
-            {
-                player.HealthBar = Content.Load<Texture2D>("HealthBar5");
-            } 
-            if(player.health <= 8)
-            {
-                player.HealthBar = Content.Load<Texture2D>("HealthBar6");
-            }  
-            if(player.health <= 7)
-            {
-                player.HealthBar = Content.Load<Texture2D>("HealthBar7");
-            }  
-            if(player.health <= 5)
-            {
-                player.HealthBar = Content.Load<Texture2D>("HealthBar8");
-            }
-            if (player.health <= 3)
-            {
-                player.HealthBar = Content.Load<Texture2D>("HealthBar8");
-            }
-            if(player.health <= 1)
-            {
-                player.HealthBar = Content.Load<Texture2D>("HealthBar9");
+            player.HealthBar = Content.Load<Texture2D>($"HealthBar{i}");
             }
         }
         public void AnimalAnimation(List<Animals> animals, ContentManager content)
@@ -235,43 +160,11 @@ namespace TheShaman
                         }
                     }
                 }
-                //sorry again dont have time to fix it xD
-                if (humans[i].humanHealth <= 18)
+                for(int j = 9; humans[i].humanHealth/2.4 <= j; j--)
                 {
-                    humans[i].HealthBar = content.Load<Texture2D>("HealthBar1");
+                    humans[i].HealthBar = content.Load<Texture2D>($"HealthBar{j}");
                 }
-                if (humans[i].humanHealth <= 16)
-                {
-                    humans[i].HealthBar = content.Load<Texture2D>("HealthBar2");
-                }
-                if (humans[i].humanHealth <= 14)
-                {
-                    humans[i].HealthBar = content.Load<Texture2D>("HealthBar3");
-                }
-                if (humans[i].humanHealth <= 12)
-                {
-                    humans[i].HealthBar = content.Load<Texture2D>("HealthBar4");
-                }
-                if (humans[i].humanHealth <= 8)
-                {
-                    humans[i].HealthBar = content.Load<Texture2D>("HealthBar5");
-                }
-                if (humans[i].humanHealth <= 7)
-                {
-                    humans[i].HealthBar = content.Load<Texture2D>("HealthBar6");
-                }
-                if (humans[i].humanHealth <= 5)
-                {
-                    humans[i].HealthBar = content.Load<Texture2D>($"HealthBar7");
-                }
-                if (humans[i].humanHealth <= 3)
-                {
-                    humans[i].HealthBar = content.Load<Texture2D>($"HealthBar8");
-                }
-                if (humans[i].humanHealth <= 1)
-                {
-                    humans[i].HealthBar = content.Load<Texture2D>($"HealthBar9");
-                }
+        
             }
         }
         public void waterAnimation(List<Water> waters, ContentManager content)

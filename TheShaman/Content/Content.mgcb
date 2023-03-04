@@ -372,7 +372,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:healthBar1.png
+/build:healthBar1.png;healthBar9.png
 
 #begin healthBar2.png
 /importer:TextureImporter
@@ -384,7 +384,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:healthBar2.png
+/build:healthBar2.png;healthBar8.png
 
 #begin healthBar3.png
 /importer:TextureImporter
@@ -396,7 +396,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:healthBar3.png
+/build:healthBar3.png;healthBar7.png
 
 #begin healthBar4.png
 /importer:TextureImporter
@@ -408,7 +408,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:healthBar4.png
+/build:healthBar4.png;healthBar6.png
 
 #begin healthBar5.png
 /importer:TextureImporter
@@ -432,7 +432,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:healthBar6.png
+/build:healthBar6.png;healthBar4png
 
 #begin healthBar7.png
 /importer:TextureImporter
@@ -444,7 +444,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:healthBar7.png
+/build:healthBar7.png;healthBar3.png
 
 #begin healthBar8.png
 /importer:TextureImporter
@@ -456,7 +456,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:healthBar8.png
+/build:healthBar8.png;healthBar2.png
 
 #begin healthBar9.png
 /importer:TextureImporter
@@ -468,7 +468,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:healthBar9.png
+/build:healthBar9.png;healthBar1.png
 
 #begin hony-export.png
 /importer:TextureImporter
@@ -732,7 +732,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:ManaBar1.png
+/build:ManaBar1.png;ManaBar9.png
 
 #begin ManaBar2.png
 /importer:TextureImporter
@@ -744,7 +744,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:ManaBar2.png
+/build:ManaBar2.png;ManaBar8.png
 
 #begin ManaBar3.png
 /importer:TextureImporter
@@ -756,7 +756,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:ManaBar3.png
+/build:ManaBar3.png;ManaBar7.png
 
 #begin ManaBar4.png
 /importer:TextureImporter
@@ -768,7 +768,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:ManaBar4.png
+/build:ManaBar4.png;ManaBar6.png
 
 #begin ManaBar5.png
 /importer:TextureImporter
@@ -792,7 +792,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:ManaBar6.png
+/build:ManaBar6.png;ManaBar4.png
 
 #begin ManaBar7.png
 /importer:TextureImporter
@@ -804,7 +804,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:ManaBar7.png
+/build:ManaBar7.png;ManaBar3.png
 
 #begin ManaBar8.png
 /importer:TextureImporter
@@ -816,7 +816,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:ManaBar8.png
+/build:ManaBar8.png;ManaBar2.png
 
 #begin ManaBar9.png
 /importer:TextureImporter
@@ -828,7 +828,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:ManaBar9.png
+/build:ManaBar9.png;ManaBar1.png
 
 #begin Mashroom.png
 /importer:TextureImporter

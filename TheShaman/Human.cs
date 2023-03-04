@@ -23,7 +23,6 @@ namespace TheShaman
         public int humanHealth = 20;
         public Color damageColor = Color.White;
         public Texture2D HealthBar;
-        public int HealthCounter = 1;
         private int fileCounter = 0;
         public virtual void AnimateHuman(List<string> filepath,ContentManager content)
         {
