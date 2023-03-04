@@ -24,7 +24,7 @@ namespace TheShaman
             {
                 if (player.isFlipped == false)
                 {
-                    player.PlayerAnimation(_fileManager.PlayerIdle, Content);
+               player.PlayerAnimation(_fileManager.PlayerIdle, Content);
                 }
                 else
                 {
