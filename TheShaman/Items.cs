@@ -13,10 +13,6 @@ namespace TheShaman
     {
         public Vector2 ItemPos = new Vector2(0,0);
     }
-
-
-
-
     public class hony : Items
     {
         private Texture2D texture;
