@@ -25,7 +25,7 @@ namespace TheShaman
         public int mana = 20;
         public int health = 20;
         public int AcceptedHumans = 0;
-        private int fileCounter = 1;
+        public int fileCounter = 1;
         public void PlayerAnimation(List<string> filePath , ContentManager content)
         {
             if (fileCounter >= filePath.Count)
@@ -34,8 +34,8 @@ namespace TheShaman
             }
             else
             {
-                playerTexture = content.Load<Texture2D>($"{filePath[fileCounter]}");
-                fileCounter += 1;
+              playerTexture = content.Load<Texture2D>($"{filePath[fileCounter]}");
+              fileCounter += 1;
             }
         }
     }

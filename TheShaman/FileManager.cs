@@ -24,7 +24,7 @@ namespace TheShaman
         public List<string> humanWalking = new List<string>();
         public List<string> humanWalkingFlip = new List<string>();
         public List<string> playerHit = new List<string>();
-        public List<string> playerHtiFlip = new List<string>();
+        public List<string> playerHitFlip = new List<string>();
         public List<string> PlayerIdle = new List<string>();
         public List<string> playerIdleFlip = new List<string>();
         public List<string> playerMoving = new List<string>();
@@ -41,8 +41,8 @@ namespace TheShaman
             for(int i  = 1; i < 12; i++)
             {
                 playerHit.Add($"PlayerAnimation/playerHit{i}");
-                playerHtiFlip.Add($"PlayerFlipAnimation/playerHitFlip{i}");
-                if (i < 5)
+                playerHitFlip.Add($"PlayerFlipAnimation/playerHitFilp{i}");
+                if (i < 5) 
                 {
                     animalFiles.Add($"AnimalAnimation/animal{i}");
                     animalWalkingFiles.Add($"AnimalAnimation/AnimalWalking{i}");

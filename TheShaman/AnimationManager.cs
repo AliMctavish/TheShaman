@@ -48,7 +48,7 @@ namespace TheShaman
             {
                 if (player.isHitting == true)
                 {
-                 player.PlayerAnimation(_fileManager.playerHtiFlip, Content); 
+                 player.PlayerAnimation(_fileManager.playerHitFlip, Content);
                 }
                 if (Keyboard.GetState().IsKeyDown(Keys.LeftControl) &&  player.mana != 0 )
                 {
@@ -60,7 +60,7 @@ namespace TheShaman
             {
                 if (player.isHitting == true)
                 {
-                    player.PlayerAnimation(_fileManager.playerHit, Content);
+                  player.PlayerAnimation(_fileManager.playerHit, Content);
                 }
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
