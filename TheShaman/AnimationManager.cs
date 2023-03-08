@@ -18,9 +18,10 @@ namespace TheShaman
         private FileManager _fileManager = new FileManager();
         public int counter = 0;
         public int state = 1;
+        public  int current = 0;
         public void playerAnimation(Player player, ContentManager Content)
         {
-            if(player.isIdle)
+            if(player.isIdle && !Keyboard.GetState().IsKeyDown(Keys.Right) && !Keyboard.GetState().IsKeyDown(Keys.Left) && player.isHitting == false && !Keyboard.GetState().IsKeyDown(Keys.Up) && !Keyboard.GetState().IsKeyDown(Keys.Down))
             {
                 if (player.isFlipped == false)
                 {
@@ -31,68 +32,102 @@ namespace TheShaman
                     player.PlayerAnimation(_fileManager.playerIdleFlip, Content);
                 }
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Right) && player.isHitting == false )
+            if (Keyboard.GetState().IsKeyDown(Keys.Right) && player.isHitting == false &&
+                !Keyboard.GetState().IsKeyDown(Keys.Down) &&
+                !Keyboard.GetState().IsKeyDown(Keys.Up) &&
+                !Keyboard.GetState().IsKeyDown(Keys.LeftControl))
             {
+                    player.PlayerAnimation(_fileManager.playerMoving, Content);
                     player.isFlipped = false;
-                if (player.isFlipped == false)
-                {
-                 player.PlayerAnimation(_fileManager.playerMoving , Content);
-                }
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Left) && player.isHitting == false)
+            if (Keyboard.GetState().IsKeyDown(Keys.Left) && player.isHitting == false &&
+                !Keyboard.GetState().IsKeyDown(Keys.Down) &&
+                !Keyboard.GetState().IsKeyDown(Keys.Up) && 
+                !Keyboard.GetState().IsKeyDown(Keys.LeftControl))
             {
-                player.isFlipped = true;
                 player.PlayerAnimation(_fileManager.playerMovingFlip,Content);
+                player.isFlipped = true;
             }
             if (player.isFlipped)
             {
                 if (player.isHitting == true)
                 {
-                 player.PlayerAnimation(_fileManager.playerHitFlip, Content);
+                    player.playerTexture = Content.Load<Texture2D>($"{_fileManager.playerHitFlip[current]}");
+                    current += 1;
+                    if (current == _fileManager.playerHitFlip.Count)
+                    {
+                        player.isHitting = false;
+                        current = 0;
+                    }
                 }
-                if (Keyboard.GetState().IsKeyDown(Keys.LeftControl) &&  player.mana != 0 )
-                {
-                 player.PlayerAnimation(_fileManager.playerPushFlip, Content);
-                    player.isPushing = true;
-                } 
             }
             else
             {
                 if (player.isHitting == true)
                 {
-                  player.PlayerAnimation(_fileManager.playerHit, Content);
+                  player.playerTexture = Content.Load<Texture2D>($"{_fileManager.playerHit[current]}");
+                  current += 1;
+                    if (current == _fileManager.playerHit.Count)
+                    {
+                        player.isHitting = false;
+                        current = 0;
+                    }
                 }
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.LeftControl) && player.mana != 0 && !player.isFlipped)
+            {
+                if (current < _fileManager.playerPush.Count)
+                {
+                    player.isIdle = false;
+                    player.playerTexture = Content.Load<Texture2D>($"{_fileManager.playerPush[current]}");
+                    current += 1;
+                }
+                else
+                {
+                    current = 5;
+                }
+            }
+            else
+            {
+                player.isIdle = true;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.LeftControl) && player.mana != 0 && player.isFlipped)
+            {
+                if (current < _fileManager.playerPushFlip.Count)
+                {
+                    player.isIdle = false;
+                    player.playerTexture = Content.Load<Texture2D>($"{_fileManager.playerPushFlip[current]}");
+                    current += 1;
+                }
+                else
+                {
+                    current = 5;
+                }
+            }
+            else
+            {
+                player.isIdle = true;
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
             {
                 player.isHitting = true;
             }
-            if(Keyboard.GetState().IsKeyDown(Keys.LeftControl) && player.mana != 0 && !player.isFlipped)
-            {
-                player.PlayerAnimation(_fileManager.playerPush,Content);
-                player.isPushing = true;
-            }
-            if(Keyboard.GetState().IsKeyDown(Keys.Up) &&  player.isHitting == false && player.isPushing == false)
+        
+            if(Keyboard.GetState().IsKeyDown(Keys.Up) &&  player.isHitting == false && player.isPushing == false && !Keyboard.GetState().IsKeyDown(Keys.LeftControl))
             {
                 player.isFlipped = false;
-                if (player.isFlipped == false)
-                {
-                    player.PlayerAnimation(_fileManager.playerWalkingUp, Content);
-                }
+                player.PlayerAnimation(_fileManager.playerWalkingUp, Content);
             } 
-            if(Keyboard.GetState().IsKeyDown(Keys.Down) &&  player.isHitting == false && player.isPushing == false)
+            if(Keyboard.GetState().IsKeyDown(Keys.Down) && player.isHitting == false && player.isPushing == false && !Keyboard.GetState().IsKeyDown(Keys.LeftControl))
             {
-                player.isFlipped = false;
-                if (player.isFlipped == false)
-                {
-                 player.PlayerAnimation(_fileManager.playerWalkingDown,Content);
-                }
+              player.isFlipped = false;  
+              player.PlayerAnimation(_fileManager.playerWalkingDown,Content);
             }
-            for(int i = 9; player.mana / 2.4 <= i; i--)
+            for(int i = 9; player.mana / 2.4 < i; i--)
             {
-            player.manaBarTexture = Content.Load<Texture2D>($"ManaBar{i}");
+                player.manaBarTexture = Content.Load<Texture2D>($"ManaBar{i}");
             }
-            for (int i = 9; player.health / 2.4 <= i; i--)
+            for (int i = 9; player.health / 2.4 < i; i--)
             {
             player.HealthBar = Content.Load<Texture2D>($"HealthBar{i}");
             }
