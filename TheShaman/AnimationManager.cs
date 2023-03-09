@@ -21,7 +21,11 @@ namespace TheShaman
         public  int current = 0;
         public void playerAnimation(Player player, ContentManager Content)
         {
-            if(player.isIdle && !Keyboard.GetState().IsKeyDown(Keys.Right) && !Keyboard.GetState().IsKeyDown(Keys.Left) && player.isHitting == false && !Keyboard.GetState().IsKeyDown(Keys.Up) && !Keyboard.GetState().IsKeyDown(Keys.Down))
+            if(player.isIdle && !Keyboard.GetState().IsKeyDown(Keys.Right)
+                && !Keyboard.GetState().IsKeyDown(Keys.Left)
+                && player.isHitting == false &&
+                !Keyboard.GetState().IsKeyDown(Keys.Up)
+                && !Keyboard.GetState().IsKeyDown(Keys.Down))
             {
                 if (player.isFlipped == false)
                 {
@@ -60,6 +64,23 @@ namespace TheShaman
                         current = 0;
                     }
                 }
+                if (Keyboard.GetState().IsKeyDown(Keys.LeftControl) &&  player.mana != 0  ) 
+                {
+                    if(current < _fileManager.playerPushFlip.Count) 
+                    {
+                    player.isIdle = false;
+                    player.playerTexture = Content.Load<Texture2D>($"{_fileManager.playerPushFlip[current]}");
+                    current += 1;
+                    }
+                    else
+                    {
+                    current = 5;
+                    }
+                }
+                else
+                {
+                    player.isIdle = true;
+                }
             }
             else
             {
@@ -74,29 +95,12 @@ namespace TheShaman
                     }
                 }
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.LeftControl) && player.mana != 0 && !player.isFlipped)
+            if (Keyboard.GetState().IsKeyDown(Keys.LeftControl) && player.mana != 0 && !player.isFlipped && !Keyboard.GetState().IsKeyDown(Keys.Up) && !Keyboard.GetState().IsKeyDown(Keys.Down))
             {
                 if (current < _fileManager.playerPush.Count)
                 {
                     player.isIdle = false;
                     player.playerTexture = Content.Load<Texture2D>($"{_fileManager.playerPush[current]}");
-                    current += 1;
-                }
-                else
-                {
-                    current = 5;
-                }
-            }
-            else
-            {
-                player.isIdle = true;
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.LeftControl) && player.mana != 0 && player.isFlipped)
-            {
-                if (current < _fileManager.playerPushFlip.Count)
-                {
-                    player.isIdle = false;
-                    player.playerTexture = Content.Load<Texture2D>($"{_fileManager.playerPushFlip[current]}");
                     current += 1;
                 }
                 else
@@ -132,7 +136,7 @@ namespace TheShaman
             player.HealthBar = Content.Load<Texture2D>($"HealthBar{i}");
             }
         }
-        public void AnimalAnimation(List<Animals> animals, ContentManager content)
+        public void AnimalAnimation(List<Animals> animals, ContentManager content) 
         {
             foreach (Animals animal in animals)
             {
